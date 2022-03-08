@@ -2,11 +2,11 @@ name: Code Style
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - '**.hs'
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     tags: [ "*.*.*" ]
     paths:
       - '**.hs'
