@@ -1,0 +1,48 @@
+name:                team-proj-abbr
+version:             0.1.0.0
+github:              "cad0p/uu-afp-2021-team-proj-abbr"
+license:             BSD3
+author:              "Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering"
+maintainer:          "p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl"
+copyright:           "Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  team-proj-abbr-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - team-proj-abbr
+
+tests:
+  team-proj-abbr-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - team-proj-abbr
