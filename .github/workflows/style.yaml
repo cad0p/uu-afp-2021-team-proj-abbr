@@ -7,7 +7,7 @@ on:
       - '**.hs'
   push:
     branches: [ "main" ]
-    tags: [ "*.*.*" ]
+    # tags: [ "*.*.*" ]
     paths:
       - '**.hs'
 
