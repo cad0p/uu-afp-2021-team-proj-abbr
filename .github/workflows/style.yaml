@@ -3,9 +3,13 @@ name: Code Style
 on:
   pull_request:
     branches: [ "master" ]
+    paths:
+      - '**.hs'
   push:
     branches: [ "master" ]
     tags: [ "*.*.*" ]
+    paths:
+      - '**.hs'
 
 jobs:
   build:
