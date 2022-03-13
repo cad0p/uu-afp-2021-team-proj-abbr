@@ -1,6 +1,6 @@
 module Decoder where
 
-import Parser (ParseStructure)
+import           Parser (ParseStructure)
 
 decode :: ParseStructure -> String
 decode = undefined

@@ -1,7 +1,7 @@
 module Matcher where
 
-import Parser
-import KnowledgeBase
+import           KnowledgeBase
+import           Parser
 
 match :: KnowledgeBaseStructure -> ParseStructure -> ParseStructure
 match = undefined
