@@ -11,7 +11,7 @@ homepage:       https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme
 bug-reports:    https://github.com/cad0p/uu-afp-2021-team-proj-abbr/issues
 author:         Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 maintainer:     p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
-copyright:      Copyright (c) 2022 Pier Carlo Cadoppi
+copyright:      Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -25,7 +25,13 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Decoder
+      InputInterface
+      KnowledgeBase
+      Mapper
+      Matcher
+      OutputInterface
+      Parser
   other-modules:
       Paths_team_proj_abbr
   hs-source-dirs:
