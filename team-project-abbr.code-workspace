@@ -9,6 +9,10 @@
       "name": "Backend"
     },
     {
+      "path": "backend/team-proj-abbr",
+      "name": "Backend / Core (CLI)"
+    },
+    {
       "path": "frontend",
       "name": "Frontend"
     },

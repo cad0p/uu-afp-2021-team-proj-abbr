@@ -2,12 +2,12 @@ name: Code Style
 
 on:
   pull_request:
-    branches: [ "main" ]
+    # branches: [ "main" ]
     paths-ignore:
       - 'frontend/**'
   push:
-    branches: [ "main" ]
-    tags: [ "*.*.*" ]
+    # branches: [ "main" ]
+    # tags: [ "*.*.*" ]
     paths-ignore:
       - 'frontend/**'
 
