@@ -7,7 +7,7 @@ on:
       - 'frontend/**'
   push:
     # branches: [ "main" ]
-    tags: [ "*.*.*" ]
+    # tags: [ "*.*.*" ]
     paths-ignore:
       - 'frontend/**'
 
