@@ -12,13 +12,11 @@ on:
     paths-ignore:
       - 'frontend/**'
 
-
+env:
+  WORKING_DIRECTORY: backend/team-proj-abbr
 
 jobs:
   build:
-    env:
-      WORKING_DIRECTORY: backend/team-proj-abbr
-
     defaults:
       run:
         working-directory: ${{ WORKING_DIRECTORY }}
