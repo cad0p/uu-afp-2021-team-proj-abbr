@@ -13,11 +13,15 @@ on:
       - 'frontend/**'
 
 
+
 jobs:
   build:
+    env:
+      WORKING_DIRECTORY: backend/team-proj-abbr
+
     defaults:
       run:
-        working-directory: backend/team-proj-abbr
+        working-directory: echo "$WORKING_DIRECTORY"
 
     strategy:
       matrix:
@@ -72,13 +76,14 @@ jobs:
         DESTDIR=dist/coverage make report && DESTDIR=dist/coverage make badge
       env:
         PKG_NAME: ${{ steps.variables.outputs.pkg_name }}
-    # Let's try now: it worked but it pushed an empty deploy
+    # Guide: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token
     - name: 📘 Publish Documentation
       if: matrix.os == 'ubuntu-latest' && github.event_name == 'push'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: backend/team-proj-abbr/dist
+        publish_dir: echo "$WORKING_DIRECTORY/dist"
+        destination_dir: echo "$WORKING_DIRECTORY"
         enable_jekyll: true
 
   release:
