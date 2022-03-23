@@ -18,10 +18,10 @@ jobs:
       matrix:
         os: [ubuntu-latest]
       working-directory: backend/team-proj-abbr
+    
     defaults:
       run:
-        working-directory: ${{ working-directory }}
-
+        working-directory: backend/team-proj-abbr
 
     runs-on: ${{ matrix.os }}
     steps:
