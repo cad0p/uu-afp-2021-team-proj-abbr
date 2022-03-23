@@ -12,18 +12,16 @@ on:
     paths-ignore:
       - 'frontend/**'
 
-env:
-  WORKING_DIRECTORY: backend/team-proj-abbr
-
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: ${{ WORKING_DIRECTORY }}
-
     strategy:
       matrix:
         os: [ubuntu-latest]
+      working-directory: backend/team-proj-abbr
+    defaults:
+      run:
+        working-directory: ${{ working-directory }}
+
 
     runs-on: ${{ matrix.os }}
     steps:
