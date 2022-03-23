@@ -1,6 +1,12 @@
 module Parser where
 
-data ParseStructure
+newtype Token
+  = Token String
+  deriving (Eq, Ord, Show)
 
-parse :: String -> ParseStructure
-parse = undefined
+type ParseStructure
+  = [Token]
+
+-- | Map a string to a list of Tokens
+parseInput :: String -> ParseStructure
+parseInput s = map Token (words s)
