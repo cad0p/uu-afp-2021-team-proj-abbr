@@ -21,7 +21,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: echo "$WORKING_DIRECTORY"
+        working-directory: ${{ WORKING_DIRECTORY }}
 
     strategy:
       matrix:
@@ -82,8 +82,8 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: echo "$WORKING_DIRECTORY/dist"
-        destination_dir: echo "$WORKING_DIRECTORY"
+        publish_dir: ${{ WORKING_DIRECTORY }}/dist
+        destination_dir: ${{ WORKING_DIRECTORY }}
         enable_jekyll: true
 
   release:
