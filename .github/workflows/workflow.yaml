@@ -14,7 +14,7 @@ on:
 
 defaults:
   run:
-    working-directory: /backend/team-proj-abbr
+    working-directory: ../backend/team-proj-abbr
 
 jobs:
   build:
