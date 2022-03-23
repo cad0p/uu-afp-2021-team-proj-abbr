@@ -25,13 +25,13 @@ source-repository head
 
 library
   exposed-modules:
-      Decoder
-      InputInterface
-      KnowledgeBase
-      Mapper
-      Matcher
-      OutputInterface
-      Parser
+      LibCore.Decoder
+      LibCore.InputInterface
+      LibCore.KnowledgeBase
+      LibCore.Mapper
+      LibCore.Matcher
+      LibCore.OutputInterface
+      LibCore.Parser
   other-modules:
       Paths_team_proj_abbr
   hs-source-dirs:
