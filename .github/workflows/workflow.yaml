@@ -19,7 +19,7 @@ jobs:
   build:
     defaults:
       run:
-        working-directory: ${{ WORKING_DIRECTORY }}
+        working-directory: backend/team-proj-abbr
 
     strategy:
       matrix:
@@ -80,8 +80,8 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ${{ WORKING_DIRECTORY }}/dist
-        destination_dir: ${{ WORKING_DIRECTORY }}
+        publish_dir: backend/team-proj-abbr/dist
+        destination_dir: backend/team-proj-abbr
         enable_jekyll: true
 
   release:
