@@ -2,4 +2,5 @@
 
 ## Backend / Core (CLI)
 
-* [ok](./backend/team-proj-abbr/haddock)
+* [haddock](./backend/team-proj-abbr/haddock)
+* [coverage](./backend/team-proj-abbr/coverage/hpc_index.html)
