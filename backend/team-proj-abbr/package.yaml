@@ -22,6 +22,10 @@ description:         Please see the README on GitHub at <https://github.com/cad0
 dependencies:
 - base >= 4.7 && < 5
 
+ghc-options:
+- -Wall
+- -fwarn-incomplete-uni-patterns
+
 library:
   source-dirs: lib-core
 
@@ -46,3 +50,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - team-proj-abbr
+    - tasty
+    - tasty-hunit
