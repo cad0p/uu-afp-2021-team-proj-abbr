@@ -2,4 +2,4 @@
 
 ## Backend / Core (CLI)
 
-* [ok](./team-proj-abbr/haddock)
+* [ok](./backend/team-proj-abbr/haddock)
