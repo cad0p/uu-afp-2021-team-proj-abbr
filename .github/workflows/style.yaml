@@ -1,10 +1,10 @@
 name: Code Style
 
 on:
-  pull_request:
-    # branches: [ "main" ]
-    paths-ignore:
-      - 'frontend/**'
+  # pull_request:
+  #   # branches: [ "main" ]
+  #   paths-ignore:
+  #     - 'frontend/**'
   push:
     # branches: [ "main" ]
     # tags: [ "*.*.*" ]
