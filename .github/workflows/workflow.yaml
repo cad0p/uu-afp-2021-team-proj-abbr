@@ -12,14 +12,14 @@ on:
     paths-ignore:
       - 'frontend/**'
 
-# env:
-#   WORKING_DIRECTORY: backend/team-proj-abbr
+env:
+  WORKING_DIRECTORY: backend/team-proj-abbr
 
 jobs:
   build:
     defaults:
       run:
-        working-directory: backend/team-proj-abbr
+        working-directory: ${{ WORKING_DIRECTORY }}
 
     strategy:
       matrix:
