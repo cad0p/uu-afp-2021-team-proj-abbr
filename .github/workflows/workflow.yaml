@@ -12,8 +12,8 @@ on:
     paths-ignore:
       - 'frontend/**'
 
-env:
-  WORKING_DIRECTORY: backend/team-proj-abbr
+# env:
+#   WORKING_DIRECTORY: backend/team-proj-abbr
 
 jobs:
   build:
