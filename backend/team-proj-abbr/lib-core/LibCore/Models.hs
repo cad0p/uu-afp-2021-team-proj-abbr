@@ -5,5 +5,9 @@ module LibCore.Models where
 -- | the DoMap strings start with @@
 data Token
   = NoToken String
-  | DoMap String
+  | DoMap Keyword
+  deriving (Eq, Ord, Show)
+
+newtype Keyword
+  = Keyword String
   deriving (Eq, Ord, Show)

@@ -1,9 +1,8 @@
 module LibCore.Mapper where
 
 import qualified Data.Map              as M
-import           Data.Maybe            (fromMaybe)
 import           LibCore.KnowledgeBase (KnowledgeBaseStructure)
-import           LibCore.Models        (Token)
+import           LibCore.Models        (Token (DoMap, NoToken))
 import           LibCore.Parser        (ParseStructure)
 
 -- | Map a ParseStructure using a KnowledgeBaseStructure to another ParseStructure.
@@ -16,6 +15,5 @@ mapParseStructure k = map (doLookup k)
 -- | the lookup token. Otherwise, it returns the result of the lookup, which
 -- | is also a token
 doLookup :: KnowledgeBaseStructure -> Token -> Token
-doLookup k t = fromMaybe t (M.lookup t k)
-
-
+doLookup _ n@(NoToken _) = n
+doLookup k n@(DoMap kw)  = maybe n DoMap (M.lookup kw k)
