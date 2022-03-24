@@ -1,8 +1,10 @@
 module Mapper where
 
+import qualified Data.Map      as M
 import           Data.Maybe    (fromMaybe)
 import           KnowledgeBase (KnowledgeBaseStructure)
-import           Parser        (ParseStructure, Token)
+import           Models        (Token)
+import           Parser        (ParseStructure)
 
 -- | Map a ParseStructure using a KnowledgeBaseStructure to another ParseStructure.
 -- | The structure of this function makes it possible to apply multiple
@@ -14,4 +16,4 @@ mapParseStructure k = map (doLookup k)
 -- | the lookup token. Otherwise, it returns the result of the lookup, which
 -- | is also a token
 doLookup :: KnowledgeBaseStructure -> Token -> Token
-doLookup k t = fromMaybe t (lookup t k)
+doLookup k t = fromMaybe t (M.lookup t k)

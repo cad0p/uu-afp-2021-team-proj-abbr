@@ -1,8 +1,9 @@
 module KnowledgeBase where
 
-import           Parser (Token)
+import           Data.Map (Map)
+import           Models   (Token)
 
-type KnowledgeBaseStructure = [(Token, Token)]
+type KnowledgeBaseStructure = Map Token Token
 
 getKnowledgeBase :: KnowledgeBaseStructure
 getKnowledgeBase = undefined
