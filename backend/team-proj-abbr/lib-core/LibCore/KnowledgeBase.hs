@@ -1,4 +1,4 @@
-module KnowledgeBase where
+module LibCore.KnowledgeBase where
 
 data KnowledgeBaseStructure
 

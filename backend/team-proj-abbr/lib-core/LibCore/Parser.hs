@@ -1,4 +1,4 @@
-module Parser where
+module LibCore.Parser where
 
 data ParseStructure
 

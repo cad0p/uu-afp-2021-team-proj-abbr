@@ -25,17 +25,18 @@ source-repository head
 
 library
   exposed-modules:
-      Decoder
-      InputInterface
-      KnowledgeBase
-      Mapper
-      Matcher
-      OutputInterface
-      Parser
+      LibCore.Decoder
+      LibCore.InputInterface
+      LibCore.KnowledgeBase
+      LibCore.Mapper
+      LibCore.Matcher
+      LibCore.OutputInterface
+      LibCore.Parser
   other-modules:
       Paths_team_proj_abbr
   hs-source-dirs:
       lib-core
+  ghc-options: -Wall -fwarn-incomplete-uni-patterns
   build-depends:
       base >=4.7 && <5
   default-language: Haskell2010
@@ -46,7 +47,7 @@ executable team-proj-abbr-exe
       Paths_team_proj_abbr
   hs-source-dirs:
       app
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -fwarn-incomplete-uni-patterns -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , team-proj-abbr
@@ -56,11 +57,20 @@ test-suite team-proj-abbr-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.LibCore.Decoder
+      Test.LibCore.InputInterface
+      Test.LibCore.KnowledgeBase
+      Test.LibCore.Mapper
+      Test.LibCore.Matcher
+      Test.LibCore.OutputInterface
+      Test.LibCore.Parser
       Paths_team_proj_abbr
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -fwarn-incomplete-uni-patterns -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , tasty
+    , tasty-hunit
     , team-proj-abbr
   default-language: Haskell2010
