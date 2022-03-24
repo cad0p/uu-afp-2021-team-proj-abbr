@@ -2,6 +2,7 @@
 name: Continuous Integration / Core (CLI)
 
 on:
+  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
   # pull_request:
   #   # branches: [ "main" ]
   #   paths-ignore:
