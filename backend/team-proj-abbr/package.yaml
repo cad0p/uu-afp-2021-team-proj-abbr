@@ -39,6 +39,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - team-proj-abbr
+    - optparse-applicative
 
 tests:
   team-proj-abbr-test:
