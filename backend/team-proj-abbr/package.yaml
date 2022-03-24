@@ -24,6 +24,10 @@ dependencies:
 - parsec
 - containers
 
+ghc-options:
+- -Wall
+- -fwarn-incomplete-uni-patterns
+
 library:
   source-dirs: lib-core
 
@@ -48,3 +52,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - team-proj-abbr
+    - tasty
+    - tasty-hunit

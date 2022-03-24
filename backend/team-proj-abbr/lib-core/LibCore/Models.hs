@@ -1,4 +1,4 @@
-module Models where
+module LibCore.Models where
 
 -- | We parse a string into a NoToken if it does not match the syntax for
 -- | parsing. The DoMap is a string that has to be mapped. In our proposals,

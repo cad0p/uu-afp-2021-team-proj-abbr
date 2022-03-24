@@ -1,10 +1,10 @@
-module Mapper where
+module LibCore.Mapper where
 
-import qualified Data.Map      as M
-import           Data.Maybe    (fromMaybe)
-import           KnowledgeBase (KnowledgeBaseStructure)
-import           Models        (Token)
-import           Parser        (ParseStructure)
+import qualified Data.Map              as M
+import           Data.Maybe            (fromMaybe)
+import           LibCore.KnowledgeBase (KnowledgeBaseStructure)
+import           LibCore.Models        (Token)
+import           LibCore.Parser        (ParseStructure)
 
 -- | Map a ParseStructure using a KnowledgeBaseStructure to another ParseStructure.
 -- | The structure of this function makes it possible to apply multiple
@@ -17,3 +17,5 @@ mapParseStructure k = map (doLookup k)
 -- | is also a token
 doLookup :: KnowledgeBaseStructure -> Token -> Token
 doLookup k t = fromMaybe t (M.lookup t k)
+
+

@@ -1,6 +1,6 @@
-module Parser where
+module LibCore.Parser where
 
-import           Models (Token (NoToken))
+import           LibCore.Models (Token (NoToken))
 
 type ParseStructure
   = [Token]
