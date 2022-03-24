@@ -65,7 +65,6 @@ test-suite team-proj-abbr-test
       Test.LibCore.InputInterface
       Test.LibCore.KnowledgeBase
       Test.LibCore.Mapper
-      Test.LibCore.Matcher
       Test.LibCore.OutputInterface
       Test.LibCore.Parser
       Paths_team_proj_abbr
