@@ -1,0 +1,23 @@
+{
+    "recommendations": [
+        "emeraldwalk.runonsave",
+        "hoovercj.haskell-linter",
+        "justusadam.language-haskell",
+        "haskell.haskell"
+    ]
+    // add the following to your settings.json
+    // "emeraldwalk.runonsave": {
+    //     "commands": [
+    //         {
+    //             "match": "\\.hs$",
+    //             "cmd": "stylish-haskell -i ${file}"
+    //         }
+    //     ]
+    // },
+    // "haskell.hlint.executablePath": "~/.local/bin/hlint",
+    // "[haskell]": {
+    //     "editor.tabSize": 2,
+    //     "editor.defaultFormatter": "vigoo.stylish-haskell"
+    // },
+
+}
