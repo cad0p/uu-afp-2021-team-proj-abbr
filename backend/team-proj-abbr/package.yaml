@@ -41,6 +41,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - team-proj-abbr
+    - cmdargs >= 0.10.21
 
 tests:
   team-proj-abbr-test:

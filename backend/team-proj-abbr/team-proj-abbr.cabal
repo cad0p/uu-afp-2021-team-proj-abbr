@@ -54,6 +54,7 @@ executable team-proj-abbr-exe
       base >=4.7 && <5
     , containers
     , parsec
+    , cmdargs >=0.10.21
     , team-proj-abbr
   default-language: Haskell2010
 
