@@ -32,7 +32,7 @@ library:
   source-dirs: lib-core
 
 executables:
-  team-proj-abbr-exe:
+  team-proj-abbr-cli:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
