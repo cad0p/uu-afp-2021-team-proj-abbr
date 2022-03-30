@@ -135,4 +135,10 @@ kbModes = [list, add, update, delete]
 --     * delete     - delete an existing record from the knowledge base
 main :: IO ()
 main = mockCliHandler =<< CMD.cmdArgs (CMD.modes $ expansionModes ++ kbModes)
-    where mockCliHandler = print
+  where
+    mockCliHandler c@Replace{} = print $ "replacing! --> " ++ show c
+    mockCliHandler c@Expand{}  = print $ "expanding! --> " ++ show c
+    mockCliHandler c@List{}    = print $ "listing! --> " ++ show c
+    mockCliHandler c@Add{}     = print $ "adding! --> " ++ show c
+    mockCliHandler c@Update{}  = print $ "updating! --> " ++ show c
+    mockCliHandler c@Delete{}  = print $ "deleting! --> " ++ show c
