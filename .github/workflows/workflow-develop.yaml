@@ -14,7 +14,7 @@ on:
       - 'frontend/**'
 
 jobs:
-  build-dev:
+  build:
     strategy:
       matrix:
         os: [ubuntu-latest]
