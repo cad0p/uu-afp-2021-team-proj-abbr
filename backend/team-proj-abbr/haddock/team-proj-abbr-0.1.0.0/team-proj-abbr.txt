@@ -9,6 +9,7 @@
 @package team-proj-abbr
 @version 0.1.0.0
 
+
 module LibCli.CliSpec
 cliModes :: [ShortHndr]
 
@@ -49,6 +50,7 @@ Delete :: String -> Maybe FilePath -> ShortHndr
 [kb] :: ShortHndr -> Maybe FilePath
 instance GHC.Show.Show LibCli.CliSpec.ShortHndr
 instance Data.Data.Data LibCli.CliSpec.ShortHndr
+
 
 module LibCli.CliMain
 mockCliHandler :: ShortHndr -> IO ()
