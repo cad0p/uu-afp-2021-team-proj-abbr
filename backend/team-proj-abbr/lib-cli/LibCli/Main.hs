@@ -7,9 +7,9 @@ Stability   : experimental
 -}
 
 
-module LibCli.CliMain where
+module LibCli.Main where
 
-import qualified LibCli.CliSpec         as CS (ShortHndr (..), cliModes)
+import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
 import qualified System.Console.CmdArgs as CMD
 
 -----------------------

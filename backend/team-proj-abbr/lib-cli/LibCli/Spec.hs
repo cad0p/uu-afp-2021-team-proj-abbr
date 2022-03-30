@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 {-|
-Module      : LibCli.CliSpec
+Module      : LibCli.Spec
 Description : Command Line Interface - Specification
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
@@ -9,7 +9,7 @@ Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering
 Stability   : experimental
 -}
 
-module LibCli.CliSpec
+module LibCli.Spec
     ( cliModes
     , ShortHndr(..)
     ) where
