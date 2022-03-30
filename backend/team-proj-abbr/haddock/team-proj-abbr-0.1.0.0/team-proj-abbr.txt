@@ -31,19 +31,19 @@ List :: Maybe FilePath -> ShortHndr
 
 -- | Defines the arguments for the add command
 Add :: String -> String -> Maybe FilePath -> ShortHndr
-[keyword] :: ShortHndr -> String
+[abbreviation] :: ShortHndr -> String
 [expansion] :: ShortHndr -> String
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the update command
 Update :: String -> String -> Maybe FilePath -> ShortHndr
-[keyword] :: ShortHndr -> String
+[abbreviation] :: ShortHndr -> String
 [expansion] :: ShortHndr -> String
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the delete command
 Delete :: String -> Maybe FilePath -> ShortHndr
-[keyword] :: ShortHndr -> String
+[abbreviation] :: ShortHndr -> String
 [kb] :: ShortHndr -> Maybe FilePath
 instance GHC.Show.Show LibCli.CliSpec.ShortHndr
 instance Data.Data.Data LibCli.CliSpec.ShortHndr
