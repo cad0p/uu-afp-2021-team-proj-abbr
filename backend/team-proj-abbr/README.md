@@ -1,17 +1,25 @@
 # team-proj-abbr
-To setup:
+## To setup:
 ```sh
 cd team-proj-abbr
 stack setup
 ```
 
-To run:
+## To run:
 ```sh
 stack build
 stack ghci
 stack test
 stack haddock
 ```
+
+### CLI
+
+The CLI can be run as follows:
+```sh
+stack exec team-proj-abbr-cli -- --help
+```
+(the double dash `--` passes all the following command line arguments to the executable)
 
 To debug:
 ```sh
