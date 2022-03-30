@@ -12,3 +12,4 @@ Install [`Elm` following the oficial docs](https://guide.elm-lang.org/install/el
 - `elm init` - initialize a new elm project
 - `elm reactor` - start a reactive local server for your project
 - `elm make` - build a given elm file
+- `elm install <package name>` - install an external package
