@@ -12,31 +12,35 @@ projectName = "shrthdnr"
 
 -- |ShortHndr CLI interface specification.
 data ShortHndr
-  -- \/ Expansion modes:
+  -- |Defines the arguments for the replace command
   = Replace
       { input   :: Maybe FilePath
       , out     :: Maybe FilePath
       , inplace :: Maybe Bool
       , kb      :: Maybe FilePath
       }
+  -- |Defines the arguments for the expand command
   | Expand
       { abbreviation :: String
       , kb           :: Maybe FilePath
       }
-  -- \/ KB modes:
+  -- |Defines the arguments for the list command
   | List
       { kb :: Maybe FilePath
       }
+  -- |Defines the arguments for the add command
   | Add
       { keyword   :: String
       , expansion :: String
       , kb        :: Maybe FilePath
       }
+  -- |Defines the arguments for the update command
   | Update
       { keyword   :: String
       , expansion :: String
       , kb        :: Maybe FilePath
       }
+  -- |Defines the arguments for the delete command
   | Delete
       { keyword :: String
       , kb      :: Maybe FilePath
