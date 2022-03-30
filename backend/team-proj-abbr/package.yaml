@@ -21,6 +21,7 @@ description:         Please see the README on GitHub at <https://github.com/cad0
 
 dependencies:
 - base >= 4.7 && < 5
+- cmdargs >= 0.10.21
 - parsec
 - containers
 
@@ -29,7 +30,7 @@ ghc-options:
 - -fwarn-incomplete-uni-patterns
 
 library:
-  source-dirs: lib-core
+  source-dirs: [lib-core, lib-cli]
 
 executables:
   team-proj-abbr-cli:
@@ -41,7 +42,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - team-proj-abbr
-    - cmdargs >= 0.10.21
 
 tests:
   team-proj-abbr-test:
