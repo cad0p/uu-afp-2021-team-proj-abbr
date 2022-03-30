@@ -1,6 +1,6 @@
 module Main where
 
-import           Test.DocTest                   ( doctest )
+import           Test.DocTest (doctest)
 
 -- |Code locations included in the doctest suite.
 doctestCoverage :: [[Char]]
