@@ -8,7 +8,6 @@ import           Test.LibCore.InputInterface
     )
 import           Test.LibCore.KnowledgeBase   (huKnowledgeBase, qcKnowledgeBase)
 import           Test.LibCore.Mapper          (huMapper, qcMapper)
-import           Test.LibCore.Matcher         (huMatcher, qcMatcher)
 import           Test.LibCore.OutputInterface
     ( huOutputInterface
     , qcOutputInterface
@@ -31,7 +30,6 @@ qcProps     =   testGroup "QuickCheck"  [ qcDecoder
                                         , qcInputInterface
                                         , qcKnowledgeBase
                                         , qcMapper
-                                        , qcMatcher
                                         , qcOutputInterface
                                         , qcParser ]
 
@@ -45,6 +43,5 @@ hUnit       =   testGroup "HUnit"       [ huDecoder
                                         , huInputInterface
                                         , huKnowledgeBase
                                         , huMapper
-                                        , huMatcher
                                         , huOutputInterface
                                         , huParser ]

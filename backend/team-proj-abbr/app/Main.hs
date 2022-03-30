@@ -41,4 +41,3 @@ addRecord = AddRecord
 main :: IO ()
 main = mockCliHandler =<< cmdArgs (modes [expandBulk, addRecord])
   where mockCliHandler = print
-

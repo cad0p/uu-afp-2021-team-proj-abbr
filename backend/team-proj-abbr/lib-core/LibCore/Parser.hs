@@ -1,6 +1,10 @@
 module LibCore.Parser where
 
-data ParseStructure
+import           LibCore.Models (Token (NoToken))
 
-parse :: String -> ParseStructure
-parse = undefined
+type ParseStructure
+  = [Token]
+
+-- | Map a string to a list of Tokens
+parseInput :: String -> ParseStructure
+parseInput s = map NoToken (words s)
