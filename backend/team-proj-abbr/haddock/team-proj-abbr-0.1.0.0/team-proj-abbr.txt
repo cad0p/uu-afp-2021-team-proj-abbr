@@ -10,47 +10,22 @@
 module LibCore.InputInterface
 getInput :: String
 
-module LibCore.Models
-
--- | We parse a string into a NoToken if it does not match the syntax for |
---   parsing. The DoMap is a string that has to be mapped. In our
---   proposals, | the DoMap strings start with @@
-data Token
-NoToken :: String -> Token
-DoMap :: Keyword -> Token
-newtype Keyword
-Keyword :: String -> Keyword
-instance GHC.Show.Show LibCore.Models.Keyword
-instance GHC.Classes.Ord LibCore.Models.Keyword
-instance GHC.Classes.Eq LibCore.Models.Keyword
-instance GHC.Show.Show LibCore.Models.Token
-instance GHC.Classes.Ord LibCore.Models.Token
-instance GHC.Classes.Eq LibCore.Models.Token
-
 module LibCore.KnowledgeBase
-type KnowledgeBaseStructure = Map Keyword Keyword
+data KnowledgeBaseStructure
 getKnowledgeBase :: KnowledgeBaseStructure
 
 module LibCore.OutputInterface
 returnOutput :: String -> IO ()
 
 module LibCore.Parser
-type ParseStructure = [Token]
+data ParseStructure
+parse :: String -> ParseStructure
 
--- | Map a string to a list of Tokens
-parseInput :: String -> ParseStructure
+module LibCore.Matcher
+match :: KnowledgeBaseStructure -> ParseStructure -> ParseStructure
 
 module LibCore.Mapper
-
--- | Map a ParseStructure using a KnowledgeBaseStructure to another
---   ParseStructure. | The structure of this function makes it possible to
---   apply multiple | KnowledgeBases to one ParseStructure
 mapParseStructure :: KnowledgeBaseStructure -> ParseStructure -> ParseStructure
-
--- | Lookup a token in the KnowledgeBaseStructure. If it is not found,
---   return | the lookup token. Otherwise, it returns the result of the
---   lookup, which | is also a token
-doLookup :: KnowledgeBaseStructure -> Token -> Token
 
 module LibCore.Decoder
 decode :: ParseStructure -> String
