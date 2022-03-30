@@ -70,6 +70,5 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - team-proj-abbr
     - base
     - doctest >= 0.8
