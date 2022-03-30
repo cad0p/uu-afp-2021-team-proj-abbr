@@ -8,6 +8,7 @@ import qualified System.Console.CmdArgs as CMD
 -----------------------
 
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
+-- TODO: (future task) implement the actual handlers with the business logic.
 mockCliHandler :: CS.ShortHndr -> IO ()
 mockCliHandler c@CS.Replace{} = print $ "replacing! --> " ++ show c
 mockCliHandler c@CS.Expand{}  = print $ "expanding! --> " ++ show c
