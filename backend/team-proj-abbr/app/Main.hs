@@ -136,6 +136,7 @@ kbModes = [list, add, update, delete]
 main :: IO ()
 main = mockCliHandler =<< CMD.cmdArgs (CMD.modes $ expansionModes ++ kbModes)
   where
+    -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
     mockCliHandler c@Replace{} = print $ "replacing! --> " ++ show c
     mockCliHandler c@Expand{}  = print $ "expanding! --> " ++ show c
     mockCliHandler c@List{}    = print $ "listing! --> " ++ show c
