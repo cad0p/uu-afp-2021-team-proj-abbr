@@ -10,9 +10,13 @@ module LibCore.Parser where
 
 import           LibCore.Models (Token (NoToken))
 
-type ParseStructure
-  = [Token]
+type ParseStructure = [Token]
 
 -- | Map a string to a list of Tokens
+--
+-- Examples:
+--
+-- >>> parseInput "Hello world, this is a test"
+-- [NoToken "Hello",NoToken "world,",NoToken "this",NoToken "is",NoToken "a",NoToken "test"]
 parseInput :: String -> ParseStructure
 parseInput s = map NoToken (words s)
