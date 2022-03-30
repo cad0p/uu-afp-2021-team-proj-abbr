@@ -89,16 +89,25 @@ forall a. Show a =&gt; a -&gt; [Char]
 </span><span id="line-22"></span><span>
 </span><span id="line-23"></span><span class="hs-comment">-- |Main entrypoint of the CLI application.</span><span>
 </span><span id="line-24"></span><span class="hs-comment">--</span><span>
-</span><span id="line-25"></span><span class="hs-comment">-- _CLI Endpoint design:_</span><span>
+</span><span id="line-25"></span><span class="hs-comment">-- /CLI endpoints:/</span><span>
 </span><span id="line-26"></span><span class="hs-comment">--</span><span>
-</span><span id="line-27"></span><span class="hs-comment">--     * replace    - expand all the abbreviation in the full text file</span><span>
-</span><span id="line-28"></span><span class="hs-comment">--     * expand     - find an expansion for a single abbreviation input</span><span>
-</span><span id="line-29"></span><span class="hs-comment">--     * list       - list all the known expansion records</span><span>
-</span><span id="line-30"></span><span class="hs-comment">--     * add        - add a new record to the knowledge base</span><span>
-</span><span id="line-31"></span><span class="hs-comment">--     * update     - modify an existing record in the knowledge base</span><span>
-</span><span id="line-32"></span><span class="hs-comment">--     * delete     - delete an existing record from the knowledge base</span><span>
-</span><span id="line-33"></span><span class="annot"><a href="LibCli.CliMain.html#cliMain"><span class="hs-identifier hs-type">cliMain</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-34"></span><span id="cliMain"><span class="annot"><span class="annottext">cliMain :: IO ()
+</span><span id="line-27"></span><span class="hs-comment">--    * replace   - expand all the abbreviation in the full text file</span><span>
+</span><span id="line-28"></span><span class="hs-comment">--    * expand    - find an expansion for a single abbreviation input</span><span>
+</span><span id="line-29"></span><span class="hs-comment">--    * list      - list all the known expansion records</span><span>
+</span><span id="line-30"></span><span class="hs-comment">--    * add       - add a new record to the knowledge base</span><span>
+</span><span id="line-31"></span><span class="hs-comment">--    * update    - modify an existing record in the knowledge base</span><span>
+</span><span id="line-32"></span><span class="hs-comment">--    * delete    - delete an existing record from the knowledge base</span><span>
+</span><span id="line-33"></span><span class="hs-comment">--</span><span>
+</span><span id="line-34"></span><span class="hs-comment">-- /Usage:/</span><span>
+</span><span id="line-35"></span><span class="hs-comment">--</span><span>
+</span><span id="line-36"></span><span class="hs-comment">--    * --help                            - prints the full CLI tool support</span><span>
+</span><span id="line-37"></span><span class="hs-comment">--    * \&lt;command\&gt; [args\*] [options\*]  - invokes the command</span><span>
+</span><span id="line-38"></span><span class="hs-comment">--</span><span>
+</span><span id="line-39"></span><span class="hs-comment">-- /See more:/</span><span>
+</span><span id="line-40"></span><span class="hs-comment">--</span><span>
+</span><span id="line-41"></span><span class="hs-comment">--    * See 'LibCli.CliSpec' for more information about the CLI endpoints.</span><span>
+</span><span id="line-42"></span><span class="annot"><a href="LibCli.CliMain.html#cliMain"><span class="hs-identifier hs-type">cliMain</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-43"></span><span id="cliMain"><span class="annot"><span class="annottext">cliMain :: IO ()
 </span><a href="LibCli.CliMain.html#cliMain"><span class="hs-identifier hs-var hs-var">cliMain</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; IO ()
 </span><a href="LibCli.CliMain.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span class="annot"><span class="annottext">(ShortHndr -&gt; IO ()) -&gt; IO ShortHndr -&gt; IO ()
 forall (m :: * -&gt; *) a b. Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b
@@ -108,4 +117,4 @@ forall a. Data a =&gt; a -&gt; IO a
 forall val. Data val =&gt; [val] -&gt; val
 </span><span class="hs-identifier hs-var">CMD.modes</span></span><span> </span><span class="annot"><span class="annottext">[ShortHndr]
 </span><a href="LibCli.CliSpec.html#cliModes"><span class="hs-identifier hs-var">CS.cliModes</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-35"></span></pre></body></html>
+</span><span id="line-44"></span></pre></body></html>

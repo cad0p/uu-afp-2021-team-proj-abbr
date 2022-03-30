@@ -55,7 +55,7 @@ mockCliHandler :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
 --   
---   _CLI Endpoint design:_
+--   <i>CLI endpoints:</i>
 --   
 --   <ul>
 --   <li>replace - expand all the abbreviation in the full text file</li>
@@ -64,6 +64,20 @@ mockCliHandler :: ShortHndr -> IO ()
 --   <li>add - add a new record to the knowledge base</li>
 --   <li>update - modify an existing record in the knowledge base</li>
 --   <li>delete - delete an existing record from the knowledge base</li>
+--   </ul>
+--   
+--   <i>Usage:</i>
+--   
+--   <ul>
+--   <li>--help - prints the full CLI tool support</li>
+--   <li>&lt;command&gt; [args*] [options*] - invokes the command</li>
+--   </ul>
+--   
+--   <i>See more:</i>
+--   
+--   <ul>
+--   <li>See <a>CliSpec</a> for more information about the CLI
+--   endpoints.</li>
 --   </ul>
 cliMain :: IO ()
 
