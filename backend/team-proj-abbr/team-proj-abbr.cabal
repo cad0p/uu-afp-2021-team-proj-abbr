@@ -6,8 +6,9 @@ cabal-version: 1.12
 
 name:           team-proj-abbr
 version:        0.1.0.0
+synopsis:       ShortHndr
 description:    Please see the README on GitHub at <https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme>
-homepage:       https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme
+homepage:       https://cad0p.github.io/uu-afp-2021-team-proj-abbr/backend/team-proj-abbr
 bug-reports:    https://github.com/cad0p/uu-afp-2021-team-proj-abbr/issues
 author:         Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 maintainer:     p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -39,7 +40,7 @@ library
   hs-source-dirs:
       lib-core
       lib-cli
-  ghc-options: -Wall -fwarn-incomplete-uni-patterns
+  ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -fwarn-identities
   build-depends:
       base >=4.7 && <5
     , cmdargs >=0.10.21
@@ -53,7 +54,7 @@ executable team-proj-abbr-cli
       Paths_team_proj_abbr
   hs-source-dirs:
       app
-  ghc-options: -Wall -fwarn-incomplete-uni-patterns -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , cmdargs >=0.10.21
@@ -75,7 +76,7 @@ test-suite team-proj-abbr-test
       Paths_team_proj_abbr
   hs-source-dirs:
       test
-  ghc-options: -Wall -fwarn-incomplete-uni-patterns -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , cmdargs >=0.10.21

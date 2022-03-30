@@ -1,6 +1,8 @@
 name:                team-proj-abbr
 version:             0.1.0.0
-github:              "cad0p/uu-afp-2021-team-proj-abbr"
+synopsis:            ShortHndr
+github:              cad0p/uu-afp-2021-team-proj-abbr
+homepage:            https://cad0p.github.io/uu-afp-2021-team-proj-abbr/backend/team-proj-abbr
 license:             BSD3
 author:              "Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering"
 maintainer:          "p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl"
@@ -19,18 +21,22 @@ extra-source-files:
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme>
 
+ghc-options:
+- -Wall
+- -fwarn-tabs
+- -fwarn-incomplete-uni-patterns
+- -fwarn-incomplete-record-updates
+
 dependencies:
 - base >= 4.7 && < 5
 - cmdargs >= 0.10.21
 - parsec
 - containers
 
-ghc-options:
-- -Wall
-- -fwarn-incomplete-uni-patterns
-
 library:
   source-dirs: [lib-core, lib-cli]
+  ghc-options:
+  - -fwarn-identities
 
 executables:
   team-proj-abbr-cli:
