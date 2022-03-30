@@ -74,7 +74,8 @@ expand =
             , kb           = fileFlags "Knowledge Base source file"
                                        (pure "shorthndr-kb.csv")
             }
-        CMD.&= CMD.help "Expand a provided abbreviation abbreviation if one is found"
+        CMD.&= CMD.help
+                   "Expand a provided abbreviation abbreviation if one is found"
 
 expansionModes :: [ShortHndr]
 expansionModes = [replace, expand]
@@ -100,10 +101,10 @@ add =
 update :: ShortHndr
 update =
     Update
-            { abbreviation   = CMD.def
-            , expansion = CMD.def
-            , kb        = fileFlags "Knowledge Base source file"
-                                    (pure "shorthndr-kb.csv")
+            { abbreviation = CMD.def
+            , expansion    = CMD.def
+            , kb           = fileFlags "Knowledge Base source file"
+                                       (pure "shorthndr-kb.csv")
             }
         CMD.&= CMD.help
                    "Update an existing abbreviation record in the Knowledge Base"
@@ -112,8 +113,8 @@ delete :: ShortHndr
 delete =
     Delete
             { abbreviation = CMD.def
-            , kb      = fileFlags "Knowledge Base source file"
-                                  (pure "shorthndr-kb.csv")
+            , kb           = fileFlags "Knowledge Base source file"
+                                       (pure "shorthndr-kb.csv")
             }
         CMD.&= CMD.help "Delete an abbreviation record from the Knowledge Base"
 
