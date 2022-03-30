@@ -1,32 +1,37 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 module Main where
 
-import qualified System.Console.CmdArgs        as CMD
+import qualified System.Console.CmdArgs as CMD
 
 projectName :: String
 projectName = "shrthdnr"
 
+-----------------------------------
+-- CLI interface specificaitons: --
+-----------------------------------
+
 -- |ShortHndr CLI interface specification.
 data ShortHndr
-  = Expand
+  -- \/ Expansion modes:
+  = Replace
       { input   :: Maybe FilePath
       , out     :: Maybe FilePath
       , inplace :: Maybe Bool
       , kb      :: Maybe FilePath
       }
-  | Lookup
+  | Expand
       { abbreviation :: String
       , kb           :: Maybe FilePath
       }
+  -- \/ KB modes:
   | List
       { kb :: Maybe FilePath
       }
   | Add
       { keyword   :: String
       , expansion :: String
-      , kb              :: Maybe FilePath
+      , kb        :: Maybe FilePath
       }
-  -- TODO: support additional detail updates later
   | Update
       { keyword   :: String
       , expansion :: String
@@ -36,7 +41,7 @@ data ShortHndr
       { keyword :: String
       , kb      :: Maybe FilePath
       }
-  deriving (CMD.Data, Show, CMD.Typeable)
+  deriving (CMD.Data, CMD.Typeable, Show)
 
 fileFlags :: String -> Maybe FilePath -> Maybe FilePath
 fileFlags h f = f CMD.&= CMD.help h CMD.&= CMD.typFile
@@ -45,30 +50,39 @@ fileFlags h f = f CMD.&= CMD.help h CMD.&= CMD.typFile
 -- Expansion commands: --
 -------------------------
 
-expand :: ShortHndr
-expand =
-    Expand
+replace :: ShortHndr
+replace =
+    Replace
             { input   = fileFlags "Source file" (pure "shorthndr-input.txt")
             , out     = fileFlags "Output file" (pure "shorthndr--out.txt")
             , kb      = fileFlags "KnowledgeBase source file"
                                   (pure "shorthndr-kb.csv")
             , inplace = CMD.def
             }
-        CMD.&= CMD.help "Expand all abreviations in the provided file"
+        CMD.&= CMD.help
+                   "Replace all abreviations in the provided file with their expansions"
 
-lookup :: ShortHndr
-lookup =
-    Lookup
+expand :: ShortHndr
+expand =
+    Expand
             { abbreviation = CMD.def
             , kb           = fileFlags "KnowledgeBase source file"
                                        (pure "shorthndr-kb.csv")
             }
         CMD.&= CMD.help "Expand all abreviations in the provided file"
 
+expansionModes :: [ShortHndr]
+expansionModes = [replace, expand]
 
 ------------------------------
 -- Knowledge Base commands: --
 ------------------------------
+
+list :: ShortHndr
+list =
+    List { kb = fileFlags "KnowledgeBase source file" (pure "shorthndr-kb.csv")
+         }
+        CMD.&= CMD.help "List all records of the Knowledge Base"
 
 add :: ShortHndr
 add =
@@ -78,16 +92,43 @@ add =
         }
         CMD.&= CMD.help "Add a new abbreviation record to the Knowledge Base"
 
+update :: ShortHndr
+update =
+    Update
+            { keyword   = CMD.def
+            , expansion = CMD.def
+            , kb        = fileFlags "KnowledgeBase source file"
+                                    (pure "shorthndr-kb.csv")
+            }
+        CMD.&= CMD.help
+                   "Update an existing abbreviation record in the Knowledge Base"
+
+delete :: ShortHndr
+delete =
+    Delete
+            { keyword = CMD.def
+            , kb      = fileFlags "KnowledgeBase source file"
+                                  (pure "shorthndr-kb.csv")
+            }
+        CMD.&= CMD.help "Delete an abbreviation record from the Knowledge Base"
+
+kbModes :: [ShortHndr]
+kbModes = [list, add, update, delete]
+
+----------------------------
+-- Executable entrypoiny: --
+----------------------------
+
 -- |Main entrypoint of the CLI application.
 --
--- Endpoint design:
--- TODO:
--- [ ]     - expand - expand all the abbreviation in the full text file
--- [ ]     - lookup - find an expansion for a single abbreviation input
--- [ ]     - list   - list all the known expansion records
--- [ ]     - add    - add a new record to the knowledge base
--- [ ]     - update - modify an existing record in the knowledge base
--- [ ]     - delete - delete an existing record from the knowledge base
+-- _CLI Endpoint design:_
+--
+--     * replace    - expand all the abbreviation in the full text file
+--     * expand     - find an expansion for a single abbreviation input
+--     * list       - list all the known expansion records
+--     * add        - add a new record to the knowledge base
+--     * update     - modify an existing record in the knowledge base
+--     * delete     - delete an existing record from the knowledge base
 main :: IO ()
-main = mockCliHandler =<< CMD.cmdArgs (CMD.modes [expand, add])
+main = mockCliHandler =<< CMD.cmdArgs (CMD.modes $ expansionModes ++ kbModes)
     where mockCliHandler = print
