@@ -8,11 +8,11 @@
 </span><span id="line-8"></span><span class="hs-comment">-- | Map a string to a list of Tokens</span><span>
 </span><span id="line-9"></span><span class="annot"><a href="LibCore.Parser.html#parseInput"><span class="hs-identifier hs-type">parseInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.Parser.html#ParseStructure"><span class="hs-identifier hs-type">ParseStructure</span></a></span><span>
 </span><span id="line-10"></span><span id="parseInput"><span class="annot"><span class="annottext">parseInput :: String -&gt; ParseStructure
-</span><a href="LibCore.Parser.html#parseInput"><span class="hs-identifier hs-var hs-var">parseInput</span></a></span></span><span> </span><span id="local-6989586621679036322"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679036322"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; Token) -&gt; [String] -&gt; ParseStructure
+</span><a href="LibCore.Parser.html#parseInput"><span class="hs-identifier hs-var hs-var">parseInput</span></a></span></span><span> </span><span id="local-6989586621679040819"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679040819"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; Token) -&gt; [String] -&gt; ParseStructure
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Token
 </span><a href="LibCore.Models.html#NoToken"><span class="hs-identifier hs-var">NoToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [String]
 </span><span class="hs-identifier hs-var">words</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679036322"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679040819"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-11"></span></pre></body></html>

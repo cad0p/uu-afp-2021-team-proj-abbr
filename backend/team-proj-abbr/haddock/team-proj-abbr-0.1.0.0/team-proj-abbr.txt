@@ -7,6 +7,64 @@
 @package team-proj-abbr
 @version 0.1.0.0
 
+module LibCli.CliSpec
+cliModes :: [ShortHndr]
+
+-- | ShortHndr CLI interface specification.
+data ShortHndr
+
+-- | Defines the arguments for the replace command
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
+[input] :: ShortHndr -> Maybe FilePath
+[out] :: ShortHndr -> Maybe FilePath
+[inplace] :: ShortHndr -> Maybe Bool
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the expand command
+Expand :: String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the list command
+List :: Maybe FilePath -> ShortHndr
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the add command
+Add :: String -> String -> Maybe FilePath -> ShortHndr
+[keyword] :: ShortHndr -> String
+[expansion] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the update command
+Update :: String -> String -> Maybe FilePath -> ShortHndr
+[keyword] :: ShortHndr -> String
+[expansion] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the delete command
+Delete :: String -> Maybe FilePath -> ShortHndr
+[keyword] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+instance GHC.Show.Show LibCli.CliSpec.ShortHndr
+instance Data.Data.Data LibCli.CliSpec.ShortHndr
+
+module LibCli.CliMain
+mockCliHandler :: ShortHndr -> IO ()
+
+-- | Main entrypoint of the CLI application.
+--   
+--   _CLI Endpoint design:_
+--   
+--   <ul>
+--   <li>replace - expand all the abbreviation in the full text file</li>
+--   <li>expand - find an expansion for a single abbreviation input</li>
+--   <li>list - list all the known expansion records</li>
+--   <li>add - add a new record to the knowledge base</li>
+--   <li>update - modify an existing record in the knowledge base</li>
+--   <li>delete - delete an existing record from the knowledge base</li>
+--   </ul>
+cliMain :: IO ()
+
 module LibCore.InputInterface
 getInput :: String
 
