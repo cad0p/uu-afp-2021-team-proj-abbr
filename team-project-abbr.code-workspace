@@ -26,7 +26,7 @@
       "commands": [
         {
           "match": "\\.hs$",
-          "cmd": "stylish-haskell -i ${file} && brittany -c ${file}"
+          "cmd": "brittany --write-mode=inplace ${file} && stylish-haskell -i ${file}"
         }
       ]
     },
