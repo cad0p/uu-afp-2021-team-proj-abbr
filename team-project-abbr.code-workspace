@@ -5,10 +5,6 @@
       "name": "Root"
     },
     {
-      "path": "backend",
-      "name": "Backend"
-    },
-    {
       "path": "backend/team-proj-abbr",
       "name": "Backend / Core (CLI)"
     },
