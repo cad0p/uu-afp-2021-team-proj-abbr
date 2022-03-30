@@ -83,8 +83,10 @@ mockCliHandler :: ShortHndr -> IO ()
 --   </ul>
 cliMain :: IO ()
 
+
 module LibCore.InputInterface
 getInput :: String
+
 
 module LibCore.Models
 
@@ -103,18 +105,22 @@ instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 
+
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
 getKnowledgeBase :: KnowledgeBaseStructure
 
+
 module LibCore.OutputInterface
 returnOutput :: String -> IO ()
+
 
 module LibCore.Parser
 type ParseStructure = [Token]
 
 -- | Map a string to a list of Tokens
 parseInput :: String -> ParseStructure
+
 
 module LibCore.Mapper
 
@@ -127,6 +133,7 @@ mapParseStructure :: KnowledgeBaseStructure -> ParseStructure -> ParseStructure
 --   return | the lookup token. Otherwise, it returns the result of the
 --   lookup, which | is also a token
 doLookup :: KnowledgeBaseStructure -> Token -> Token
+
 
 module LibCore.Decoder
 decode :: ParseStructure -> String
