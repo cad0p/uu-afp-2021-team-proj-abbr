@@ -1,7 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 {-|
-Module      : LibCli.Spec
 Description : Command Line Interface - Specification
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
