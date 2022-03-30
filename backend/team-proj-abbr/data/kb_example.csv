@@ -1,3 +1,6 @@
 Abbreviation,Expansion,
 hl,hello
 thm,theorem
+ax,axiom
+lmm,lemma
+prf,proof
