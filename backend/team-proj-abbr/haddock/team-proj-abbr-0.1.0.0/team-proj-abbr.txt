@@ -37,31 +37,8 @@ returnOutput :: String -> IO ()
 module LibCore.Parser
 type ParseStructure = [Token]
 
--- | The abbreviation symbol. Can later be made configurable
-abbSymbol :: String
-
--- | Given a string, parse it. This function can throw an error if parsing
---   fails
-doParse :: String -> ParseStructure
-
 -- | Map a string to a list of Tokens
-parseInput :: String -> Either ParseError ParseStructure
-
--- | The main parser tries to consume all input into a ParseStructure,
---   given an abbreviation symbol
-mainParser :: String -> Parser ParseStructure
-
--- | Given an abbreviation string s, parse the string after it
-abbrParser :: String -> Parser Token
-
--- | Parse any string into a token
-noAbbrParser :: Parser Token
-
--- | Consume whitespace characters
-whitespace :: Parser ()
-
--- | Lexeme parsers consume the whitespace after them
-lexeme :: Parser a -> Parser a
+parseInput :: String -> ParseStructure
 
 module LibCore.Mapper
 
