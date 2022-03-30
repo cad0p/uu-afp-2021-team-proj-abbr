@@ -20,5 +20,17 @@
       "path": ".github",
       "name": "Github Actions"
     }
-  ]
+  ],
+  "settings": {
+    "emeraldwalk.runonsave": {
+      "commands": [
+        {
+          "match": "\\.hs$",
+          "cmd": "stylish-haskell -i ${file} && brittany -c ${file}"
+        }
+      ]
+    },
+    "haskell.formattingProvider": "brittany",
+    "haskell.checkProject": false
+  }
 }

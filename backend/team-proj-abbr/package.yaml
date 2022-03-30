@@ -61,3 +61,15 @@ tests:
     - team-proj-abbr
     - tasty
     - tasty-hunit
+
+  team-proj-abbr-doctest:
+    main:                Main.hs
+    source-dirs:         test-doctest
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - team-proj-abbr
+    - base
+    - doctest >= 0.8
