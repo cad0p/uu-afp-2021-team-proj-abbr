@@ -30,20 +30,20 @@ data ShortHndr
       }
   -- |Defines the arguments for the add command
   | Add
-      { keyword   :: String
-      , expansion :: String
-      , kb        :: Maybe FilePath
+      { abbreviation :: String
+      , expansion    :: String
+      , kb           :: Maybe FilePath
       }
   -- |Defines the arguments for the update command
   | Update
-      { keyword   :: String
-      , expansion :: String
-      , kb        :: Maybe FilePath
+      { abbreviation :: String
+      , expansion    :: String
+      , kb           :: Maybe FilePath
       }
   -- |Defines the arguments for the delete command
   | Delete
-      { keyword :: String
-      , kb      :: Maybe FilePath
+      { abbreviation :: String
+      , kb           :: Maybe FilePath
       }
   deriving (CMD.Data, CMD.Typeable, Show)
 
@@ -74,7 +74,7 @@ expand =
             , kb           = fileFlags "Knowledge Base source file"
                                        (pure "shorthndr-kb.csv")
             }
-        CMD.&= CMD.help "Expand a provided abbreviation if found"
+        CMD.&= CMD.help "Expand a provided abbreviation abbreviation if one is found"
 
 expansionModes :: [ShortHndr]
 expansionModes = [replace, expand]
@@ -91,7 +91,7 @@ list =
 
 add :: ShortHndr
 add =
-    Add { keyword = CMD.def
+    Add { abbreviation = CMD.def
         , expansion = CMD.def
         , kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
         }
@@ -100,7 +100,7 @@ add =
 update :: ShortHndr
 update =
     Update
-            { keyword   = CMD.def
+            { abbreviation   = CMD.def
             , expansion = CMD.def
             , kb        = fileFlags "Knowledge Base source file"
                                     (pure "shorthndr-kb.csv")
@@ -111,7 +111,7 @@ update =
 delete :: ShortHndr
 delete =
     Delete
-            { keyword = CMD.def
+            { abbreviation = CMD.def
             , kb      = fileFlags "Knowledge Base source file"
                                   (pure "shorthndr-kb.csv")
             }
