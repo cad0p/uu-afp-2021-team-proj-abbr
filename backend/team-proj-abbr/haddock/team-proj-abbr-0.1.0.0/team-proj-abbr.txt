@@ -10,7 +10,7 @@
 @version 0.1.0.0
 
 
-module LibCli.CliSpec
+module LibCli.Spec
 cliModes :: [ShortHndr]
 
 -- | ShortHndr CLI interface specification.
@@ -48,11 +48,11 @@ Update :: String -> String -> Maybe FilePath -> ShortHndr
 Delete :: String -> Maybe FilePath -> ShortHndr
 [abbreviation] :: ShortHndr -> String
 [kb] :: ShortHndr -> Maybe FilePath
-instance GHC.Show.Show LibCli.CliSpec.ShortHndr
-instance Data.Data.Data LibCli.CliSpec.ShortHndr
+instance GHC.Show.Show LibCli.Spec.ShortHndr
+instance Data.Data.Data LibCli.Spec.ShortHndr
 
 
-module LibCli.CliMain
+module LibCli.Main
 mockCliHandler :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
