@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 module LibCli.CliSpec
-    ( cliMain
+    ( cliModes
+    , ShortHndr(..)
     ) where
 
 import qualified System.Console.CmdArgs as CMD
@@ -118,35 +119,9 @@ delete =
 kbModes :: [ShortHndr]
 kbModes = [list, add, update, delete]
 
+-----------------------------
+-- All exported CLI modes: --
+-----------------------------
 
------------------------
--- Command Handlers: --
------------------------
-
--- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
-mockCliHandler :: ShortHndr -> IO ()
-mockCliHandler c@Replace{} = print $ "replacing! --> " ++ show c
-mockCliHandler c@Expand{}  = print $ "expanding! --> " ++ show c
-mockCliHandler c@List{}    = print $ "listing! --> " ++ show c
-mockCliHandler c@Add{}     = print $ "adding! --> " ++ show c
-mockCliHandler c@Update{}  = print $ "updating! --> " ++ show c
-mockCliHandler c@Delete{}  = print $ "deleting! --> " ++ show c
-
-----------------------------
--- Executable entrypoiny: --
-----------------------------
-
--- |Main entrypoint of the CLI application.
---
--- _CLI Endpoint design:_
---
---     * replace    - expand all the abbreviation in the full text file
---     * expand     - find an expansion for a single abbreviation input
---     * list       - list all the known expansion records
---     * add        - add a new record to the knowledge base
---     * update     - modify an existing record in the knowledge base
---     * delete     - delete an existing record from the knowledge base
-cliMain :: IO ()
-cliMain =
-    mockCliHandler =<< CMD.cmdArgs (CMD.modes $ expansionModes ++ kbModes)
-
+cliModes :: [ShortHndr]
+cliModes = expansionModes ++ kbModes
