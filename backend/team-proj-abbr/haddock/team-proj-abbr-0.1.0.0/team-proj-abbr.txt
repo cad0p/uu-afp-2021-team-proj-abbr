@@ -65,6 +65,9 @@ parseInput :: String -> Either ParseError ParseStructure
 --   given an | abbreviation symbol and a plural symbol
 mainParser :: String -> String -> Parser ParseStructure
 
+-- | Inverse of the <a>isSpace</a> function from Data.Char
+notSpace :: Char -> Bool
+
 -- | Given an abbreviation string s and a plural end string p, parse the
 --   string between it
 pluralAbbrParser :: String -> String -> Parser Token

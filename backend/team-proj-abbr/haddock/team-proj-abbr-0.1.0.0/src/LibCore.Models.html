@@ -6,14 +6,14 @@
 </span><span id="line-6"></span><span class="hs-keyword">data</span><span> </span><span id="Token"><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier hs-var">Token</span></a></span></span><span>
 </span><span id="line-7"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="NoToken"><span class="annot"><a href="LibCore.Models.html#NoToken"><span class="hs-identifier hs-var">NoToken</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-8"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DoMap"><span class="annot"><a href="LibCore.Models.html#DoMap"><span class="hs-identifier hs-var">DoMap</span></a></span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
-</span><span id="line-9"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039032"><span id="local-6989586621679039034"><span class="annot"><span class="annottext">Token -&gt; Token -&gt; Bool
+</span><span id="line-9"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039058"><span id="local-6989586621679039060"><span class="annot"><span class="annottext">Token -&gt; Token -&gt; Bool
 (Token -&gt; Token -&gt; Bool) -&gt; (Token -&gt; Token -&gt; Bool) -&gt; Eq Token
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Token -&gt; Token -&gt; Bool
 $c/= :: Token -&gt; Token -&gt; Bool
 == :: Token -&gt; Token -&gt; Bool
 $c== :: Token -&gt; Token -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039016"><span id="local-6989586621679039018"><span id="local-6989586621679039020"><span id="local-6989586621679039022"><span id="local-6989586621679039024"><span id="local-6989586621679039026"><span id="local-6989586621679039028"><span class="annot"><span class="annottext">Eq Token
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039042"><span id="local-6989586621679039044"><span id="local-6989586621679039046"><span id="local-6989586621679039048"><span id="local-6989586621679039050"><span id="local-6989586621679039052"><span id="local-6989586621679039054"><span class="annot"><span class="annottext">Eq Token
 Eq Token
 -&gt; (Token -&gt; Token -&gt; Ordering)
 -&gt; (Token -&gt; Token -&gt; Bool)
@@ -51,7 +51,7 @@ $c&lt; :: Token -&gt; Token -&gt; Bool
 compare :: Token -&gt; Token -&gt; Ordering
 $ccompare :: Token -&gt; Token -&gt; Ordering
 $cp1Ord :: Eq Token
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039009"><span id="local-6989586621679039011"><span id="local-6989586621679039013"><span class="annot"><span class="annottext">Int -&gt; Token -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039035"><span id="local-6989586621679039037"><span id="local-6989586621679039039"><span class="annot"><span class="annottext">Int -&gt; Token -&gt; ShowS
 [Token] -&gt; ShowS
 Token -&gt; String
 (Int -&gt; Token -&gt; ShowS)
@@ -69,7 +69,7 @@ $cshowsPrec :: Int -&gt; Token -&gt; ShowS
 </span><span id="line-11"></span><span class="hs-keyword">data</span><span> </span><span id="Keyword"><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-var">Keyword</span></a></span></span><span>
 </span><span id="line-12"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Keyword"><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-var">Keyword</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-13"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Plural"><span class="annot"><a href="LibCore.Models.html#Plural"><span class="hs-identifier hs-var">Plural</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-14"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039002"><span id="local-6989586621679039004"><span class="annot"><span class="annottext">Keyword -&gt; Keyword -&gt; Bool
+</span><span id="line-14"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039028"><span id="local-6989586621679039030"><span class="annot"><span class="annottext">Keyword -&gt; Keyword -&gt; Bool
 (Keyword -&gt; Keyword -&gt; Bool)
 -&gt; (Keyword -&gt; Keyword -&gt; Bool) -&gt; Eq Keyword
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -77,7 +77,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Keyword -&gt; Keyword -&gt; Bool
 == :: Keyword -&gt; Keyword -&gt; Bool
 $c== :: Keyword -&gt; Keyword -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679038987"><span id="local-6989586621679038989"><span id="local-6989586621679038991"><span id="local-6989586621679038993"><span id="local-6989586621679038995"><span id="local-6989586621679038997"><span id="local-6989586621679038999"><span class="annot"><span class="annottext">Eq Keyword
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039013"><span id="local-6989586621679039015"><span id="local-6989586621679039017"><span id="local-6989586621679039019"><span id="local-6989586621679039021"><span id="local-6989586621679039023"><span id="local-6989586621679039025"><span class="annot"><span class="annottext">Eq Keyword
 Eq Keyword
 -&gt; (Keyword -&gt; Keyword -&gt; Ordering)
 -&gt; (Keyword -&gt; Keyword -&gt; Bool)
@@ -115,7 +115,7 @@ $c&lt; :: Keyword -&gt; Keyword -&gt; Bool
 compare :: Keyword -&gt; Keyword -&gt; Ordering
 $ccompare :: Keyword -&gt; Keyword -&gt; Ordering
 $cp1Ord :: Eq Keyword
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679038981"><span id="local-6989586621679038983"><span id="local-6989586621679038985"><span class="annot"><span class="annottext">Int -&gt; Keyword -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039007"><span id="local-6989586621679039009"><span id="local-6989586621679039011"><span class="annot"><span class="annottext">Int -&gt; Keyword -&gt; ShowS
 [Keyword] -&gt; ShowS
 Keyword -&gt; String
 (Int -&gt; Keyword -&gt; ShowS)
