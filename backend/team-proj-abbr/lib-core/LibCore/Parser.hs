@@ -1,5 +1,6 @@
 module LibCore.Parser where
 
+import           Data.Char          (isSpace)
 import           Data.Functor
 import           LibCore.Models
     ( Keyword (Keyword, Plural)
@@ -12,6 +13,7 @@ import           Text.Parsec
     , many
     , many1
     , parse
+    , satisfy
     , spaces
     , string
     , try
@@ -58,6 +60,10 @@ parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 mainParser :: String -> String -> Parser ParseStructure
 mainParser s p = do many $ choice [try $lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme noAbbrParser]
 
+-- | Inverse of the 'isSpace' function from Data.Char
+notSpace :: Char -> Bool
+notSpace c = not $ isSpace c
+
 -- | Given an abbreviation string s and a plural end string p, parse the string between it
 pluralAbbrParser :: String -> String -> Parser Token
 pluralAbbrParser s p = do
@@ -70,11 +76,11 @@ pluralAbbrParser s p = do
 abbrParser :: String -> Parser Token
 abbrParser s = do
   void $ string s
-  a <- many1 alphaNum
+  a <- many1 $ satisfy notSpace
   return $ DoMap $ Keyword a
 
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
 noAbbrParser = do
-  a <- many1 alphaNum
+  a <- many1 $ satisfy notSpace
   return $ NoToken a
