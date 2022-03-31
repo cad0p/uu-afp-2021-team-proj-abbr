@@ -48,6 +48,6 @@ mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 --
 -- /See more:/
 --
---    * See 'LibCli.CliSpec' for more information about the CLI endpoints.
+--    * See 'LibCli.Spec' for more information about the CLI endpoints.
 cliMain :: IO ()
 cliMain = mockCliHandler =<< CMD.cmdArgs (CMD.modes CS.cliModes)
