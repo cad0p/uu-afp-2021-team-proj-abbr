@@ -2,13 +2,90 @@
 -- See Hoogle, http://www.haskell.org/hoogle/
 
 
--- | Please see the README on GitHub at
+-- | ShortHndr
+--   
+--   Please see the README on GitHub at
 --   <a>https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme</a>
 @package team-proj-abbr
 @version 0.1.0.0
 
+
+module LibCli.Spec
+cliModes :: [ShortHndr]
+
+-- | ShortHndr CLI interface specification.
+data ShortHndr
+
+-- | Defines the arguments for the replace command
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
+[input] :: ShortHndr -> Maybe FilePath
+[out] :: ShortHndr -> Maybe FilePath
+[inplace] :: ShortHndr -> Maybe Bool
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the expand command
+Expand :: String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the list command
+List :: Maybe FilePath -> ShortHndr
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the add command
+Add :: String -> String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[expansion] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the update command
+Update :: String -> String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[expansion] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+
+-- | Defines the arguments for the delete command
+Delete :: String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+instance GHC.Show.Show LibCli.Spec.ShortHndr
+instance Data.Data.Data LibCli.Spec.ShortHndr
+
+
+module LibCli.Main
+mockCliHandler :: ShortHndr -> IO ()
+
+-- | Main entrypoint of the CLI application.
+--   
+--   <i>CLI endpoints:</i>
+--   
+--   <ul>
+--   <li>replace - expand all the abbreviation in the full text file</li>
+--   <li>expand - find an expansion for a single abbreviation input</li>
+--   <li>list - list all the known expansion records</li>
+--   <li>add - add a new record to the knowledge base</li>
+--   <li>update - modify an existing record in the knowledge base</li>
+--   <li>delete - delete an existing record from the knowledge base</li>
+--   </ul>
+--   
+--   <i>Usage:</i>
+--   
+--   <ul>
+--   <li>--help - prints the full CLI tool support</li>
+--   <li>&lt;command&gt; [args*] [options*] - invokes the command</li>
+--   </ul>
+--   
+--   <i>See more:</i>
+--   
+--   <ul>
+--   <li>See <a>Spec</a> for more information about the CLI endpoints.</li>
+--   </ul>
+cliMain :: IO ()
+
+
 module LibCore.InputInterface
 getInput :: String
+
 
 module LibCore.Models
 
@@ -27,18 +104,22 @@ instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 
+
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
 getKnowledgeBase :: KnowledgeBaseStructure
 
+
 module LibCore.OutputInterface
 returnOutput :: String -> IO ()
+
 
 module LibCore.Parser
 type ParseStructure = [Token]
 
 -- | Map a string to a list of Tokens
 parseInput :: String -> ParseStructure
+
 
 module LibCore.Mapper
 
@@ -51,6 +132,7 @@ mapParseStructure :: KnowledgeBaseStructure -> ParseStructure -> ParseStructure
 --   return | the lookup token. Otherwise, it returns the result of the
 --   lookup, which | is also a token
 doLookup :: KnowledgeBaseStructure -> Token -> Token
+
 
 module LibCore.Decoder
 decode :: ParseStructure -> String

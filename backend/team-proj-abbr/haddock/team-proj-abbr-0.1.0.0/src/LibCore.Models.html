@@ -1,19 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_8pyyElPHSiYC7eqZd76LgG"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCore.Models</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-comment">-- | We parse a string into a NoToken if it does not match the syntax for</span><span>
-</span><span id="line-4"></span><span class="hs-comment">-- | parsing. The DoMap is a string that has to be mapped. In our proposals,</span><span>
-</span><span id="line-5"></span><span class="hs-comment">-- | the DoMap strings start with @@</span><span>
-</span><span id="line-6"></span><span class="hs-keyword">data</span><span> </span><span id="Token"><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier hs-var">Token</span></a></span></span><span>
-</span><span id="line-7"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="NoToken"><span class="annot"><a href="LibCore.Models.html#NoToken"><span class="hs-identifier hs-var">NoToken</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-8"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DoMap"><span class="annot"><a href="LibCore.Models.html#DoMap"><span class="hs-identifier hs-var">DoMap</span></a></span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
-</span><span id="line-9"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679036293"><span id="local-6989586621679036295"><span class="annot"><span class="annottext">Token -&gt; Token -&gt; Bool
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_8pyyElPHSiYC7eqZd76LgG"></span><span class="hs-comment">{-|
+Description : TODO: Models stuff
+Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
+License     : BSD3
+Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
+Stability   : experimental
+-}</span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCore.Models</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span class="hs-comment">-- | We parse a string into a NoToken if it does not match the syntax for</span><span>
+</span><span id="line-12"></span><span class="hs-comment">-- | parsing. The DoMap is a string that has to be mapped. In our proposals,</span><span>
+</span><span id="line-13"></span><span class="hs-comment">-- | the DoMap strings start with @@</span><span>
+</span><span id="line-14"></span><span class="hs-keyword">data</span><span> </span><span id="Token"><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier hs-var">Token</span></a></span></span><span>
+</span><span id="line-15"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="NoToken"><span class="annot"><a href="LibCore.Models.html#NoToken"><span class="hs-identifier hs-var">NoToken</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-16"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DoMap"><span class="annot"><a href="LibCore.Models.html#DoMap"><span class="hs-identifier hs-var">DoMap</span></a></span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
+</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679040782"><span id="local-6989586621679040784"><span class="annot"><span class="annottext">Token -&gt; Token -&gt; Bool
 (Token -&gt; Token -&gt; Bool) -&gt; (Token -&gt; Token -&gt; Bool) -&gt; Eq Token
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Token -&gt; Token -&gt; Bool
 $c/= :: Token -&gt; Token -&gt; Bool
 == :: Token -&gt; Token -&gt; Bool
 $c== :: Token -&gt; Token -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679036277"><span id="local-6989586621679036279"><span id="local-6989586621679036281"><span id="local-6989586621679036283"><span id="local-6989586621679036285"><span id="local-6989586621679036287"><span id="local-6989586621679036289"><span class="annot"><span class="annottext">Eq Token
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679040766"><span id="local-6989586621679040768"><span id="local-6989586621679040770"><span id="local-6989586621679040772"><span id="local-6989586621679040774"><span id="local-6989586621679040776"><span id="local-6989586621679040778"><span class="annot"><span class="annottext">Eq Token
 Eq Token
 -&gt; (Token -&gt; Token -&gt; Ordering)
 -&gt; (Token -&gt; Token -&gt; Bool)
@@ -51,7 +59,7 @@ $c&lt; :: Token -&gt; Token -&gt; Bool
 compare :: Token -&gt; Token -&gt; Ordering
 $ccompare :: Token -&gt; Token -&gt; Ordering
 $cp1Ord :: Eq Token
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679036270"><span id="local-6989586621679036272"><span id="local-6989586621679036274"><span class="annot"><span class="annottext">Int -&gt; Token -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679040759"><span id="local-6989586621679040761"><span id="local-6989586621679040763"><span class="annot"><span class="annottext">Int -&gt; Token -&gt; ShowS
 [Token] -&gt; ShowS
 Token -&gt; String
 (Int -&gt; Token -&gt; ShowS)
@@ -65,10 +73,10 @@ $cshow :: Token -&gt; String
 showsPrec :: Int -&gt; Token -&gt; ShowS
 $cshowsPrec :: Int -&gt; Token -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-10"></span><span>
-</span><span id="line-11"></span><span class="hs-keyword">newtype</span><span> </span><span id="Keyword"><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-var">Keyword</span></a></span></span><span>
-</span><span id="line-12"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Keyword"><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-var">Keyword</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-13"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679036264"><span id="local-6989586621679036266"><span class="annot"><span class="annottext">Keyword -&gt; Keyword -&gt; Bool
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">newtype</span><span> </span><span id="Keyword"><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-var">Keyword</span></a></span></span><span>
+</span><span id="line-20"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Keyword"><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-var">Keyword</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-21"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679040753"><span id="local-6989586621679040755"><span class="annot"><span class="annottext">Keyword -&gt; Keyword -&gt; Bool
 (Keyword -&gt; Keyword -&gt; Bool)
 -&gt; (Keyword -&gt; Keyword -&gt; Bool) -&gt; Eq Keyword
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -76,7 +84,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Keyword -&gt; Keyword -&gt; Bool
 == :: Keyword -&gt; Keyword -&gt; Bool
 $c== :: Keyword -&gt; Keyword -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679036249"><span id="local-6989586621679036251"><span id="local-6989586621679036253"><span id="local-6989586621679036255"><span id="local-6989586621679036257"><span id="local-6989586621679036259"><span id="local-6989586621679036261"><span class="annot"><span class="annottext">Eq Keyword
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679040738"><span id="local-6989586621679040740"><span id="local-6989586621679040742"><span id="local-6989586621679040744"><span id="local-6989586621679040746"><span id="local-6989586621679040748"><span id="local-6989586621679040750"><span class="annot"><span class="annottext">Eq Keyword
 Eq Keyword
 -&gt; (Keyword -&gt; Keyword -&gt; Ordering)
 -&gt; (Keyword -&gt; Keyword -&gt; Bool)
@@ -114,7 +122,7 @@ $c&lt; :: Keyword -&gt; Keyword -&gt; Bool
 compare :: Keyword -&gt; Keyword -&gt; Ordering
 $ccompare :: Keyword -&gt; Keyword -&gt; Ordering
 $cp1Ord :: Eq Keyword
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679036243"><span id="local-6989586621679036245"><span id="local-6989586621679036247"><span class="annot"><span class="annottext">Int -&gt; Keyword -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679040732"><span id="local-6989586621679040734"><span id="local-6989586621679040736"><span class="annot"><span class="annottext">Int -&gt; Keyword -&gt; ShowS
 [Keyword] -&gt; ShowS
 Keyword -&gt; String
 (Int -&gt; Keyword -&gt; ShowS)
@@ -128,4 +136,4 @@ $cshow :: Keyword -&gt; String
 showsPrec :: Int -&gt; Keyword -&gt; ShowS
 $cshowsPrec :: Int -&gt; Keyword -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-14"></span></pre></body></html>
+</span><span id="line-22"></span></pre></body></html>
