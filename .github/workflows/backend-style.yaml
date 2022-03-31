@@ -38,3 +38,11 @@ jobs:
           fi
         # https://stackoverflow.com/questions/57806624/github-actions-how-to-build-project-in-sub-directory
         working-directory: backend
+
+  build:
+    runs-on: "ubuntu-latest"
+    needs:
+      - style
+    steps:
+      - name: ✅ Everything is good!
+        run: "echo LGTM!"

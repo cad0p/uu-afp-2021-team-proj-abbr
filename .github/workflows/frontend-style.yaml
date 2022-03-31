@@ -31,3 +31,11 @@ jobs:
           elm_files: src/
           elm_glob: false
           working-directory: frontend
+
+  build:
+    runs-on: "ubuntu-latest"
+    needs:
+      - style
+    steps:
+      - name: ✅ Everything is good!
+        run: "echo LGTM!"
