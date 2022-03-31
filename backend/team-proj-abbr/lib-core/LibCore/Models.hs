@@ -29,3 +29,7 @@ data AbbreviationRecord
       { keyword   :: Keyword
       , expansion :: Keyword
       }
+
+-- |Reserved domain-level error indications.
+newtype Error
+  = StandardError String

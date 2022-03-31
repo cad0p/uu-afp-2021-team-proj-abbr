@@ -11,9 +11,6 @@ module LibCore.KnowledgeBase where
 import           Data.Map       (Map, empty)
 import           LibCore.Models (Keyword)
 
-newtype Error
-  = StandardError String
-
 type KnowledgeBaseStructure = Map Keyword Keyword
 
 getKnowledgeBase :: KnowledgeBaseStructure
