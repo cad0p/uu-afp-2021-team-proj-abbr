@@ -78,8 +78,7 @@ mockCliHandler :: ShortHndr -> IO ()
 --   <i>See more:</i>
 --   
 --   <ul>
---   <li>See <a>CliSpec</a> for more information about the CLI
---   endpoints.</li>
+--   <li>See <a>Spec</a> for more information about the CLI endpoints.</li>
 --   </ul>
 cliMain :: IO ()
 
