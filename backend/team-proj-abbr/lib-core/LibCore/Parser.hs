@@ -1,16 +1,20 @@
 module LibCore.Parser where
 
 import           Data.Functor
-import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
+import           LibCore.Models
+    ( Keyword (Keyword, Plural)
+    , Token (DoMap, NoToken)
+    )
 import           Text.Parsec
     ( ParseError
     , alphaNum
     , choice
     , many
     , many1
-    , oneOf
     , parse
+    , spaces
     , string
+    , try
     )
 import           Text.Parsec.String (Parser)
 
@@ -21,19 +25,46 @@ type ParseStructure
 abbSymbol :: String
 abbSymbol = "@@"
 
+-- | The plural symbol. String between the abbSymbol and the pluralSymbol are interpreted as plurals
+pluralSymbol :: String
+pluralSymbol = "'s"
+
+-- | Consume whitespace characters
+whitespace :: Parser ()
+whitespace = void spaces
+
+-- | Lexeme parsers consume the whitespace after them
+lexeme :: Parser a -> Parser a
+lexeme p = p <* whitespace
+
 -- | Given a string, parse it. This function can throw an error if parsing fails
 doParse :: String -> ParseStructure
 doParse s = case parseInput s of
   Left err -> error $ show err
   Right ps -> ps
 
--- | Map a string to a list of Tokens
+-- | Map a string to a list of Tokens. For example:
+-- >>> parseInput "@@bob"
+-- Right [DoMap (Keyword "bob")]
+-- >>> parseInput "@@fw's"
+-- Right [DoMap (Plural "fw")]
+-- >>> parseInput "hello!"
+-- Right [NoToken "hello"]
 parseInput :: String -> Either ParseError ParseStructure
-parseInput = parse (mainParser abbSymbol) ""
+parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 
--- | The main parser tries to consume all input into a ParseStructure, given an abbreviation symbol
-mainParser :: String -> Parser ParseStructure
-mainParser s = do many $ choice [lexeme $ abbrParser s, lexeme noAbbrParser]
+-- | The main parser tries to consume all input into a ParseStructure, given an
+-- | abbreviation symbol and a plural symbol
+mainParser :: String -> String -> Parser ParseStructure
+mainParser s p = do many $ choice [try $lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme noAbbrParser]
+
+-- | Given an abbreviation string s and a plural end string p, parse the string between it
+pluralAbbrParser :: String -> String -> Parser Token
+pluralAbbrParser s p = do
+  void $ string s
+  a <- many1 alphaNum
+  void $ string p
+  return $ DoMap $ Plural a
 
 -- | Given an abbreviation string s, parse the string after it
 abbrParser :: String -> Parser Token
@@ -47,11 +78,3 @@ noAbbrParser :: Parser Token
 noAbbrParser = do
   a <- many1 alphaNum
   return $ NoToken a
-
--- | Consume whitespace characters
-whitespace :: Parser ()
-whitespace = void $ many $ oneOf [' ', '\n', '\t']
-
--- | Lexeme parsers consume the whitespace after them
-lexeme :: Parser a -> Parser a
-lexeme p = p <* whitespace

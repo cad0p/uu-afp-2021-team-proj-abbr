@@ -8,6 +8,7 @@ data Token
   | DoMap Keyword
   deriving (Eq, Ord, Show)
 
-newtype Keyword
+data Keyword
   = Keyword String
+  | Plural String
   deriving (Eq, Ord, Show)
