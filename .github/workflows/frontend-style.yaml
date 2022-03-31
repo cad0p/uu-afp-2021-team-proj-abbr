@@ -1,19 +1,15 @@
 name: Frontend Code Style
 
 on:
-  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
-  # pull_request:
-  #   # branches: [ "main" ]
-  #   paths-ignore:
-  #     - 'backend/**'
   push:
+    # Leaving here in case we need to run on other conditions
     # branches: [ "main" ]
     # tags: [ "*.*.*" ]
-    paths-ignore:
-      - "backend/**"
+    paths:
+      - "frontend/**"
 
 jobs:
-  build:
+  style:
     strategy:
       matrix:
         os: [ubuntu-latest]
