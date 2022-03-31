@@ -10,27 +10,27 @@ on:
     # branches: [ "main" ]
     # tags: [ "*.*.*" ]
     paths-ignore:
-      - 'backend/**'
+      - "backend/**"
 
 jobs:
   build:
     strategy:
       matrix:
         os: [ubuntu-latest]
-
     runs-on: ${{ matrix.os }}
     steps:
-    - name: 📥 Checkout repository
-      uses: actions/checkout@v1
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v1
 
-    - name: Install elm-format
-      run: |
-        npm install -g elm-format@^0.8.5
-    - name: ✍  Check elm-format
-      uses: sparksp/elm-format-action@v1
-      with: 
-        # Matching all elm files
-        elm_files: |
-          src/**/*.elm
-        elm_glob: true
-        working-directory: frontend
+      - name: Install elm-format
+        run: |
+          npm install -g elm-format@^0.8.5
+
+      - name: ✍  Check elm-format
+        uses: sparksp/elm-format-action@v1
+        with:
+          # Matching all elm files
+          elm_files: |
+            src/**/*.elm
+          elm_glob: true
+          working-directory: frontend
