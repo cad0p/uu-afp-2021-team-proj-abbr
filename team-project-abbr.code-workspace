@@ -20,5 +20,17 @@
       "path": ".github",
       "name": "Github Actions"
     }
-  ]
+  ],
+  "settings": {
+    "emeraldwalk.runonsave": {
+      "commands": [
+        {
+          "match": "\\.hs$",
+          "cmd": "brittany --write-mode=inplace ${file} && stylish-haskell -i ${file}"
+        }
+      ]
+    },
+    "haskell.formattingProvider": "brittany",
+    "haskell.checkProject": false
+  }
 }
