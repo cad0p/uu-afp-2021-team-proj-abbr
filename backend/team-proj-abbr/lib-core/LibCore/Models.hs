@@ -22,3 +22,10 @@ data Keyword
       , plural  :: Bool
       }
   deriving (Eq, Ord, Show)
+
+-- |Standard representation of the abbreviation record.
+data AbbreviationRecord
+  = AbbreviationRecord
+      { keyword   :: Keyword
+      , expansion :: Keyword
+      }
