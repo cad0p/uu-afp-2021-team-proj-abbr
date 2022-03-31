@@ -27,9 +27,7 @@ jobs:
       - name: ✍  Check elm-format
         uses: sparksp/elm-format-action@v1
         with:
-          # Matching all elm files
-          elm_files: |
-            src/**/*.elm
-            src/*.elm
-          elm_glob: true
+          elm_format: elm-format
+          elm_files: src/
+          elm_glob: false
           working-directory: frontend
