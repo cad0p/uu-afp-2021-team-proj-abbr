@@ -27,6 +27,7 @@ jobs:
         with:
           # Matching all elm files
           elm_files: |
+            src/**/*.elm
             src/*.elm
           elm_glob: true
           working-directory: frontend
