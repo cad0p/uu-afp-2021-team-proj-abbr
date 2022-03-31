@@ -1,0 +1,36 @@
+name: Frontend Code Style
+
+on:
+  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
+  # pull_request:
+  #   # branches: [ "main" ]
+  #   paths-ignore:
+  #     - 'backend/**'
+  push:
+    # branches: [ "main" ]
+    # tags: [ "*.*.*" ]
+    paths-ignore:
+      - 'backend/**'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v1
+
+    - name: Install elm-format
+      run: |
+        npm install -g elm-format@^0.8.5
+    - name: ✍  Check elm-format
+      uses: sparksp/elm-format-action@v1
+      with: 
+        # Matching all elm files
+        elm_files: |
+          src/**/*.elm
+        elm_glob: true
+        working-directory: frontend

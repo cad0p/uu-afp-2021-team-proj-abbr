@@ -1,4 +1,4 @@
-name: Code Style
+name: Backend Code Style
 
 on:
   # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
