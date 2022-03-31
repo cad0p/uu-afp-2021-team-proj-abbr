@@ -119,13 +119,6 @@ module LibCore.Parser
 type ParseStructure = [Token]
 
 -- | Map a string to a list of Tokens
---   
---   Examples:
---   
---   <pre>
---   &gt;&gt;&gt; parseInput "Hello world, this is a test"
---   [NoToken "Hello",NoToken "world,",NoToken "this",NoToken "is",NoToken "a",NoToken "test"]
---   </pre>
 parseInput :: String -> ParseStructure
 
 

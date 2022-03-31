@@ -10,16 +10,12 @@ Stability   : experimental
 </span><span id="line-10"></span><span>
 </span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Models.html"><span class="hs-identifier">LibCore.Models</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier">Token</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#NoToken"><span class="hs-identifier">NoToken</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-12"></span><span>
-</span><span id="line-13"></span><span class="hs-keyword">type</span><span> </span><span id="ParseStructure"><span class="annot"><a href="LibCore.Parser.html#ParseStructure"><span class="hs-identifier hs-var">ParseStructure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier hs-type">Token</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-14"></span><span>
-</span><span id="line-15"></span><span class="hs-comment">-- | Map a string to a list of Tokens</span><span>
-</span><span id="line-16"></span><span class="hs-comment">--</span><span>
-</span><span id="line-17"></span><span class="hs-comment">-- Examples:</span><span>
-</span><span id="line-18"></span><span class="hs-comment">--</span><span>
-</span><span id="line-19"></span><span class="hs-comment">-- &gt;&gt;&gt; parseInput &quot;Hello world, this is a test&quot;</span><span>
-</span><span id="line-20"></span><span class="hs-comment">-- [NoToken &quot;Hello&quot;,NoToken &quot;world,&quot;,NoToken &quot;this&quot;,NoToken &quot;is&quot;,NoToken &quot;a&quot;,NoToken &quot;test&quot;]</span><span>
-</span><span id="line-21"></span><span class="annot"><a href="LibCore.Parser.html#parseInput"><span class="hs-identifier hs-type">parseInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.Parser.html#ParseStructure"><span class="hs-identifier hs-type">ParseStructure</span></a></span><span>
-</span><span id="line-22"></span><span id="parseInput"><span class="annot"><span class="annottext">parseInput :: String -&gt; ParseStructure
+</span><span id="line-13"></span><span class="hs-keyword">type</span><span> </span><span id="ParseStructure"><span class="annot"><a href="LibCore.Parser.html#ParseStructure"><span class="hs-identifier hs-var">ParseStructure</span></a></span></span><span>
+</span><span id="line-14"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier hs-type">Token</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-15"></span><span>
+</span><span id="line-16"></span><span class="hs-comment">-- | Map a string to a list of Tokens</span><span>
+</span><span id="line-17"></span><span class="annot"><a href="LibCore.Parser.html#parseInput"><span class="hs-identifier hs-type">parseInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.Parser.html#ParseStructure"><span class="hs-identifier hs-type">ParseStructure</span></a></span><span>
+</span><span id="line-18"></span><span id="parseInput"><span class="annot"><span class="annottext">parseInput :: String -&gt; ParseStructure
 </span><a href="LibCore.Parser.html#parseInput"><span class="hs-identifier hs-var hs-var">parseInput</span></a></span></span><span> </span><span id="local-6989586621679040811"><span class="annot"><span class="annottext">String
 </span><a href="#local-6989586621679040811"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String -&gt; Token) -&gt; [String] -&gt; ParseStructure
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
@@ -27,4 +23,4 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><a href="LibCore.Models.html#NoToken"><span class="hs-identifier hs-var">NoToken</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [String]
 </span><span class="hs-identifier hs-var">words</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><a href="#local-6989586621679040811"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-23"></span></pre></body></html>
+</span><span id="line-19"></span></pre></body></html>
