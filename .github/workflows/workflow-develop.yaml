@@ -10,8 +10,8 @@ on:
   push:
     # branches: [ "main" ]
     # tags: [ "*.*.*" ]
-    paths-ignore:
-      - 'frontend/**'
+    paths:
+      - 'backend/**'
 
 jobs:
   build:
