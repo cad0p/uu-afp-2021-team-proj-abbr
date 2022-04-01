@@ -1,0 +1,12 @@
+name: Full Build
+
+on:
+  push:
+
+jobs:
+  # For now it is a needed build for all pushes in order to pass the checks.
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: ✅ Everything is good!
+        run: "echo LGTM!"
