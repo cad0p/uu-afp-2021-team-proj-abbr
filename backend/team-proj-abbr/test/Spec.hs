@@ -1,4 +1,3 @@
-
 import           Test.Tasty
 
 import           Test.LibCore.Decoder         (huDecoder, qcDecoder)
@@ -19,29 +18,40 @@ main :: IO ()
 main = do
   defaultMain tests
 
-tests       ::  TestTree
-tests       =   testGroup "Tests"       [ properties, unitTests ]
+tests :: TestTree
+tests = testGroup "Tests" [properties, unitTests]
 
-properties  ::  TestTree
-properties  =   testGroup "Properties"  [ qcProps ]
+-- |Configuration of the QuickCheck tests
+--
+-- See: <https://hackage.haskell.org/package/QuickCheck>
+properties :: TestTree
+properties = testGroup "Properties" [qcProps]
 
-qcProps     ::  TestTree
-qcProps     =   testGroup "QuickCheck"  [ qcDecoder
-                                        , qcInputInterface
-                                        , qcKnowledgeBase
-                                        , qcMapper
-                                        , qcOutputInterface
-                                        , qcParser ]
+qcProps :: TestTree
+qcProps = testGroup
+  "QuickCheck"
+  [ qcDecoder
+  , qcInputInterface
+  , qcKnowledgeBase
+  , qcMapper
+  , qcOutputInterface
+  , qcParser
+  ]
 
 
+-- |Configuration of the HUnit tests
+--
+-- See: <https://hackage.haskell.org/package/HUnit>
+unitTests :: TestTree
+unitTests = testGroup "Unit tests" [hUnit]
 
-unitTests   ::  TestTree
-unitTests   =   testGroup "Unit tests"  [ hUnit ]
-
-hUnit       ::  TestTree
-hUnit       =   testGroup "HUnit"       [ huDecoder
-                                        , huInputInterface
-                                        , huKnowledgeBase
-                                        , huMapper
-                                        , huOutputInterface
-                                        , huParser ]
+hUnit :: TestTree
+hUnit = testGroup
+  "HUnit"
+  [ huDecoder
+  , huInputInterface
+  , huKnowledgeBase
+  , huMapper
+  , huOutputInterface
+  , huParser
+  ]

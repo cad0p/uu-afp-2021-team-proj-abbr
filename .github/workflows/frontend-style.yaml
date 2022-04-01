@@ -1,0 +1,44 @@
+name: Frontend Code Style
+
+on:
+  push:
+    # Leaving here in case we need to run on other conditions
+    # branches: [ "main" ]
+    # tags: [ "*.*.*" ]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/**"
+      - "!backend/**"
+
+jobs:
+  style:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Install elm-format
+        run: |
+          npm install -g elm-format@^0.8.5
+
+      - name: ✍  Check elm-format
+        uses: sparksp/elm-format-action@v1
+        with:
+          elm_format: elm-format
+          elm_files: src/
+          elm_glob: false
+          working-directory: frontend
+
+  code-build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    needs:
+      - style
+    steps:
+      - name: ✅ Everything is good!
+        run: "echo LGTM!"
