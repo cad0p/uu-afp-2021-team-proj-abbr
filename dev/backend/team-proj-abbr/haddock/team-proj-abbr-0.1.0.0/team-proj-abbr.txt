@@ -78,8 +78,7 @@ mockCliHandler :: ShortHndr -> IO ()
 --   <i>See more:</i>
 --   
 --   <ul>
---   <li>See <a>CliSpec</a> for more information about the CLI
---   endpoints.</li>
+--   <li>See <a>Spec</a> for more information about the CLI endpoints.</li>
 --   </ul>
 cliMain :: IO ()
 
@@ -119,6 +118,13 @@ module LibCore.Parser
 type ParseStructure = [Token]
 
 -- | Map a string to a list of Tokens
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; parseInput "Hello world, this is a test"
+--   [NoToken "Hello",NoToken "world,",NoToken "this",NoToken "is",NoToken "a",NoToken "test"]
+--   </pre>
 parseInput :: String -> ParseStructure
 
 
