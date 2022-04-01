@@ -11,6 +11,8 @@ on:
     # tags: [ "*.*.*" ]
     paths:
       - "backend/**"
+      - ".github/workflows/**"
+      - "!frontend/**"
 
 jobs:
   style:
