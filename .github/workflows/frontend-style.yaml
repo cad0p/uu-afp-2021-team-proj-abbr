@@ -33,7 +33,10 @@ jobs:
           working-directory: frontend
 
   code-build:
-    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     needs:
       - style
     steps:

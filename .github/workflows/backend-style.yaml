@@ -40,7 +40,10 @@ jobs:
         working-directory: backend
 
   code-build:
-    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     needs:
       - style
     steps:
