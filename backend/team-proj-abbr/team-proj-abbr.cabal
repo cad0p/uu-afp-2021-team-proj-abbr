@@ -63,6 +63,22 @@ executable team-proj-abbr-cli
     , team-proj-abbr
   default-language: Haskell2010
 
+test-suite team-proj-abbr-doctest
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_team_proj_abbr
+  hs-source-dirs:
+      test-doctest
+  ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base
+    , cmdargs >=0.10.21
+    , containers
+    , doctest >=0.8
+    , parsec
+  default-language: Haskell2010
+
 test-suite team-proj-abbr-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
