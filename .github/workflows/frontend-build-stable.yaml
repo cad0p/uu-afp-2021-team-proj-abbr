@@ -7,7 +7,7 @@ on:
 
 jobs:
   # For now it is a needed build for all pushes in order to pass the checks.
-  build:
+  build-stable:
     runs-on: "ubuntu-latest"
     steps:
       - name: ✅ Everything is good!
