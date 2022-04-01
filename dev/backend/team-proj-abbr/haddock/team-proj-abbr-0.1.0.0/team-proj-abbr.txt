@@ -95,8 +95,10 @@ module LibCore.Models
 data Token
 NoToken :: String -> Token
 DoMap :: Keyword -> Token
-newtype Keyword
-Keyword :: String -> Keyword
+data Keyword
+Keyword :: String -> Bool -> Keyword
+[keyword] :: Keyword -> String
+[plural] :: Keyword -> Bool
 instance GHC.Show.Show LibCore.Models.Keyword
 instance GHC.Classes.Ord LibCore.Models.Keyword
 instance GHC.Classes.Eq LibCore.Models.Keyword
@@ -117,15 +119,46 @@ returnOutput :: String -> IO ()
 module LibCore.Parser
 type ParseStructure = [Token]
 
--- | Map a string to a list of Tokens
---   
---   Examples:
---   
---   <pre>
---   &gt;&gt;&gt; parseInput "Hello world, this is a test"
---   [NoToken "Hello",NoToken "world,",NoToken "this",NoToken "is",NoToken "a",NoToken "test"]
---   </pre>
-parseInput :: String -> ParseStructure
+-- | The abbreviation symbol. Can later be made configurable
+abbSymbol :: String
+
+-- | The plural symbol. String between the abbSymbol and the pluralSymbol
+--   are interpreted as plurals
+pluralSymbol :: String
+
+-- | Consume whitespace characters
+whitespace :: Parser ()
+
+-- | Lexeme parsers consume the whitespace after them
+lexeme :: Parser a -> Parser a
+
+-- | Given a string, parse it. This function can throw an error if parsing
+--   fails
+doParse :: String -> ParseStructure
+
+-- | Map a string to a list of Tokens. For example: &gt;&gt;&gt; parseInput
+--   "@<tt>bob" Right [DoMap (Keyword {keyword = "bob", plural = False})]
+--   &gt;&gt;&gt; parseInput "</tt>@fw's" Right [DoMap (Keyword {keyword =
+--   "fw", plural = True})] &gt;&gt;&gt; parseInput "hello!" Right [NoToken
+--   "hello!"]
+parseInput :: String -> Either ParseError ParseStructure
+
+-- | The main parser tries to consume all input into a ParseStructure,
+--   given an | abbreviation symbol and a plural symbol
+mainParser :: String -> String -> Parser ParseStructure
+
+-- | Inverse of the <a>isSpace</a> function from Data.Char
+notSpace :: Char -> Bool
+
+-- | Given an abbreviation string s and a plural end string p, parse the
+--   string between it
+pluralAbbrParser :: String -> String -> Parser Token
+
+-- | Given an abbreviation string s, parse the string after it
+abbrParser :: String -> Parser Token
+
+-- | Parse any string into a token
+noAbbrParser :: Parser Token
 
 
 module LibCore.Mapper
