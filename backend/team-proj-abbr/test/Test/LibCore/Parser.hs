@@ -4,10 +4,7 @@ module Test.LibCore.Parser (qcParser, huParser) where
 import           Test.Tasty
 import           Test.Tasty.HUnit
 
-import           LibCore.Models
-    ( Keyword (Keyword, Plural)
-    , Token (DoMap, NoToken)
-    )
+import           LibCore.Models   (Keyword (Keyword), Token (DoMap, NoToken))
 import           LibCore.Parser   (doParse)
 
 
@@ -21,10 +18,10 @@ parseNoToken :: TestTree
 parseNoToken = testCase "Test the parsing of a NoToken" $ assertEqual "" [NoToken "hello"] (doParse "hello")
 
 parseKeyword :: TestTree
-parseKeyword = testCase "Test the parsing of a Keyword" $ assertEqual "" [DoMap $ Keyword "hello"] (doParse "@@hello")
+parseKeyword = testCase "Test the parsing of a Keyword" $ assertEqual "" [DoMap $ Keyword "hello" False] (doParse "@@hello")
 
 parsePlural :: TestTree
-parsePlural = testCase "Test the parsing of a Plural" $ assertEqual "" [DoMap $ Plural "hello"] (doParse "@@hello's")
+parsePlural = testCase "Test the parsing of a Plural" $ assertEqual "" [DoMap $ Keyword "hello" True] (doParse "@@hello's")
 
 parsePluralWord :: TestTree
 parsePluralWord = testCase "Test that a plural word is not parsed as plural" $ assertEqual "" [NoToken "hello's"] (doParse "hello's")

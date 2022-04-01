@@ -17,6 +17,8 @@ data Token
   deriving (Eq, Ord, Show)
 
 data Keyword
-  = Keyword String
-  | Plural String
+  = Keyword
+      { keyword :: String
+      , plural  :: Bool
+      }
   deriving (Eq, Ord, Show)

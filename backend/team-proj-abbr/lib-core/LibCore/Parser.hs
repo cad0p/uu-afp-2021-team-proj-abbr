@@ -10,10 +10,7 @@ module LibCore.Parser where
 
 import           Data.Char          (isSpace)
 import           Data.Functor
-import           LibCore.Models
-    ( Keyword (Keyword, Plural)
-    , Token (DoMap, NoToken)
-    )
+import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
 import           Text.Parsec
     ( ParseError
     , alphaNum
@@ -54,11 +51,11 @@ doParse s = case parseInput s of
 
 -- | Map a string to a list of Tokens. For example:
 -- >>> parseInput "@@bob"
--- Right [DoMap (Keyword "bob")]
+-- Right [DoMap (Keyword {keyword = "bob", plural = False})]
 -- >>> parseInput "@@fw's"
--- Right [DoMap (Plural "fw")]
+-- Right [DoMap (Keyword {keyword = "fw", plural = True})]
 -- >>> parseInput "hello!"
--- Right [NoToken "hello"]
+-- Right [NoToken "hello!"]
 parseInput :: String -> Either ParseError ParseStructure
 parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 
@@ -77,14 +74,14 @@ pluralAbbrParser s p = do
   void $ string s
   a <- many1 alphaNum
   void $ string p
-  return $ DoMap $ Plural a
+  return $ DoMap $ Keyword a True
 
 -- | Given an abbreviation string s, parse the string after it
 abbrParser :: String -> Parser Token
 abbrParser s = do
   void $ string s
   a <- many1 $ satisfy notSpace
-  return $ DoMap $ Keyword a
+  return $ DoMap $ Keyword a False
 
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
