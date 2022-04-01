@@ -37,7 +37,7 @@ jobs:
         # https://stackoverflow.com/questions/57806624/github-actions-how-to-build-project-in-sub-directory
         working-directory: backend
 
-  build:
+  code-build:
     runs-on: "ubuntu-latest"
     needs:
       - style
