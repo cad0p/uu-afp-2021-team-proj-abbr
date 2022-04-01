@@ -14,7 +14,7 @@ on:
       - 'backend/**'
 
 jobs:
-  build-stable:
+  code-build-stable:
     strategy:
       matrix:
         os: [ubuntu-latest]
