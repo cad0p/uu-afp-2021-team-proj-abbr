@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable #-}
-
+{-# LANGUAGE GADTs              #-}
 {-|
 Description : Command Line Interface - Specification
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
@@ -8,10 +8,7 @@ Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering
 Stability   : experimental
 -}
 
-module LibCli.Spec
-    ( cliModes
-    , ShortHndr(..)
-    ) where
+module LibCli.Spec where
 
 import qualified System.Console.CmdArgs as CMD
 
@@ -19,40 +16,73 @@ import qualified System.Console.CmdArgs as CMD
 -- CLI interface specificaitons: --
 -----------------------------------
 
+data Expansion where
+  Re :: Replace -> Expansion
+  Ex :: Expand -> Expansion
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+data KnowledgeBaseTypes where
+  Lst :: List -> KnowledgeBaseTypes
+  Ad :: Add -> KnowledgeBaseTypes
+  Up :: Update -> KnowledgeBaseTypes
+  Del :: Delete -> KnowledgeBaseTypes
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+data ShortHndrModes where
+  Exp :: Expansion -> ShortHndrModes
+  Kbt :: KnowledgeBaseTypes -> ShortHndrModes
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+
 -- |ShortHndr CLI interface specification.
-data ShortHndr
-  -- |Defines the arguments for the replace command
+-- |Defines the arguments for the replace command
+data Replace
   = Replace
-      { input   :: Maybe FilePath
-      , out     :: Maybe FilePath
-      , inplace :: Maybe Bool
-      , kb      :: Maybe FilePath
+      { input      :: Maybe FilePath
+      , out        :: Maybe FilePath
+      , inplace    :: Maybe Bool
+      , replace_kb :: Maybe FilePath
       }
-  -- |Defines the arguments for the expand command
-  | Expand
-      { abbreviation :: String
-      , kb           :: Maybe FilePath
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+-- |Defines the arguments for the expand command
+data Expand
+  = Expand
+      { expand_abbr :: String
+      , expand_kb   :: Maybe FilePath
       }
-  -- |Defines the arguments for the list command
-  | List
-      { kb :: Maybe FilePath
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+-- |Defines the arguments for the list command
+data List
+  = List
+      { list_kb :: Maybe FilePath
       }
-  -- |Defines the arguments for the add command
-  | Add
-      { abbreviation :: String
-      , expansion    :: String
-      , kb           :: Maybe FilePath
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+-- |Defines the arguments for the add command
+data Add
+  = Add
+      { add_abbr      :: String
+      , add_expansion :: String
+      , add_kb        :: Maybe FilePath
       }
-  -- |Defines the arguments for the update command
-  | Update
-      { abbreviation :: String
-      , expansion    :: String
-      , kb           :: Maybe FilePath
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+-- |Defines the arguments for the update command
+data Update
+  = Update
+      { update_abbr      :: String
+      , update_expansion :: String
+      , update_kb        :: Maybe FilePath
       }
-  -- |Defines the arguments for the delete command
-  | Delete
-      { abbreviation :: String
-      , kb           :: Maybe FilePath
+  deriving (CMD.Data, CMD.Typeable, Show)
+
+-- |Defines the arguments for the delete command
+data Delete
+  = Delete
+      { delete_abbr :: String
+      , delete_kb   :: Maybe FilePath
       }
   deriving (CMD.Data, CMD.Typeable, Show)
 
@@ -64,75 +94,71 @@ fileFlags h f = f CMD.&= CMD.help h CMD.&= CMD.typFile
 -- Expansion commands: --
 -------------------------
 
-replace :: ShortHndr
-replace =
+replace :: ShortHndrModes
+replace = Exp ( Re $
     Replace
             { input   = fileFlags "Source file" (pure "shorthndr-input.txt")
             , out     = fileFlags "Output file" (pure "shorthndr--out.txt")
-            , kb      = fileFlags "Knowledge Base source file"
+            , replace_kb      = fileFlags "Knowledge Base source file"
                                   (pure "shorthndr-kb.csv")
             , inplace = CMD.def
-            }
+            })
         CMD.&= CMD.help
                    "Replace all abreviations in the provided file with their expansions"
 
-expand :: ShortHndr
-expand =
+expand :: ShortHndrModes
+expand = Exp ( Ex $
     Expand
-            { abbreviation = CMD.def
-            , kb           = fileFlags "Knowledge Base source file"
+            { expand_abbr = CMD.def
+            , expand_kb           = fileFlags "Knowledge Base source file"
                                        (pure "shorthndr-kb.csv")
-            }
+            })
         CMD.&= CMD.help
                    "Expand a provided abbreviation abbreviation if one is found"
 
-expansionModes :: [ShortHndr]
-expansionModes = [replace, expand]
 
 ------------------------------
 -- Knowledge Base commands: --
 ------------------------------
 
-list :: ShortHndr
-list =
-    List { kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
-         }
+list :: ShortHndrModes
+list = Kbt ( Lst $
+    List { list_kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
+         })
         CMD.&= CMD.help "List all records of the Knowledge Base"
 
-add :: ShortHndr
-add =
-    Add { abbreviation = CMD.def
-        , expansion = CMD.def
-        , kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
-        }
+add :: ShortHndrModes
+add = Kbt ( Ad $
+    Add { add_abbr = CMD.def
+        , add_expansion = CMD.def
+        , add_kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
+        })
         CMD.&= CMD.help "Add a new abbreviation record to the Knowledge Base"
 
-update :: ShortHndr
-update =
+update :: ShortHndrModes
+update = Kbt ( Up $
     Update
-            { abbreviation = CMD.def
-            , expansion    = CMD.def
-            , kb           = fileFlags "Knowledge Base source file"
+            { update_abbr = CMD.def
+            , update_expansion    = CMD.def
+            , update_kb           = fileFlags "Knowledge Base source file"
                                        (pure "shorthndr-kb.csv")
-            }
+            })
         CMD.&= CMD.help
                    "Update an existing abbreviation record in the Knowledge Base"
 
-delete :: ShortHndr
-delete =
+delete :: ShortHndrModes
+delete = Kbt (Del $
     Delete
-            { abbreviation = CMD.def
-            , kb           = fileFlags "Knowledge Base source file"
+            { delete_abbr = CMD.def
+            , delete_kb           = fileFlags "Knowledge Base source file"
                                        (pure "shorthndr-kb.csv")
-            }
+            })
         CMD.&= CMD.help "Delete an abbreviation record from the Knowledge Base"
 
-kbModes :: [ShortHndr]
-kbModes = [list, add, update, delete]
 
 -----------------------------
 -- All exported CLI modes: --
 -----------------------------
 
-cliModes :: [ShortHndr]
-cliModes = expansionModes ++ kbModes
+cliModes :: [ShortHndrModes]
+cliModes = [replace, expand, list, add, update, delete]

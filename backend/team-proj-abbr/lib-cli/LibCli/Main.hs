@@ -9,8 +9,7 @@ Stability   : experimental
 
 module LibCli.Main where
 
-import           LibCli.Spec             (ShortHndr (input, out))
-import qualified LibCli.Spec             as CS (ShortHndr (..), cliModes)
+import           LibCli.Spec
 import           LibCore.Decoder         (decode)
 import           LibCore.KnowledgeBase   (getKnowledgeBase)
 import           LibCore.Mapper          (mapParseStructure)
@@ -22,26 +21,28 @@ import qualified System.Console.CmdArgs  as CMD
 -- Command Handlers: --
 -----------------------
 
--- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
 -- TODO: (future task) implement the actual handlers with the business logic.
-mockCliHandler :: CS.ShortHndr -> IO ()
--- mockCliHandler c@CS.Replace{} = print $ "replacing! --> " ++ show c
-mockCliHandler c@CS.Replace{} = replaceMode c
-mockCliHandler c@CS.Expand{}  = print $ "expanding! --> " ++ show c
-mockCliHandler c@CS.List{}    = print $ "listing! --> " ++ show c
-mockCliHandler c@CS.Add{}     = print $ "adding! --> " ++ show c
-mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
-mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
+mockCliHandler :: ShortHndrModes -> IO ()
+mockCliHandler (Exp e) = handleExpMode e
+mockCliHandler (Kbt k) = handleKbtMode k
 
-replaceMode :: ShortHndr -> IO ()
-replaceMode c@CS.Replace {} = do
+handleExpMode :: Expansion -> IO ()
+handleExpMode (Re r) = replaceMode r
+handleExpMode (Ex c) = print $ "expanding! --> " ++ show c
+
+handleKbtMode :: KnowledgeBaseTypes -> IO ()
+handleKbtMode (Lst c) = print $ "listing! --> " ++ show c
+handleKbtMode (Ad c)  = print $ "adding! --> " ++ show c
+handleKbtMode (Up c)  = print $ "updating! --> " ++ show c
+handleKbtMode (Del c) = print $ "deleting! --> " ++ show c
+
+replaceMode :: Replace -> IO ()
+replaceMode c = do
     case input c of
       Nothing -> error "No input file was found"
       Just f -> do
           s <- readFile f
           returnOutput (out c) (decode $ mapParseStructure getKnowledgeBase $ doParse s)
--- Impossible case because of the mockCliHandler
-replaceMode _ = undefined
 
 ----------------------------
 -- Executable entrypoiny: --
@@ -67,4 +68,4 @@ replaceMode _ = undefined
 --
 --    * See 'LibCli.Spec' for more information about the CLI endpoints.
 cliMain :: IO ()
-cliMain = mockCliHandler =<< CMD.cmdArgs (CMD.modes CS.cliModes)
+cliMain = mockCliHandler =<< CMD.cmdArgs (CMD.modes cliModes)
