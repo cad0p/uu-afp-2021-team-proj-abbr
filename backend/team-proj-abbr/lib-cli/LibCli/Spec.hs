@@ -54,10 +54,8 @@ data Expand
   deriving (CMD.Data, CMD.Typeable, Show)
 
 -- |Defines the arguments for the list command
-data List
-  = List
-      { list_kb :: Maybe FilePath
-      }
+newtype List
+  = List { list_kb :: Maybe FilePath }
   deriving (CMD.Data, CMD.Typeable, Show)
 
 -- |Defines the arguments for the add command
