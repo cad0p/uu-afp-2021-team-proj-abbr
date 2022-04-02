@@ -9,8 +9,14 @@ Stability   : experimental
 
 module LibCli.Main where
 
-import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
-import qualified System.Console.CmdArgs as CMD
+import           LibCli.Spec             (ShortHndr (input, out))
+import qualified LibCli.Spec             as CS (ShortHndr (..), cliModes)
+import           LibCore.Decoder         (decode)
+import           LibCore.KnowledgeBase   (getKnowledgeBase)
+import           LibCore.Mapper          (mapParseStructure)
+import           LibCore.OutputInterface (returnOutput)
+import           LibCore.Parser          (doParse)
+import qualified System.Console.CmdArgs  as CMD
 
 -----------------------
 -- Command Handlers: --
@@ -19,12 +25,23 @@ import qualified System.Console.CmdArgs as CMD
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
 -- TODO: (future task) implement the actual handlers with the business logic.
 mockCliHandler :: CS.ShortHndr -> IO ()
-mockCliHandler c@CS.Replace{} = print $ "replacing! --> " ++ show c
+-- mockCliHandler c@CS.Replace{} = print $ "replacing! --> " ++ show c
+mockCliHandler c@CS.Replace{} = replaceMode c
 mockCliHandler c@CS.Expand{}  = print $ "expanding! --> " ++ show c
 mockCliHandler c@CS.List{}    = print $ "listing! --> " ++ show c
 mockCliHandler c@CS.Add{}     = print $ "adding! --> " ++ show c
 mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
 mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
+
+replaceMode :: ShortHndr -> IO ()
+replaceMode c@CS.Replace {} = do
+    case input c of
+      Nothing -> error "No input file was found"
+      Just f -> do
+          s <- readFile f
+          returnOutput (out c) (decode $ mapParseStructure getKnowledgeBase $ doParse s)
+-- Impossible case because of the mockCliHandler
+replaceMode _ = undefined
 
 ----------------------------
 -- Executable entrypoiny: --
