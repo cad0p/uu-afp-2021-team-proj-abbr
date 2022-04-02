@@ -11,45 +11,85 @@
 
 
 module LibCli.Spec
-cliModes :: [ShortHndr]
+data Expansion
+[Re] :: Replace -> Expansion
+[Ex] :: Expand -> Expansion
+data KnowledgeBaseTypes
+[Lst] :: List -> KnowledgeBaseTypes
+[Ad] :: Add -> KnowledgeBaseTypes
+[Up] :: Update -> KnowledgeBaseTypes
+[Del] :: Delete -> KnowledgeBaseTypes
+data ShortHndrModes
+[Exp] :: Expansion -> ShortHndrModes
+[Kbt] :: KnowledgeBaseTypes -> ShortHndrModes
 
--- | ShortHndr CLI interface specification.
-data ShortHndr
-
--- | Defines the arguments for the replace command
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
-[input] :: ShortHndr -> Maybe FilePath
-[out] :: ShortHndr -> Maybe FilePath
-[inplace] :: ShortHndr -> Maybe Bool
-[kb] :: ShortHndr -> Maybe FilePath
+-- | ShortHndr CLI interface specification. |Defines the arguments for the
+--   replace command
+data Replace
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> Replace
+[input] :: Replace -> Maybe FilePath
+[out] :: Replace -> Maybe FilePath
+[inplace] :: Replace -> Maybe Bool
+[replace_kb] :: Replace -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
-Expand :: String -> Maybe FilePath -> ShortHndr
-[abbreviation] :: ShortHndr -> String
-[kb] :: ShortHndr -> Maybe FilePath
+data Expand
+Expand :: String -> Maybe FilePath -> Expand
+[expand_abbr] :: Expand -> String
+[expand_kb] :: Expand -> Maybe FilePath
 
 -- | Defines the arguments for the list command
-List :: Maybe FilePath -> ShortHndr
-[kb] :: ShortHndr -> Maybe FilePath
+data List
+List :: Maybe FilePath -> List
+[list_kb] :: List -> Maybe FilePath
 
 -- | Defines the arguments for the add command
-Add :: String -> String -> Maybe FilePath -> ShortHndr
-[abbreviation] :: ShortHndr -> String
-[expansion] :: ShortHndr -> String
-[kb] :: ShortHndr -> Maybe FilePath
+data Add
+Add :: String -> String -> Maybe FilePath -> Add
+[add_abbr] :: Add -> String
+[add_expansion] :: Add -> String
+[add_kb] :: Add -> Maybe FilePath
 
 -- | Defines the arguments for the update command
-Update :: String -> String -> Maybe FilePath -> ShortHndr
-[abbreviation] :: ShortHndr -> String
-[expansion] :: ShortHndr -> String
-[kb] :: ShortHndr -> Maybe FilePath
+data Update
+Update :: String -> String -> Maybe FilePath -> Update
+[update_abbr] :: Update -> String
+[update_expansion] :: Update -> String
+[update_kb] :: Update -> Maybe FilePath
 
 -- | Defines the arguments for the delete command
-Delete :: String -> Maybe FilePath -> ShortHndr
-[abbreviation] :: ShortHndr -> String
-[kb] :: ShortHndr -> Maybe FilePath
-instance GHC.Show.Show LibCli.Spec.ShortHndr
-instance Data.Data.Data LibCli.Spec.ShortHndr
+data Delete
+Delete :: String -> Maybe FilePath -> Delete
+[delete_abbr] :: Delete -> String
+[delete_kb] :: Delete -> Maybe FilePath
+
+-- | Utility function to provide help for the file type arguments.
+fileFlags :: String -> Maybe FilePath -> Maybe FilePath
+replace :: ShortHndrModes
+expand :: ShortHndrModes
+list :: ShortHndrModes
+add :: ShortHndrModes
+update :: ShortHndrModes
+delete :: ShortHndrModes
+cliModes :: [ShortHndrModes]
+instance GHC.Show.Show LibCli.Spec.Replace
+instance Data.Data.Data LibCli.Spec.Replace
+instance GHC.Show.Show LibCli.Spec.Expand
+instance Data.Data.Data LibCli.Spec.Expand
+instance GHC.Show.Show LibCli.Spec.Expansion
+instance Data.Data.Data LibCli.Spec.Expansion
+instance GHC.Show.Show LibCli.Spec.List
+instance Data.Data.Data LibCli.Spec.List
+instance GHC.Show.Show LibCli.Spec.Add
+instance Data.Data.Data LibCli.Spec.Add
+instance GHC.Show.Show LibCli.Spec.Update
+instance Data.Data.Data LibCli.Spec.Update
+instance GHC.Show.Show LibCli.Spec.Delete
+instance Data.Data.Data LibCli.Spec.Delete
+instance GHC.Show.Show LibCli.Spec.KnowledgeBaseTypes
+instance Data.Data.Data LibCli.Spec.KnowledgeBaseTypes
+instance GHC.Show.Show LibCli.Spec.ShortHndrModes
+instance Data.Data.Data LibCli.Spec.ShortHndrModes
 
 
 module LibCore.InputInterface
@@ -149,8 +189,10 @@ tokenToString :: Token -> String
 
 
 module LibCli.Main
-mockCliHandler :: ShortHndr -> IO ()
-replaceMode :: ShortHndr -> IO ()
+mockCliHandler :: ShortHndrModes -> IO ()
+handleExpMode :: Expansion -> IO ()
+handleKbtMode :: KnowledgeBaseTypes -> IO ()
+replaceMode :: Replace -> IO ()
 
 -- | Main entrypoint of the CLI application.
 --   
