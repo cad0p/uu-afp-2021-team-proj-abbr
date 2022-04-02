@@ -39,7 +39,7 @@ Expand :: String -> Maybe FilePath -> Expand
 [expand_kb] :: Expand -> Maybe FilePath
 
 -- | Defines the arguments for the list command
-data List
+newtype List
 List :: Maybe FilePath -> List
 [list_kb] :: List -> Maybe FilePath
 
