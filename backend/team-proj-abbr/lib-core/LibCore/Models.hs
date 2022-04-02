@@ -16,6 +16,9 @@ data Token
   | DoMap Keyword
   deriving (Eq, Ord, Show)
 
-newtype Keyword
-  = Keyword String
+data Keyword
+  = Keyword
+      { keyword :: String
+      , plural  :: Bool
+      }
   deriving (Eq, Ord, Show)
