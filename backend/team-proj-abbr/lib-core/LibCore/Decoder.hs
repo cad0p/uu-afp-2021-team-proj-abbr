@@ -8,7 +8,12 @@ Stability   : experimental
 
 module LibCore.Decoder where
 
+import           LibCore.Models (Keyword (Keyword), Token (DoMap, NoToken))
 import           LibCore.Parser (ParseStructure)
 
 decode :: ParseStructure -> String
-decode = undefined
+decode s = unwords $ map tokenToString s
+
+tokenToString :: Token -> String
+tokenToString (NoToken s)           = s
+tokenToString (DoMap (Keyword k _)) = k
