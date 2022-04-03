@@ -16,7 +16,7 @@ import           LibCore.Mapper                  (mapParseStructure)
 import           LibCore.OutputInterface         (returnOutput)
 import           LibCore.Parser                  (doParse)
 import           System.Console.CmdArgs.Explicit
-    ( HelpFormat (HelpFormatDefault)
+    ( HelpFormat (HelpFormatAll)
     , helpText
     , processArgs
     )
@@ -26,11 +26,6 @@ import           System.Console.CmdArgs.Explicit
 -----------------------
 
 -- TODO: (future task) implement the actual handlers with the business logic.
-mockCliHandler :: ShortHndrModes -> IO ()
-mockCliHandler (Exp e) = handleExpMode e
-mockCliHandler (Kbt k) = handleKbtMode k
-mockCliHandler Hlp     = print $ helpText [] HelpFormatDefault arguments
-
 handleExpMode :: Expansion -> IO ()
 handleExpMode (Re r) = replaceMode r
 handleExpMode (Ex c) = print $ "expanding! --> " ++ show c
@@ -77,5 +72,5 @@ cliMain = do
        xs <- processArgs arguments
        case xs of
          Exp ex  -> handleExpMode ex
-         Kbt kbt -> print kbt
-         Hlp     -> print $ helpText [] HelpFormatDefault arguments
+         Kbt kbt -> handleKbtMode kbt
+         Hlp     -> print $ helpText [] HelpFormatAll arguments
