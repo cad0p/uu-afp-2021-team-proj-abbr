@@ -10,164 +10,196 @@ Stability   : experimental
 </span><span id="line-10"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCli.Main</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-11"></span><span>
 </span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCli.Spec.html"><span class="hs-identifier">LibCli.Spec</span></a></span><span>
-</span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Decoder.html"><span class="hs-identifier">LibCore.Decoder</span></a></span><span>         </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Decoder.html#decode"><span class="hs-identifier">decode</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-14"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.KnowledgeBase.html"><span class="hs-identifier">LibCore.KnowledgeBase</span></a></span><span>   </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier">getKnowledgeBase</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Mapper.html"><span class="hs-identifier">LibCore.Mapper</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Mapper.html#mapParseStructure"><span class="hs-identifier">mapParseStructure</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.OutputInterface.html"><span class="hs-identifier">LibCore.OutputInterface</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.OutputInterface.html#returnOutput"><span class="hs-identifier">returnOutput</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Parser.html"><span class="hs-identifier">LibCore.Parser</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Parser.html#doParse"><span class="hs-identifier">doParse</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">System.Console.CmdArgs</span></span><span>  </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">CMD</span></span><span>
-</span><span id="line-19"></span><span>
-</span><span id="line-20"></span><span class="hs-comment">-----------------------</span><span>
-</span><span id="line-21"></span><span class="hs-comment">-- Command Handlers: --</span><span>
-</span><span id="line-22"></span><span class="hs-comment">-----------------------</span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Decoder.html"><span class="hs-identifier">LibCore.Decoder</span></a></span><span>                 </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Decoder.html#decode"><span class="hs-identifier">decode</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.KnowledgeBase.html"><span class="hs-identifier">LibCore.KnowledgeBase</span></a></span><span>           </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier">getKnowledgeBase</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Mapper.html"><span class="hs-identifier">LibCore.Mapper</span></a></span><span>                  </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Mapper.html#mapParseStructure"><span class="hs-identifier">mapParseStructure</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.OutputInterface.html"><span class="hs-identifier">LibCore.OutputInterface</span></a></span><span>         </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.OutputInterface.html#returnOutput"><span class="hs-identifier">returnOutput</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Parser.html"><span class="hs-identifier">LibCore.Parser</span></a></span><span>                  </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Parser.html#doParse"><span class="hs-identifier">doParse</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.Console.CmdArgs.Explicit</span></span><span>
+</span><span id="line-19"></span><span>    </span><span class="hs-special">(</span><span> </span><span class="annot"><span class="hs-identifier">HelpFormat</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">HelpFormatDefault</span></span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">helpText</span></span><span>
+</span><span id="line-21"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">processArgs</span></span><span>
+</span><span id="line-22"></span><span>    </span><span class="hs-special">)</span><span>
 </span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span class="hs-comment">-- TODO: (future task) implement the actual handlers with the business logic.</span><span>
-</span><span id="line-25"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-type">mockCliHandler</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndrModes"><span class="hs-identifier hs-type">ShortHndrModes</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-26"></span><span id="mockCliHandler"><span class="annot"><span class="annottext">mockCliHandler :: ShortHndrModes -&gt; IO ()
-</span><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var hs-var">mockCliHandler</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Exp"><span class="hs-identifier hs-type">Exp</span></a></span><span> </span><span id="local-6989586621679046947"><span class="annot"><span class="annottext">Expansion
-</span><a href="#local-6989586621679046947"><span class="hs-identifier hs-var">e</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Expansion -&gt; IO ()
+</span><span id="line-24"></span><span class="hs-comment">-----------------------</span><span>
+</span><span id="line-25"></span><span class="hs-comment">-- Command Handlers: --</span><span>
+</span><span id="line-26"></span><span class="hs-comment">-----------------------</span><span>
+</span><span id="line-27"></span><span>
+</span><span id="line-28"></span><span class="hs-comment">-- TODO: (future task) implement the actual handlers with the business logic.</span><span>
+</span><span id="line-29"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-type">mockCliHandler</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndrModes"><span class="hs-identifier hs-type">ShortHndrModes</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-30"></span><span id="mockCliHandler"><span class="annot"><span class="annottext">mockCliHandler :: ShortHndrModes -&gt; IO ()
+</span><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var hs-var">mockCliHandler</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Exp"><span class="hs-identifier hs-type">Exp</span></a></span><span> </span><span id="local-6989586621679047568"><span class="annot"><span class="annottext">Expansion
+</span><a href="#local-6989586621679047568"><span class="hs-identifier hs-var">e</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Expansion -&gt; IO ()
 </span><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-var">handleExpMode</span></a></span><span> </span><span class="annot"><span class="annottext">Expansion
-</span><a href="#local-6989586621679046947"><span class="hs-identifier hs-var">e</span></a></span><span>
-</span><span id="line-27"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Kbt"><span class="hs-identifier hs-type">Kbt</span></a></span><span> </span><span id="local-6989586621679046944"><span class="annot"><span class="annottext">KnowledgeBaseTypes
-</span><a href="#local-6989586621679046944"><span class="hs-identifier hs-var">k</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseTypes -&gt; IO ()
+</span><a href="#local-6989586621679047568"><span class="hs-identifier hs-var">e</span></a></span><span>
+</span><span id="line-31"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Kbt"><span class="hs-identifier hs-type">Kbt</span></a></span><span> </span><span id="local-6989586621679047565"><span class="annot"><span class="annottext">KnowledgeBaseTypes
+</span><a href="#local-6989586621679047565"><span class="hs-identifier hs-var">k</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseTypes -&gt; IO ()
 </span><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseTypes
-</span><a href="#local-6989586621679046944"><span class="hs-identifier hs-var">k</span></a></span><span>
-</span><span id="line-28"></span><span>
-</span><span id="line-29"></span><span class="annot"><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-type">handleExpMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#Expansion"><span class="hs-identifier hs-type">Expansion</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-30"></span><span id="handleExpMode"><span class="annot"><span class="annottext">handleExpMode :: Expansion -&gt; IO ()
-</span><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-var hs-var">handleExpMode</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Re"><span class="hs-identifier hs-type">Re</span></a></span><span> </span><span id="local-6989586621679046941"><span class="annot"><span class="annottext">Replace
-</span><a href="#local-6989586621679046941"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Replace -&gt; IO ()
+</span><a href="#local-6989586621679047565"><span class="hs-identifier hs-var">k</span></a></span><span>
+</span><span id="line-32"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndrModes
+</span><a href="LibCli.Spec.html#Hlp"><span class="hs-identifier hs-var">Hlp</span></a></span><span>     </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text] -&gt; IO ()
+forall a. Show a =&gt; a -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; IO ()) -&gt; [Text] -&gt; IO ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; HelpFormat -&gt; Mode ShortHndrModes -&gt; [Text]
+forall a. [String] -&gt; HelpFormat -&gt; Mode a -&gt; [Text]
+</span><span class="hs-identifier hs-var">helpText</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">HelpFormat
+</span><span class="hs-identifier hs-var">HelpFormatDefault</span></span><span> </span><span class="annot"><span class="annottext">Mode ShortHndrModes
+</span><a href="LibCli.Spec.html#arguments"><span class="hs-identifier hs-var">arguments</span></a></span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="annot"><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-type">handleExpMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#Expansion"><span class="hs-identifier hs-type">Expansion</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-35"></span><span id="handleExpMode"><span class="annot"><span class="annottext">handleExpMode :: Expansion -&gt; IO ()
+</span><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-var hs-var">handleExpMode</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Re"><span class="hs-identifier hs-type">Re</span></a></span><span> </span><span id="local-6989586621679047560"><span class="annot"><span class="annottext">Replace
+</span><a href="#local-6989586621679047560"><span class="hs-identifier hs-var">r</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Replace -&gt; IO ()
 </span><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var">replaceMode</span></a></span><span> </span><span class="annot"><span class="annottext">Replace
-</span><a href="#local-6989586621679046941"><span class="hs-identifier hs-var">r</span></a></span><span>
-</span><span id="line-31"></span><span class="annot"><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-var">handleExpMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Ex"><span class="hs-identifier hs-type">Ex</span></a></span><span> </span><span id="local-6989586621679046938"><span class="annot"><span class="annottext">Expand
-</span><a href="#local-6989586621679046938"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679047560"><span class="hs-identifier hs-var">r</span></a></span><span>
+</span><span id="line-36"></span><span class="annot"><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-var">handleExpMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Ex"><span class="hs-identifier hs-type">Ex</span></a></span><span> </span><span id="local-6989586621679047557"><span class="annot"><span class="annottext">Expand
+</span><a href="#local-6989586621679047557"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
-</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><span class="hs-string">&quot;expanding! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;expanding! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
-</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Expand -&gt; [Char]
-forall a. Show a =&gt; a -&gt; [Char]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Expand -&gt; String
+forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Expand
-</span><a href="#local-6989586621679046938"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-32"></span><span>
-</span><span id="line-33"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-type">handleKbtMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#KnowledgeBaseTypes"><span class="hs-identifier hs-type">KnowledgeBaseTypes</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-34"></span><span id="handleKbtMode"><span class="annot"><span class="annottext">handleKbtMode :: KnowledgeBaseTypes -&gt; IO ()
-</span><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var hs-var">handleKbtMode</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Lst"><span class="hs-identifier hs-type">Lst</span></a></span><span> </span><span id="local-6989586621679046935"><span class="annot"><span class="annottext">List
-</span><a href="#local-6989586621679046935"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679047557"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-type">handleKbtMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#KnowledgeBaseTypes"><span class="hs-identifier hs-type">KnowledgeBaseTypes</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-39"></span><span id="handleKbtMode"><span class="annot"><span class="annottext">handleKbtMode :: KnowledgeBaseTypes -&gt; IO ()
+</span><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var hs-var">handleKbtMode</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Lst"><span class="hs-identifier hs-type">Lst</span></a></span><span> </span><span id="local-6989586621679047554"><span class="annot"><span class="annottext">List
+</span><a href="#local-6989586621679047554"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
-</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><span class="hs-string">&quot;listing! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;listing! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
-</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">List -&gt; [Char]
-forall a. Show a =&gt; a -&gt; [Char]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">List -&gt; String
+forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">List
-</span><a href="#local-6989586621679046935"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-35"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Ad"><span class="hs-identifier hs-type">Ad</span></a></span><span> </span><span id="local-6989586621679046933"><span class="annot"><span class="annottext">Add
-</span><a href="#local-6989586621679046933"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679047554"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-40"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Ad"><span class="hs-identifier hs-type">Ad</span></a></span><span> </span><span id="local-6989586621679047552"><span class="annot"><span class="annottext">Add
+</span><a href="#local-6989586621679047552"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
-</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><span class="hs-string">&quot;adding! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;adding! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
-</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Add -&gt; [Char]
-forall a. Show a =&gt; a -&gt; [Char]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Add -&gt; String
+forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Add
-</span><a href="#local-6989586621679046933"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-36"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Up"><span class="hs-identifier hs-type">Up</span></a></span><span> </span><span id="local-6989586621679046931"><span class="annot"><span class="annottext">Update
-</span><a href="#local-6989586621679046931"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679047552"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-41"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Up"><span class="hs-identifier hs-type">Up</span></a></span><span> </span><span id="local-6989586621679047550"><span class="annot"><span class="annottext">Update
+</span><a href="#local-6989586621679047550"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
-</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><span class="hs-string">&quot;updating! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;updating! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
-</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Update -&gt; [Char]
-forall a. Show a =&gt; a -&gt; [Char]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Update -&gt; String
+forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Update
-</span><a href="#local-6989586621679046931"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-37"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Del"><span class="hs-identifier hs-type">Del</span></a></span><span> </span><span id="local-6989586621679046929"><span class="annot"><span class="annottext">Delete
-</span><a href="#local-6989586621679046929"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679047550"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-42"></span><span class="annot"><a href="LibCli.Main.html#handleKbtMode"><span class="hs-identifier hs-var">handleKbtMode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCli.Spec.html#Del"><span class="hs-identifier hs-type">Del</span></a></span><span> </span><span id="local-6989586621679047548"><span class="annot"><span class="annottext">Delete
+</span><a href="#local-6989586621679047548"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
-</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><span class="hs-string">&quot;deleting! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;deleting! --&gt; &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
-</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Delete -&gt; [Char]
-forall a. Show a =&gt; a -&gt; [Char]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Delete -&gt; String
+forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Delete
-</span><a href="#local-6989586621679046929"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-38"></span><span>
-</span><span id="line-39"></span><span class="annot"><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-type">replaceMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">Replace</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-40"></span><span id="replaceMode"><span class="annot"><span class="annottext">replaceMode :: Replace -&gt; IO ()
-</span><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var hs-var">replaceMode</span></a></span></span><span> </span><span id="local-6989586621679046928"><span class="annot"><span class="annottext">Replace
-</span><a href="#local-6989586621679046928"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-41"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Replace -&gt; Maybe [Char]
+</span><a href="#local-6989586621679047548"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span class="annot"><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-type">replaceMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">Replace</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-45"></span><span id="replaceMode"><span class="annot"><span class="annottext">replaceMode :: Replace -&gt; IO ()
+</span><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var hs-var">replaceMode</span></a></span></span><span> </span><span id="local-6989586621679047547"><span class="annot"><span class="annottext">Replace
+</span><a href="#local-6989586621679047547"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-46"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Replace -&gt; Maybe String
 </span><a href="LibCli.Spec.html#input"><span class="hs-identifier hs-var hs-var">input</span></a></span><span> </span><span class="annot"><span class="annottext">Replace
-</span><a href="#local-6989586621679046928"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-42"></span><span>      </span><span class="annot"><span class="annottext">Maybe [Char]
-</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
-forall a. HasCallStack =&gt; [Char] -&gt; a
-</span><span class="hs-identifier hs-var">error</span></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679047547"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-47"></span><span>      </span><span class="annot"><span class="annottext">Maybe String
+</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ()
+forall a. HasCallStack =&gt; String -&gt; a
+</span><span class="hs-identifier hs-var">error</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;No input file was found&quot;</span></span><span>
-</span><span id="line-43"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679046925"><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679046925"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-44"></span><span>          </span><span id="local-6989586621679046924"><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679046924"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO [Char]
-</span><span class="hs-identifier hs-var">readFile</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679046925"><span class="hs-identifier hs-var">f</span></a></span><span>
-</span><span id="line-45"></span><span>          </span><span class="annot"><span class="annottext">Maybe [Char] -&gt; [Char] -&gt; IO ()
-</span><a href="LibCore.OutputInterface.html#returnOutput"><span class="hs-identifier hs-var">returnOutput</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Replace -&gt; Maybe [Char]
+</span><span id="line-48"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679047544"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679047544"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-49"></span><span>          </span><span id="local-6989586621679047543"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679047543"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO String
+</span><span class="hs-identifier hs-var">readFile</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679047544"><span class="hs-identifier hs-var">f</span></a></span><span>
+</span><span id="line-50"></span><span>          </span><span class="annot"><span class="annottext">Maybe String -&gt; String -&gt; IO ()
+</span><a href="LibCore.OutputInterface.html#returnOutput"><span class="hs-identifier hs-var">returnOutput</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Replace -&gt; Maybe String
 </span><a href="LibCli.Spec.html#out"><span class="hs-identifier hs-var hs-var">out</span></a></span><span> </span><span class="annot"><span class="annottext">Replace
-</span><a href="#local-6989586621679046928"><span class="hs-identifier hs-var">c</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ParseStructure -&gt; [Char]
-</span><a href="LibCore.Decoder.html#decode"><span class="hs-identifier hs-var">decode</span></a></span><span> </span><span class="annot"><span class="annottext">(ParseStructure -&gt; [Char]) -&gt; ParseStructure -&gt; [Char]
+</span><a href="#local-6989586621679047547"><span class="hs-identifier hs-var">c</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ParseStructure -&gt; String
+</span><a href="LibCore.Decoder.html#decode"><span class="hs-identifier hs-var">decode</span></a></span><span> </span><span class="annot"><span class="annottext">(ParseStructure -&gt; String) -&gt; ParseStructure -&gt; String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; ParseStructure -&gt; ParseStructure
 </span><a href="LibCore.Mapper.html#mapParseStructure"><span class="hs-identifier hs-var">mapParseStructure</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
 </span><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-var">getKnowledgeBase</span></a></span><span> </span><span class="annot"><span class="annottext">(ParseStructure -&gt; ParseStructure)
 -&gt; ParseStructure -&gt; ParseStructure
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; ParseStructure
-</span><a href="LibCore.Parser.html#doParse"><span class="hs-identifier hs-var">doParse</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679046924"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span class="hs-comment">----------------------------</span><span>
-</span><span id="line-48"></span><span class="hs-comment">-- Executable entrypoiny: --</span><span>
-</span><span id="line-49"></span><span class="hs-comment">----------------------------</span><span>
-</span><span id="line-50"></span><span>
-</span><span id="line-51"></span><span class="hs-comment">-- |Main entrypoint of the CLI application.</span><span>
-</span><span id="line-52"></span><span class="hs-comment">--</span><span>
-</span><span id="line-53"></span><span class="hs-comment">-- /CLI endpoints:/</span><span>
-</span><span id="line-54"></span><span class="hs-comment">--</span><span>
-</span><span id="line-55"></span><span class="hs-comment">--    * replace   - expand all the abbreviation in the full text file</span><span>
-</span><span id="line-56"></span><span class="hs-comment">--    * expand    - find an expansion for a single abbreviation input</span><span>
-</span><span id="line-57"></span><span class="hs-comment">--    * list      - list all the known expansion records</span><span>
-</span><span id="line-58"></span><span class="hs-comment">--    * add       - add a new record to the knowledge base</span><span>
-</span><span id="line-59"></span><span class="hs-comment">--    * update    - modify an existing record in the knowledge base</span><span>
-</span><span id="line-60"></span><span class="hs-comment">--    * delete    - delete an existing record from the knowledge base</span><span>
-</span><span id="line-61"></span><span class="hs-comment">--</span><span>
-</span><span id="line-62"></span><span class="hs-comment">-- /Usage:/</span><span>
-</span><span id="line-63"></span><span class="hs-comment">--</span><span>
-</span><span id="line-64"></span><span class="hs-comment">--    * --help                            - prints the full CLI tool support</span><span>
-</span><span id="line-65"></span><span class="hs-comment">--    * \&lt;command\&gt; [args\*] [options\*]  - invokes the command</span><span>
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ParseStructure
+</span><a href="LibCore.Parser.html#doParse"><span class="hs-identifier hs-var">doParse</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679047543"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-51"></span><span>
+</span><span id="line-52"></span><span class="hs-comment">----------------------------</span><span>
+</span><span id="line-53"></span><span class="hs-comment">-- Executable entrypoiny: --</span><span>
+</span><span id="line-54"></span><span class="hs-comment">----------------------------</span><span>
+</span><span id="line-55"></span><span>
+</span><span id="line-56"></span><span class="hs-comment">-- |Main entrypoint of the CLI application.</span><span>
+</span><span id="line-57"></span><span class="hs-comment">--</span><span>
+</span><span id="line-58"></span><span class="hs-comment">-- /CLI endpoints:/</span><span>
+</span><span id="line-59"></span><span class="hs-comment">--</span><span>
+</span><span id="line-60"></span><span class="hs-comment">--    * replace   - expand all the abbreviation in the full text file</span><span>
+</span><span id="line-61"></span><span class="hs-comment">--    * expand    - find an expansion for a single abbreviation input</span><span>
+</span><span id="line-62"></span><span class="hs-comment">--    * list      - list all the known expansion records</span><span>
+</span><span id="line-63"></span><span class="hs-comment">--    * add       - add a new record to the knowledge base</span><span>
+</span><span id="line-64"></span><span class="hs-comment">--    * update    - modify an existing record in the knowledge base</span><span>
+</span><span id="line-65"></span><span class="hs-comment">--    * delete    - delete an existing record from the knowledge base</span><span>
 </span><span id="line-66"></span><span class="hs-comment">--</span><span>
-</span><span id="line-67"></span><span class="hs-comment">-- /See more:/</span><span>
+</span><span id="line-67"></span><span class="hs-comment">-- /Usage:/</span><span>
 </span><span id="line-68"></span><span class="hs-comment">--</span><span>
-</span><span id="line-69"></span><span class="hs-comment">--    * See 'LibCli.Spec' for more information about the CLI endpoints.</span><span>
-</span><span id="line-70"></span><span class="annot"><a href="LibCli.Main.html#cliMain"><span class="hs-identifier hs-type">cliMain</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-71"></span><span id="cliMain"><span class="annot"><span class="annottext">cliMain :: IO ()
-</span><a href="LibCli.Main.html#cliMain"><span class="hs-identifier hs-var hs-var">cliMain</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ShortHndrModes -&gt; IO ()
-</span><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span class="annot"><span class="annottext">(ShortHndrModes -&gt; IO ()) -&gt; IO ShortHndrModes -&gt; IO ()
-forall (m :: * -&gt; *) a b. Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b
-</span><span class="hs-operator hs-var">=&lt;&lt;</span></span><span> </span><span class="annot"><span class="annottext">ShortHndrModes -&gt; IO ShortHndrModes
-forall a. Data a =&gt; a -&gt; IO a
-</span><span class="hs-identifier hs-var">CMD.cmdArgs</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[ShortHndrModes] -&gt; ShortHndrModes
-forall val. Data val =&gt; [val] -&gt; val
-</span><span class="hs-identifier hs-var">CMD.modes</span></span><span> </span><span class="annot"><span class="annottext">[ShortHndrModes]
-</span><a href="LibCli.Spec.html#cliModes"><span class="hs-identifier hs-var">cliModes</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-72"></span></pre></body></html>
+</span><span id="line-69"></span><span class="hs-comment">--    * --help                            - prints the full CLI tool support</span><span>
+</span><span id="line-70"></span><span class="hs-comment">--    * \&lt;command\&gt; [args\*] [options\*]  - invokes the command</span><span>
+</span><span id="line-71"></span><span class="hs-comment">--</span><span>
+</span><span id="line-72"></span><span class="hs-comment">-- /See more:/</span><span>
+</span><span id="line-73"></span><span class="hs-comment">--</span><span>
+</span><span id="line-74"></span><span class="hs-comment">--    * See 'LibCli.Spec' for more information about the CLI endpoints.</span><span>
+</span><span id="line-75"></span><span class="annot"><a href="LibCli.Main.html#cliMain"><span class="hs-identifier hs-type">cliMain</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-76"></span><span id="cliMain"><span class="annot"><span class="annottext">cliMain :: IO ()
+</span><a href="LibCli.Main.html#cliMain"><span class="hs-identifier hs-var hs-var">cliMain</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-77"></span><span>       </span><span id="local-6989586621679047539"><span class="annot"><span class="annottext">ShortHndrModes
+</span><a href="#local-6989586621679047539"><span class="hs-identifier hs-var">xs</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Mode ShortHndrModes -&gt; IO ShortHndrModes
+forall a. Mode a -&gt; IO a
+</span><span class="hs-identifier hs-var">processArgs</span></span><span> </span><span class="annot"><span class="annottext">Mode ShortHndrModes
+</span><a href="LibCli.Spec.html#arguments"><span class="hs-identifier hs-var">arguments</span></a></span><span>
+</span><span id="line-78"></span><span>       </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ShortHndrModes
+</span><a href="#local-6989586621679047539"><span class="hs-identifier hs-var">xs</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-79"></span><span>         </span><span class="annot"><a href="LibCli.Spec.html#Exp"><span class="hs-identifier hs-type">Exp</span></a></span><span> </span><span id="local-6989586621679047538"><span class="annot"><span class="annottext">Expansion
+</span><a href="#local-6989586621679047538"><span class="hs-identifier hs-var">ex</span></a></span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Expansion -&gt; IO ()
+</span><a href="LibCli.Main.html#handleExpMode"><span class="hs-identifier hs-var">handleExpMode</span></a></span><span> </span><span class="annot"><span class="annottext">Expansion
+</span><a href="#local-6989586621679047538"><span class="hs-identifier hs-var">ex</span></a></span><span>
+</span><span id="line-80"></span><span>         </span><span class="annot"><a href="LibCli.Spec.html#Kbt"><span class="hs-identifier hs-type">Kbt</span></a></span><span> </span><span id="local-6989586621679047537"><span class="annot"><span class="annottext">KnowledgeBaseTypes
+</span><a href="#local-6989586621679047537"><span class="hs-identifier hs-var">kbt</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseTypes -&gt; IO ()
+forall a. Show a =&gt; a -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseTypes
+</span><a href="#local-6989586621679047537"><span class="hs-identifier hs-var">kbt</span></a></span><span>
+</span><span id="line-81"></span><span>         </span><span class="annot"><span class="annottext">ShortHndrModes
+</span><a href="LibCli.Spec.html#Hlp"><span class="hs-identifier hs-var">Hlp</span></a></span><span>     </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Text] -&gt; IO ()
+forall a. Show a =&gt; a -&gt; IO ()
+</span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; IO ()) -&gt; [Text] -&gt; IO ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; HelpFormat -&gt; Mode ShortHndrModes -&gt; [Text]
+forall a. [String] -&gt; HelpFormat -&gt; Mode a -&gt; [Text]
+</span><span class="hs-identifier hs-var">helpText</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">HelpFormat
+</span><span class="hs-identifier hs-var">HelpFormatDefault</span></span><span> </span><span class="annot"><span class="annottext">Mode ShortHndrModes
+</span><a href="LibCli.Spec.html#arguments"><span class="hs-identifier hs-var">arguments</span></a></span><span>
+</span><span id="line-82"></span></pre></body></html>

@@ -22,6 +22,7 @@ data KnowledgeBaseTypes
 data ShortHndrModes
 [Exp] :: Expansion -> ShortHndrModes
 [Kbt] :: KnowledgeBaseTypes -> ShortHndrModes
+[Hlp] :: ShortHndrModes
 
 -- | ShortHndr CLI interface specification. |Defines the arguments for the
 --   replace command
@@ -72,6 +73,12 @@ add :: ShortHndrModes
 update :: ShortHndrModes
 delete :: ShortHndrModes
 cliModes :: [ShortHndrModes]
+defaultMode :: ShortHndrModes
+helpMode :: ShortHndrModes -> ShortHndrModes
+arguments :: Mode ShortHndrModes
+replaceArgs :: Mode ShortHndrModes
+setInplace :: Bool -> ShortHndrModes -> ShortHndrModes
+updateMode :: String -> String -> ShortHndrModes -> Either String ShortHndrModes
 instance GHC.Show.Show LibCli.Spec.Replace
 instance Data.Data.Data LibCli.Spec.Replace
 instance GHC.Show.Show LibCli.Spec.Expand
