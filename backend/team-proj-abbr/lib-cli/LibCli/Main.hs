@@ -10,12 +10,16 @@ Stability   : experimental
 module LibCli.Main where
 
 import           LibCli.Spec
-import           LibCore.Decoder         (decode)
-import           LibCore.KnowledgeBase   (getKnowledgeBase)
-import           LibCore.Mapper          (mapParseStructure)
-import           LibCore.OutputInterface (returnOutput)
-import           LibCore.Parser          (doParse)
-import qualified System.Console.CmdArgs  as CMD
+import           LibCore.Decoder                 (decode)
+import           LibCore.KnowledgeBase           (getKnowledgeBase)
+import           LibCore.Mapper                  (mapParseStructure)
+import           LibCore.OutputInterface         (returnOutput)
+import           LibCore.Parser                  (doParse)
+import           System.Console.CmdArgs.Explicit
+    ( HelpFormat (HelpFormatDefault)
+    , helpText
+    , processArgs
+    )
 
 -----------------------
 -- Command Handlers: --
@@ -25,6 +29,7 @@ import qualified System.Console.CmdArgs  as CMD
 mockCliHandler :: ShortHndrModes -> IO ()
 mockCliHandler (Exp e) = handleExpMode e
 mockCliHandler (Kbt k) = handleKbtMode k
+mockCliHandler Hlp     = print $ helpText [] HelpFormatDefault arguments
 
 handleExpMode :: Expansion -> IO ()
 handleExpMode (Re r) = replaceMode r
@@ -68,4 +73,9 @@ replaceMode c = do
 --
 --    * See 'LibCli.Spec' for more information about the CLI endpoints.
 cliMain :: IO ()
-cliMain = mockCliHandler =<< CMD.cmdArgs (CMD.modes cliModes)
+cliMain = do
+       xs <- processArgs arguments
+       case xs of
+         Exp ex  -> handleExpMode ex
+         Kbt kbt -> print kbt
+         Hlp     -> print $ helpText [] HelpFormatDefault arguments

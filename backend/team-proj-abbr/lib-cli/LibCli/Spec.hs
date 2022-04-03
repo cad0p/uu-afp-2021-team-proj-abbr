@@ -1,5 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE GADTs              #-}
+
 {-|
 Description : Command Line Interface - Specification
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
@@ -10,7 +11,16 @@ Stability   : experimental
 
 module LibCli.Spec where
 
-import qualified System.Console.CmdArgs as CMD
+import qualified System.Console.CmdArgs          as CMD
+import           System.Console.CmdArgs.Explicit
+    ( Mode
+    , flagArg
+    , flagHelpSimple
+    , flagNone
+    , flagReq
+    , mode
+    , modes
+    )
 
 -----------------------------------
 -- CLI interface specificaitons: --
@@ -31,6 +41,7 @@ data KnowledgeBaseTypes where
 data ShortHndrModes where
   Exp :: Expansion -> ShortHndrModes
   Kbt :: KnowledgeBaseTypes -> ShortHndrModes
+  Hlp :: ShortHndrModes
   deriving (CMD.Data, CMD.Typeable, Show)
 
 
@@ -160,3 +171,39 @@ delete = Kbt (Del $
 
 cliModes :: [ShortHndrModes]
 cliModes = [replace, expand, list, add, update, delete]
+
+defaultMode :: ShortHndrModes
+defaultMode = Hlp
+
+helpMode :: ShortHndrModes -> ShortHndrModes
+helpMode _ = Hlp
+
+-- Explicit arguments
+arguments :: Mode ShortHndrModes
+arguments = modes "ShortHandr" defaultMode "Use 'replace' to enter replace mode" [replaceArgs]
+
+replaceArgs :: Mode ShortHndrModes
+replaceArgs = mode "replace" initial
+    "Replace all abreviations in the provided file with their expansions"
+    (flagArg (updateMode "") "yes")
+    [
+    flagReq ["input", "i"] (updateMode "input") "FILENAME" "Input filename"
+    ,flagReq ["out", "o"] (updateMode "out") "FILENAME" "Output filename"
+    ,flagReq ["k"] (updateMode "replace_kb") "FILENAME" "Knowledgebase filename"
+    ,flagNone ["inplace"] (setInplace True) "inplace"
+    ,flagHelpSimple helpMode
+    ]
+    where initial = Exp $ Re $ Replace { input = Just "", out = Just "", replace_kb = Just "", inplace = Just False }
+
+setInplace :: Bool -> ShortHndrModes -> ShortHndrModes
+setInplace b (Exp (Re r)) = Exp $ Re $ r {inplace = Just b}
+setInplace _ r            = r
+
+updateMode :: String -> String -> ShortHndrModes -> Either String ShortHndrModes
+updateMode "input" s (Exp (Re r)) = Right $ Exp $ Re $ r {input = Just s}
+updateMode "out" s (Exp (Re r)) = Right $ Exp $ Re $ r {out = Just s}
+updateMode "replace_kb" s (Exp (Re r)) = Right $ Exp $ Re $ r {replace_kb = Just s}
+updateMode _ _ e@(Exp (Re _))       = Right e
+updateMode _ _ (Exp (Ex _))         = undefined
+updateMode _ _ (Kbt _)              = undefined
+updateMode _ _ Hlp              = undefined
