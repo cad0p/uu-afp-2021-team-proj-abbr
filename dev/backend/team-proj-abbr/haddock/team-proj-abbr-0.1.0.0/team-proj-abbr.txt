@@ -63,40 +63,26 @@ data Delete
 Delete :: String -> Maybe FilePath -> Delete
 [delete_abbr] :: Delete -> String
 [delete_kb] :: Delete -> Maybe FilePath
-
--- | Utility function to provide help for the file type arguments.
-fileFlags :: String -> Maybe FilePath -> Maybe FilePath
-replace :: ShortHndrModes
-expand :: ShortHndrModes
-list :: ShortHndrModes
-add :: ShortHndrModes
-update :: ShortHndrModes
-delete :: ShortHndrModes
-cliModes :: [ShortHndrModes]
 defaultMode :: ShortHndrModes
 helpMode :: ShortHndrModes -> ShortHndrModes
 arguments :: Mode ShortHndrModes
 replaceArgs :: Mode ShortHndrModes
 setInplace :: Bool -> ShortHndrModes -> ShortHndrModes
+expandArgs :: Mode ShortHndrModes
+listArgs :: Mode ShortHndrModes
+addArgs :: Mode ShortHndrModes
+updateArgs :: Mode ShortHndrModes
+deleteArgs :: Mode ShortHndrModes
 updateMode :: String -> String -> ShortHndrModes -> Either String ShortHndrModes
 instance GHC.Show.Show LibCli.Spec.Replace
-instance Data.Data.Data LibCli.Spec.Replace
 instance GHC.Show.Show LibCli.Spec.Expand
-instance Data.Data.Data LibCli.Spec.Expand
 instance GHC.Show.Show LibCli.Spec.Expansion
-instance Data.Data.Data LibCli.Spec.Expansion
 instance GHC.Show.Show LibCli.Spec.List
-instance Data.Data.Data LibCli.Spec.List
 instance GHC.Show.Show LibCli.Spec.Add
-instance Data.Data.Data LibCli.Spec.Add
 instance GHC.Show.Show LibCli.Spec.Update
-instance Data.Data.Data LibCli.Spec.Update
 instance GHC.Show.Show LibCli.Spec.Delete
-instance Data.Data.Data LibCli.Spec.Delete
 instance GHC.Show.Show LibCli.Spec.KnowledgeBaseTypes
-instance Data.Data.Data LibCli.Spec.KnowledgeBaseTypes
 instance GHC.Show.Show LibCli.Spec.ShortHndrModes
-instance Data.Data.Data LibCli.Spec.ShortHndrModes
 
 
 module LibCore.InputInterface
@@ -196,7 +182,6 @@ tokenToString :: Token -> String
 
 
 module LibCli.Main
-mockCliHandler :: ShortHndrModes -> IO ()
 handleExpMode :: Expansion -> IO ()
 handleKbtMode :: KnowledgeBaseTypes -> IO ()
 replaceMode :: Replace -> IO ()
