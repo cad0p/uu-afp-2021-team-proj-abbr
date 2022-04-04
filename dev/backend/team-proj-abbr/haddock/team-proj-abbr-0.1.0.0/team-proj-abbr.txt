@@ -78,7 +78,7 @@ instance GHC.Classes.Eq LibCore.Models.Token
 
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
-getKnowledgeBase :: KnowledgeBaseStructure
+getKnowledgeBase :: FilePath -> KnowledgeBaseStructure
 
 
 module LibCore.OutputInterface
