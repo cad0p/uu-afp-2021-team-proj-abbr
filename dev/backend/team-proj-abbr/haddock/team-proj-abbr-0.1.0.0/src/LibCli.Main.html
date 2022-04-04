@@ -102,29 +102,29 @@ forall a. Show a =&gt; a -&gt; [Char]
 </span><a href="LibCli.Spec.html#input"><span class="hs-identifier hs-var hs-var">input</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="#local-6989586621679044616"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-41"></span><span>    </span><span class="annot"><span class="annottext">Maybe [Char]
-</span><span class="hs-identifier hs-var">Nothing</span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. HasCallStack =&gt; [Char] -&gt; a
 </span><span class="hs-identifier hs-var">error</span></span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;No input FilePath was found&quot;</span></span><span>
 </span><span id="line-42"></span><span>    </span><span class="hs-comment">-- TODO from Pier to Wilmer: this error above is never reached</span><span>
 </span><span id="line-43"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679044614"><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044614"><span class="hs-identifier hs-var">i_f</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><a href="#local-6989586621679044614"><span class="hs-identifier hs-var">i_fp</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-44"></span><span>      </span><span id="local-6989586621679044613"><span class="annot"><span class="annottext">[Char]
 </span><a href="#local-6989586621679044613"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO [Char]
 </span><span class="hs-identifier hs-var">readFile</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044614"><span class="hs-identifier hs-var">i_f</span></a></span><span>
+</span><a href="#local-6989586621679044614"><span class="hs-identifier hs-var">i_fp</span></a></span><span>
 </span><span id="line-45"></span><span>      </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe [Char]
 </span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="#local-6989586621679044616"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-46"></span><span>        </span><span class="annot"><span class="annottext">Maybe [Char]
-</span><span class="hs-identifier hs-var">Nothing</span></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. HasCallStack =&gt; [Char] -&gt; a
 </span><span class="hs-identifier hs-var">error</span></span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;No KB FilePath was found&quot;</span></span><span>
 </span><span id="line-47"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679044611"><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_f</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO Bool
+</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_fp</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO Bool
 </span><span class="hs-identifier hs-var">doesFileExist</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_f</span></a></span><span> </span><span class="annot"><span class="annottext">IO Bool -&gt; (Bool -&gt; IO ()) -&gt; IO ()
+</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_fp</span></a></span><span> </span><span class="annot"><span class="annottext">IO Bool -&gt; (Bool -&gt; IO ()) -&gt; IO ()
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
 </span><span id="line-48"></span><span>          </span><span class="annot"><span class="annottext">Bool
@@ -134,14 +134,14 @@ forall a. HasCallStack =&gt; [Char] -&gt; a
 </span><span class="hs-string">&quot;The KB File '&quot;</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_f</span></a></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
+</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_fp</span></a></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char] -&gt; [Char]
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;' does not exist&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-49"></span><span>          </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_f</span></a></span><span> </span><span class="annot"><span class="annottext">IO () -&gt; IO () -&gt; IO ()
+</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_fp</span></a></span><span> </span><span class="annot"><span class="annottext">IO () -&gt; IO () -&gt; IO ()
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; m b -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Maybe [Char] -&gt; [Char] -&gt; IO ()
 </span><a href="LibCore.OutputInterface.html#returnOutput"><span class="hs-identifier hs-var">returnOutput</span></a></span><span>
@@ -152,7 +152,7 @@ forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; m b -&gt; m b
 </span><a href="LibCore.Decoder.html#decode"><span class="hs-identifier hs-var">decode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; ParseStructure -&gt; ParseStructure
 </span><a href="LibCore.Mapper.html#mapParseStructure"><span class="hs-identifier hs-var">mapParseStructure</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Char] -&gt; KnowledgeBaseStructure
 </span><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-var">getKnowledgeBase</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_f</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Char] -&gt; ParseStructure
+</span><a href="#local-6989586621679044611"><span class="hs-identifier hs-var">kb_fp</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Char] -&gt; ParseStructure
 </span><a href="LibCore.Parser.html#doParse"><span class="hs-identifier hs-var">doParse</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><a href="#local-6989586621679044613"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-52"></span><span class="hs-comment">-- Impossible case because of the mockCliHandler</span><span>
