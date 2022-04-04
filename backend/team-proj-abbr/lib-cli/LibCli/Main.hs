@@ -45,7 +45,7 @@ replaceMode c@CS.Replace {} = do
 replaceMode _ = undefined
 
 ----------------------------
--- Executable entrypoiny: --
+-- Executable entrypoint: --
 ----------------------------
 
 -- |Main entrypoint of the CLI application.
