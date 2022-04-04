@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_GY6ULtuxbwkBpm3K69xRIr"></span><span class="hs-comment">{-|
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span id="%24con2tag_9newD3rPErK0U1GysKIHbH"></span><span class="hs-comment">{-|
 Description : TODO: Models stuff
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
@@ -14,14 +14,14 @@ Stability   : experimental
 </span><span id="line-14"></span><span class="hs-keyword">data</span><span> </span><span id="Token"><span class="annot"><a href="LibCore.Models.html#Token"><span class="hs-identifier hs-var">Token</span></a></span></span><span>
 </span><span id="line-15"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="NoToken"><span class="annot"><a href="LibCore.Models.html#NoToken"><span class="hs-identifier hs-var">NoToken</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-16"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DoMap"><span class="annot"><a href="LibCore.Models.html#DoMap"><span class="hs-identifier hs-var">DoMap</span></a></span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
-</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679044431"><span id="local-6989586621679044433"><span class="annot"><span class="annottext">Token -&gt; Token -&gt; Bool
+</span><span id="line-17"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679050964"><span id="local-6989586621679050966"><span class="annot"><span class="annottext">Token -&gt; Token -&gt; Bool
 (Token -&gt; Token -&gt; Bool) -&gt; (Token -&gt; Token -&gt; Bool) -&gt; Eq Token
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Token -&gt; Token -&gt; Bool
 $c/= :: Token -&gt; Token -&gt; Bool
 == :: Token -&gt; Token -&gt; Bool
 $c== :: Token -&gt; Token -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679044415"><span id="local-6989586621679044417"><span id="local-6989586621679044419"><span id="local-6989586621679044421"><span id="local-6989586621679044423"><span id="local-6989586621679044425"><span id="local-6989586621679044427"><span class="annot"><span class="annottext">Eq Token
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679050948"><span id="local-6989586621679050950"><span id="local-6989586621679050952"><span id="local-6989586621679050954"><span id="local-6989586621679050956"><span id="local-6989586621679050958"><span id="local-6989586621679050960"><span class="annot"><span class="annottext">Eq Token
 Eq Token
 -&gt; (Token -&gt; Token -&gt; Ordering)
 -&gt; (Token -&gt; Token -&gt; Bool)
@@ -59,7 +59,7 @@ $c&lt; :: Token -&gt; Token -&gt; Bool
 compare :: Token -&gt; Token -&gt; Ordering
 $ccompare :: Token -&gt; Token -&gt; Ordering
 $cp1Ord :: Eq Token
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679044408"><span id="local-6989586621679044410"><span id="local-6989586621679044412"><span class="annot"><span class="annottext">Int -&gt; Token -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679050941"><span id="local-6989586621679050943"><span id="local-6989586621679050945"><span class="annot"><span class="annottext">Int -&gt; Token -&gt; ShowS
 [Token] -&gt; ShowS
 Token -&gt; String
 (Int -&gt; Token -&gt; ShowS)
@@ -81,7 +81,7 @@ $cshowsPrec :: Int -&gt; Token -&gt; ShowS
 </span><span id="line-22"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="plural"><span class="annot"><span class="annottext">Keyword -&gt; Bool
 </span><a href="LibCore.Models.html#plural"><span class="hs-identifier hs-var hs-var">plural</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
 </span><span id="line-23"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-24"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679044400"><span id="local-6989586621679044402"><span class="annot"><span class="annottext">Keyword -&gt; Keyword -&gt; Bool
+</span><span id="line-24"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679050933"><span id="local-6989586621679050935"><span class="annot"><span class="annottext">Keyword -&gt; Keyword -&gt; Bool
 (Keyword -&gt; Keyword -&gt; Bool)
 -&gt; (Keyword -&gt; Keyword -&gt; Bool) -&gt; Eq Keyword
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -89,7 +89,7 @@ forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 $c/= :: Keyword -&gt; Keyword -&gt; Bool
 == :: Keyword -&gt; Keyword -&gt; Bool
 $c== :: Keyword -&gt; Keyword -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679044385"><span id="local-6989586621679044387"><span id="local-6989586621679044389"><span id="local-6989586621679044391"><span id="local-6989586621679044393"><span id="local-6989586621679044395"><span id="local-6989586621679044397"><span class="annot"><span class="annottext">Eq Keyword
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679050918"><span id="local-6989586621679050920"><span id="local-6989586621679050922"><span id="local-6989586621679050924"><span id="local-6989586621679050926"><span id="local-6989586621679050928"><span id="local-6989586621679050930"><span class="annot"><span class="annottext">Eq Keyword
 Eq Keyword
 -&gt; (Keyword -&gt; Keyword -&gt; Ordering)
 -&gt; (Keyword -&gt; Keyword -&gt; Bool)
@@ -127,7 +127,7 @@ $c&lt; :: Keyword -&gt; Keyword -&gt; Bool
 compare :: Keyword -&gt; Keyword -&gt; Ordering
 $ccompare :: Keyword -&gt; Keyword -&gt; Ordering
 $cp1Ord :: Eq Keyword
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679044379"><span id="local-6989586621679044381"><span id="local-6989586621679044383"><span class="annot"><span class="annottext">Int -&gt; Keyword -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Ord</span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679050912"><span id="local-6989586621679050914"><span id="local-6989586621679050916"><span class="annot"><span class="annottext">Int -&gt; Keyword -&gt; ShowS
 [Keyword] -&gt; ShowS
 Keyword -&gt; String
 (Int -&gt; Keyword -&gt; ShowS)

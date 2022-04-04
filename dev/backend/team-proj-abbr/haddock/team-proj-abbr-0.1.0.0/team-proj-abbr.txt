@@ -78,7 +78,13 @@ instance GHC.Classes.Eq LibCore.Models.Token
 
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
-getKnowledgeBase :: FilePath -> KnowledgeBaseStructure
+data KbEntry
+KbEntry :: String -> String -> KbEntry
+[abbreviation] :: KbEntry -> String
+[expansion] :: KbEntry -> String
+mapEntries :: KbEntry -> (Keyword, Keyword)
+getKnowledgeBase :: Vector KbEntry -> KnowledgeBaseStructure
+instance Data.Csv.Conversion.FromNamedRecord LibCore.KnowledgeBase.KbEntry
 
 
 module LibCore.OutputInterface
