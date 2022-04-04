@@ -51,7 +51,7 @@ forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
 </span><span class="hs-string">&quot;expansion&quot;</span></span><span>
 </span><span id="line-34"></span><span>
 </span><span id="line-35"></span><span>
-</span><span id="line-36"></span><span class="hs-comment">{- 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
+</span><span id="line-36"></span><span class="hs-comment">{-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
 -}</span><span>
 </span><span id="line-38"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#mapEntries"><span class="hs-identifier hs-type">mapEntries</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-39"></span><span id="mapEntries"><span class="annot"><span class="annottext">mapEntries :: KbEntry -&gt; (Keyword, Keyword)
@@ -76,7 +76,7 @@ forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
 </span><span id="line-44"></span><span>
 </span><span id="line-45"></span><span>
 </span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span class="hs-comment">{- 'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'
+</span><span id="line-47"></span><span class="hs-comment">{-| 'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'
 
 -}</span><span>
 </span><span id="line-50"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-type">getKnowledgeBase</span></a></span><span>
