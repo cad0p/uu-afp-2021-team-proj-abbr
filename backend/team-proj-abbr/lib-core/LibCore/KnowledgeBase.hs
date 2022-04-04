@@ -12,7 +12,8 @@ module LibCore.KnowledgeBase where
 import           Data.Map       (Map, empty)
 import           LibCore.Models (Keyword)
 
+
 type KnowledgeBaseStructure = Map Keyword Keyword
 
-getKnowledgeBase :: KnowledgeBaseStructure
-getKnowledgeBase = empty
+getKnowledgeBase :: FilePath -> KnowledgeBaseStructure
+getKnowledgeBase _ = empty
