@@ -1,97 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
-Description : Defines the knowledge base, and a way to parse it from a file.
-              For now, only '.csv' is supported
+Description : TODO: defines the knowledge base
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
 Stability   : experimental
 -}</span><span>
-</span><span id="line-9"></span><span>
-</span><span id="line-10"></span><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
-</span><span id="line-11"></span><span>
-</span><span id="line-12"></span><span>
-</span><span id="line-13"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCore.KnowledgeBase</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-14"></span><span>
-</span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Csv</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">FromNamedRecord</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">parseNamedRecord</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-operator">(.:)</span></span><span class="hs-special">)</span><span>
-</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">fromList</span></span><span class="hs-special">)</span><span>
-</span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Vector</span></span><span>    </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">V</span></span><span>
-</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Models.html"><span class="hs-identifier">LibCore.Models</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#keyword"><span class="hs-identifier">keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#plural"><span class="hs-identifier">plural</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-19"></span><span>
-</span><span id="line-20"></span><span>
-</span><span id="line-21"></span><span>
-</span><span id="line-22"></span><span class="hs-keyword">type</span><span> </span><span id="KnowledgeBaseStructure"><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-var">KnowledgeBaseStructure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
-</span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span class="hs-comment">-- | 'KbEntry' is an entry on the file containing the KB</span><span>
-</span><span id="line-25"></span><span class="hs-keyword">data</span><span> </span><span id="KbEntry"><span class="annot"><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-var">KbEntry</span></a></span></span><span>
-</span><span id="line-26"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="KbEntry"><span class="annot"><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-var">KbEntry</span></a></span></span><span>
-</span><span id="line-27"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><span class="annottext">KbEntry -&gt; String
-</span><a href="LibCore.KnowledgeBase.html#abbreviation"><span class="hs-identifier hs-var hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-28"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="expansion"><span class="annot"><span class="annottext">KbEntry -&gt; String
-</span><a href="LibCore.KnowledgeBase.html#expansion"><span class="hs-identifier hs-var hs-var">expansion</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-29"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-30"></span><span>
-</span><span id="line-31"></span><span class="hs-comment">-- | 'FromNamedRecord' describes how to parse the record</span><span>
-</span><span id="line-32"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromNamedRecord</span></span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-33"></span><span>  </span><span id="local-6989586621679050689"><span class="annot"><span class="annottext">parseNamedRecord :: NamedRecord -&gt; Parser KbEntry
-</span><a href="#local-6989586621679050689"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseNamedRecord</span></a></span></span><span> </span><span id="local-6989586621679050688"><span class="annot"><span class="annottext">NamedRecord
-</span><a href="#local-6989586621679050688"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; KbEntry
-</span><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-var">KbEntry</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; KbEntry)
--&gt; Parser String -&gt; Parser (String -&gt; KbEntry)
-forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">NamedRecord
-</span><a href="#local-6989586621679050688"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">NamedRecord -&gt; ByteString -&gt; Parser String
-forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
-</span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><span class="hs-string">&quot;abbreviation&quot;</span></span><span> </span><span class="annot"><span class="annottext">Parser (String -&gt; KbEntry) -&gt; Parser String -&gt; Parser KbEntry
-forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">NamedRecord
-</span><a href="#local-6989586621679050688"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">NamedRecord -&gt; ByteString -&gt; Parser String
-forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
-</span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><span class="hs-string">&quot;expansion&quot;</span></span><span>
-</span><span id="line-34"></span><span>
-</span><span id="line-35"></span><span>
-</span><span id="line-36"></span><span class="hs-comment">{-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
--}</span><span>
-</span><span id="line-38"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#mapEntries"><span class="hs-identifier hs-type">mapEntries</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-39"></span><span id="mapEntries"><span class="annot"><span class="annottext">mapEntries :: KbEntry -&gt; (Keyword, Keyword)
-</span><a href="LibCore.KnowledgeBase.html#mapEntries"><span class="hs-identifier hs-var hs-var">mapEntries</span></a></span></span><span> </span><span id="local-6989586621679050685"><span class="annot"><span class="annottext">KbEntry
-</span><a href="#local-6989586621679050685"><span class="hs-identifier hs-var">e</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-40"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword :: String -&gt; Bool -&gt; Keyword
-</span><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">keyword :: String
-</span><a href="LibCore.Models.html#keyword"><span class="hs-identifier hs-var">keyword</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KbEntry -&gt; String
-</span><a href="LibCore.KnowledgeBase.html#abbreviation"><span class="hs-identifier hs-var hs-var">abbreviation</span></a></span><span> </span><span class="annot"><span class="annottext">KbEntry
-</span><a href="#local-6989586621679050685"><span class="hs-identifier hs-var">e</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">plural :: Bool
-</span><a href="LibCore.Models.html#plural"><span class="hs-identifier hs-var">plural</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
-</span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-special">}</span><span class="hs-special">)</span><span>
-</span><span id="line-41"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword :: String -&gt; Bool -&gt; Keyword
-</span><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">keyword :: String
-</span><a href="LibCore.Models.html#keyword"><span class="hs-identifier hs-var">keyword</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KbEntry -&gt; String
-</span><a href="LibCore.KnowledgeBase.html#expansion"><span class="hs-identifier hs-var hs-var">expansion</span></a></span><span> </span><span class="annot"><span class="annottext">KbEntry
-</span><a href="#local-6989586621679050685"><span class="hs-identifier hs-var">e</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">plural :: Bool
-</span><a href="LibCore.Models.html#plural"><span class="hs-identifier hs-var">plural</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
-</span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-special">}</span><span class="hs-special">)</span><span>
-</span><span id="line-42"></span><span>  </span><span class="hs-special">)</span><span>
-</span><span id="line-43"></span><span>
-</span><span id="line-44"></span><span>
-</span><span id="line-45"></span><span>
-</span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span class="hs-comment">{-| 'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'
-
--}</span><span>
-</span><span id="line-50"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-type">getKnowledgeBase</span></a></span><span>
-</span><span id="line-51"></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">V.Vector</span></span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-comment">-- ^ it is the result of the low level parsing of the file, represented as a vector of entries</span><span>
-</span><span id="line-52"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span>
-</span><span id="line-53"></span><span id="getKnowledgeBase"><span class="annot"><span class="annottext">getKnowledgeBase :: Vector KbEntry -&gt; KnowledgeBaseStructure
-</span><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-var hs-var">getKnowledgeBase</span></a></span></span><span> </span><span id="local-6989586621679050683"><span class="annot"><span class="annottext">Vector KbEntry
-</span><a href="#local-6989586621679050683"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Keyword, Keyword)] -&gt; KnowledgeBaseStructure
-forall k a. Ord k =&gt; [(k, a)] -&gt; Map k a
-</span><span class="hs-identifier hs-var">fromList</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(KbEntry -&gt; (Keyword, Keyword))
--&gt; [KbEntry] -&gt; [(Keyword, Keyword)]
-forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
-</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">KbEntry -&gt; (Keyword, Keyword)
-</span><a href="LibCore.KnowledgeBase.html#mapEntries"><span class="hs-identifier hs-var">mapEntries</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Vector KbEntry -&gt; [KbEntry]
-forall a. Vector a -&gt; [a]
-</span><span class="hs-identifier hs-var">V.toList</span></span><span> </span><span class="annot"><span class="annottext">Vector KbEntry
-</span><a href="#local-6989586621679050683"><span class="hs-identifier hs-var">v</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-54"></span></pre></body></html>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCore.KnowledgeBase</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">empty</span></span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Models.html"><span class="hs-identifier">LibCore.Models</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">type</span><span> </span><span id="KnowledgeBaseStructure"><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-var">KnowledgeBaseStructure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
+</span><span id="line-15"></span><span>
+</span><span id="line-16"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-type">getKnowledgeBase</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span>
+</span><span id="line-17"></span><span id="getKnowledgeBase"><span class="annot"><span class="annottext">getKnowledgeBase :: KnowledgeBaseStructure
+</span><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-var hs-var">getKnowledgeBase</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
+forall k a. Map k a
+</span><span class="hs-identifier hs-var">empty</span></span><span>
+</span><span id="line-18"></span></pre></body></html>

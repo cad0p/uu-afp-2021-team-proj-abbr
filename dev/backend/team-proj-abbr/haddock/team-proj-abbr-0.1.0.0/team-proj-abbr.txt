@@ -78,21 +78,7 @@ instance GHC.Classes.Eq LibCore.Models.Token
 
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
-
--- | <a>KbEntry</a> is an entry on the file containing the KB
-data KbEntry
-KbEntry :: String -> String -> KbEntry
-[abbreviation] :: KbEntry -> String
-[expansion] :: KbEntry -> String
-
--- | <a>mapEntries</a> maps entries to a pair of (<a>abbreviation</a>,
---   <a>expansion</a>)
-mapEntries :: KbEntry -> (Keyword, Keyword)
-
--- | <a>getKnowledgeBase</a> parses from a CSV file to a
---   <a>KnowledgeBaseStructure</a>
-getKnowledgeBase :: Vector KbEntry -> KnowledgeBaseStructure
-instance Data.Csv.Conversion.FromNamedRecord LibCore.KnowledgeBase.KbEntry
+getKnowledgeBase :: KnowledgeBaseStructure
 
 
 module LibCore.OutputInterface
@@ -164,11 +150,6 @@ tokenToString :: Token -> String
 
 module LibCli.Main
 mockCliHandler :: ShortHndr -> IO ()
-
--- | <a>replaceMode</a> does the replacind heavy lifting
---   
---   Under the hood it checks for errors in the input file (TODO input
---   file) and the KB
 replaceMode :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
