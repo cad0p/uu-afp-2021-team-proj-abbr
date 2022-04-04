@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-|
 Description : Command Line Interface - Main
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
@@ -35,12 +36,19 @@ mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
 mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 
 replaceMode :: ShortHndr -> IO ()
-replaceMode c@CS.Replace {} = do
-    case input c of
-      Nothing -> error "No input file was found"
-      Just f -> do
-          s <- readFile f
-          returnOutput (out c) (decode $ mapParseStructure getKnowledgeBase $ doParse s)
+replaceMode c@CS.Replace{} = do
+  case input c of
+    Nothing  -> error "No input FilePath was found"
+    -- TODO from Pier to Wilmer: this error above is never reached
+    Just i_f -> do
+      s <- readFile i_f
+      case kb c of
+        Nothing   -> error "No KB FilePath was found"
+        Just kb_f -> doesFileExist kb_f >>= \case
+          False -> error ("The KB File '" ++ kb_f ++ "' does not exist")
+          True  -> putStrLn kb_f >> returnOutput
+            (out c)
+            (decode (mapParseStructure (getKnowledgeBase kb_f) (doParse s)))
 -- Impossible case because of the mockCliHandler
 replaceMode _ = undefined
 
