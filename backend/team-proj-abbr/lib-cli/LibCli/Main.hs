@@ -44,6 +44,7 @@ replaceMode c@CS.Replace{} = do
       s <- readFile i_fp
       case kb c of
         Nothing    -> error "No KB FilePath was found"
+        -- source: https://stackoverflow.com/questions/16952335/is-there-any-way-to-use-io-bool-in-if-statement-without-binding-to-a-name-in-has
         Just kb_fp -> doesFileExist kb_fp >>= \case
           False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
           True  -> putStrLn kb_fp >> returnOutput
