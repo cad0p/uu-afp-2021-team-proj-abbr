@@ -43,6 +43,7 @@ library
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -fwarn-identities
   build-depends:
       base >=4.7 && <5
+    , cassava
     , cmdargs >=0.10.21
     , containers
     , parsec
@@ -57,6 +58,7 @@ executable team-proj-abbr-cli
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , cassava
     , cmdargs >=0.10.21
     , containers
     , parsec
@@ -73,6 +75,7 @@ test-suite team-proj-abbr-doctest
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base
+    , cassava
     , cmdargs >=0.10.21
     , containers
     , doctest >=0.8
@@ -95,6 +98,7 @@ test-suite team-proj-abbr-test
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , cassava
     , cmdargs >=0.10.21
     , containers
     , parsec

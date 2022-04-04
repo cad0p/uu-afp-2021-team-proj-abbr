@@ -32,6 +32,7 @@ dependencies:
 - cmdargs >= 0.10.21
 - parsec
 - containers
+- cassava
 
 library:
   source-dirs: [lib-core, lib-cli]
