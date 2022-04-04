@@ -60,6 +60,11 @@ data ShortHndr
 fileFlags :: String -> Maybe FilePath -> Maybe FilePath
 fileFlags h f = f CMD.&= CMD.help h CMD.&= CMD.typFile
 
+
+-- | ShortHndr default KB
+defaultKB :: String
+defaultKB = "data/shorthndr-kb.csv"
+
 -------------------------
 -- Expansion commands: --
 -------------------------
@@ -70,7 +75,7 @@ replace =
             { input   = fileFlags "Source file" (pure "shorthndr-input.txt")
             , out     = fileFlags "Output file" (pure "shorthndr--out.txt")
             , kb      = fileFlags "Knowledge Base source file"
-                                  (pure "shorthndr-kb.csv")
+                                  (pure defaultKB)
             , inplace = CMD.def
             }
         CMD.&= CMD.help
@@ -81,7 +86,7 @@ expand =
     Expand
             { abbreviation = CMD.def
             , kb           = fileFlags "Knowledge Base source file"
-                                       (pure "shorthndr-kb.csv")
+                                       (pure defaultKB)
             }
         CMD.&= CMD.help
                    "Expand a provided abbreviation abbreviation if one is found"
@@ -95,7 +100,7 @@ expansionModes = [replace, expand]
 
 list :: ShortHndr
 list =
-    List { kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
+    List { kb = fileFlags "Knowledge Base source file" (pure defaultKB)
          }
         CMD.&= CMD.help "List all records of the Knowledge Base"
 
@@ -103,7 +108,7 @@ add :: ShortHndr
 add =
     Add { abbreviation = CMD.def
         , expansion = CMD.def
-        , kb = fileFlags "Knowledge Base source file" (pure "shorthndr-kb.csv")
+        , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
         }
         CMD.&= CMD.help "Add a new abbreviation record to the Knowledge Base"
 
@@ -113,7 +118,7 @@ update =
             { abbreviation = CMD.def
             , expansion    = CMD.def
             , kb           = fileFlags "Knowledge Base source file"
-                                       (pure "shorthndr-kb.csv")
+                                       (pure defaultKB)
             }
         CMD.&= CMD.help
                    "Update an existing abbreviation record in the Knowledge Base"
@@ -123,7 +128,7 @@ delete =
     Delete
             { abbreviation = CMD.def
             , kb           = fileFlags "Knowledge Base source file"
-                                       (pure "shorthndr-kb.csv")
+                                       (pure defaultKB)
             }
         CMD.&= CMD.help "Delete an abbreviation record from the Knowledge Base"
 
