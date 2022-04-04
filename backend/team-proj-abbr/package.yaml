@@ -34,6 +34,8 @@ dependencies:
 - containers
 - cassava
 - directory
+- bytestring
+- vector
 
 library:
   source-dirs: [lib-core, lib-cli]
