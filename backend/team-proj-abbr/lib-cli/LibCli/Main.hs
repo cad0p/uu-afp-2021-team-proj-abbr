@@ -39,7 +39,7 @@ mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
 mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 
 
-{- 'replaceMode' does the replacind heavy lifting
+{-| 'replaceMode' does the replacind heavy lifting
 
   Under the hood it checks for errors in the input file (TODO input file) and the KB
 -}

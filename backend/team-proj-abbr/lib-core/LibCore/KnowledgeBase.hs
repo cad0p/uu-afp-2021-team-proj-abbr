@@ -33,7 +33,7 @@ instance FromNamedRecord KbEntry where
   parseNamedRecord r = KbEntry <$> r .: "abbreviation" <*> r .: "expansion"
 
 
-{- 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
+{-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
 -}
 mapEntries :: KbEntry -> (Keyword, Keyword)
 mapEntries e =
@@ -44,7 +44,7 @@ mapEntries e =
 
 
 
-{- 'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'
+{-| 'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'
 
 -}
 getKnowledgeBase
