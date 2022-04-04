@@ -38,17 +38,17 @@ mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 replaceMode :: ShortHndr -> IO ()
 replaceMode c@CS.Replace{} = do
   case input c of
-    Nothing  -> error "No input FilePath was found"
+    Nothing   -> error "No input FilePath was found"
     -- TODO from Pier to Wilmer: this error above is never reached
-    Just i_f -> do
-      s <- readFile i_f
+    Just i_fp -> do
+      s <- readFile i_fp
       case kb c of
-        Nothing   -> error "No KB FilePath was found"
-        Just kb_f -> doesFileExist kb_f >>= \case
-          False -> error ("The KB File '" ++ kb_f ++ "' does not exist")
-          True  -> putStrLn kb_f >> returnOutput
+        Nothing    -> error "No KB FilePath was found"
+        Just kb_fp -> doesFileExist kb_fp >>= \case
+          False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
+          True  -> putStrLn kb_fp >> returnOutput
             (out c)
-            (decode (mapParseStructure (getKnowledgeBase kb_f) (doParse s)))
+            (decode (mapParseStructure (getKnowledgeBase kb_fp) (doParse s)))
 -- Impossible case because of the mockCliHandler
 replaceMode _ = undefined
 
