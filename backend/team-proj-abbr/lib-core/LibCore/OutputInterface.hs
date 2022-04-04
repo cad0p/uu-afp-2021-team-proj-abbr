@@ -8,5 +8,7 @@ Stability   : experimental
 
 module LibCore.OutputInterface where
 
-returnOutput :: String -> IO ()
-returnOutput = undefined
+returnOutput :: Maybe FilePath -> String -> IO ()
+returnOutput f = case f of
+  Nothing -> error "No output file found"
+  Just s  -> writeFile s
