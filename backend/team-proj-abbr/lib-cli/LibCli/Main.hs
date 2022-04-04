@@ -9,7 +9,7 @@ Stability   : experimental
 
 module LibCli.Main where
 
-import           LibCli.Spec             (ShortHndr (input, out))
+import           LibCli.Spec             (ShortHndr (input, kb, out))
 import qualified LibCli.Spec             as CS (ShortHndr (..), cliModes)
 import           LibCore.Decoder         (decode)
 import           LibCore.KnowledgeBase   (getKnowledgeBase)
@@ -17,6 +17,7 @@ import           LibCore.Mapper          (mapParseStructure)
 import           LibCore.OutputInterface (returnOutput)
 import           LibCore.Parser          (doParse)
 import qualified System.Console.CmdArgs  as CMD
+import           System.Directory        (doesFileExist)
 
 -----------------------
 -- Command Handlers: --

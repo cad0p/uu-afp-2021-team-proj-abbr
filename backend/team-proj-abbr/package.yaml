@@ -33,6 +33,7 @@ dependencies:
 - parsec
 - containers
 - cassava
+- directory
 
 library:
   source-dirs: [lib-core, lib-cli]
