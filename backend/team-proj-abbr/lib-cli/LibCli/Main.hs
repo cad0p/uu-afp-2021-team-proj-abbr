@@ -10,6 +10,8 @@ Stability   : experimental
 
 module LibCli.Main where
 
+import qualified Data.ByteString.Lazy    as BL
+import           Data.Csv                (decodeByName)
 import           LibCli.Spec             (ShortHndr (input, kb, out))
 import qualified LibCli.Spec             as CS (ShortHndr (..), cliModes)
 import           LibCore.Decoder         (decode)
@@ -19,6 +21,7 @@ import           LibCore.OutputInterface (returnOutput)
 import           LibCore.Parser          (doParse)
 import qualified System.Console.CmdArgs  as CMD
 import           System.Directory        (doesFileExist)
+
 
 -----------------------
 -- Command Handlers: --
@@ -47,9 +50,14 @@ replaceMode c@CS.Replace{} = do
         -- source: https://stackoverflow.com/questions/16952335/is-there-any-way-to-use-io-bool-in-if-statement-without-binding-to-a-name-in-has
         Just kb_fp -> doesFileExist kb_fp >>= \case
           False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
-          True  -> putStrLn kb_fp >> returnOutput
-            (out c)
-            (decode (mapParseStructure (getKnowledgeBase kb_fp) (doParse s)))
+          True  -> do
+            putStrLn kb_fp
+            csvData <- BL.readFile kb_fp
+            case decodeByName csvData of
+              Left  err       -> error ("decoding error: " ++ err)
+              Right (_, kb_v) -> returnOutput
+                (out c)
+                (decode (mapParseStructure (getKnowledgeBase kb_v) (doParse s)))
 -- Impossible case because of the mockCliHandler
 replaceMode _ = undefined
 
