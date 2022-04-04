@@ -78,6 +78,8 @@ instance GHC.Classes.Eq LibCore.Models.Token
 
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
+
+-- | <a>KbEntry</a> is an entry on the file containing the KB
 data KbEntry
 KbEntry :: String -> String -> KbEntry
 [abbreviation] :: KbEntry -> String
