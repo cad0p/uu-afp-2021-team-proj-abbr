@@ -32,6 +32,10 @@ dependencies:
 - cmdargs >= 0.10.21
 - parsec
 - containers
+- cassava
+- directory
+- bytestring
+- vector
 
 library:
   source-dirs: [lib-core, lib-cli]

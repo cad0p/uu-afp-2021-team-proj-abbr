@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-|
 Description : Command Line Interface - Main
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
@@ -9,7 +10,9 @@ Stability   : experimental
 
 module LibCli.Main where
 
-import           LibCli.Spec             (ShortHndr (input, out))
+import qualified Data.ByteString.Lazy    as BL
+import           Data.Csv                (decodeByName)
+import           LibCli.Spec             (ShortHndr (input, kb, out))
 import qualified LibCli.Spec             as CS (ShortHndr (..), cliModes)
 import           LibCore.Decoder         (decode)
 import           LibCore.KnowledgeBase   (getKnowledgeBase)
@@ -17,6 +20,8 @@ import           LibCore.Mapper          (mapParseStructure)
 import           LibCore.OutputInterface (returnOutput)
 import           LibCore.Parser          (doParse)
 import qualified System.Console.CmdArgs  as CMD
+import           System.Directory        (doesFileExist)
+
 
 -----------------------
 -- Command Handlers: --
@@ -33,18 +38,36 @@ mockCliHandler c@CS.Add{}     = print $ "adding! --> " ++ show c
 mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
 mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 
+
+{-| 'replaceMode' does the replacind heavy lifting
+
+  Under the hood it checks for errors in the input file (TODO input file) and the KB
+-}
 replaceMode :: ShortHndr -> IO ()
-replaceMode c@CS.Replace {} = do
-    case input c of
-      Nothing -> error "No input file was found"
-      Just f -> do
-          s <- readFile f
-          returnOutput (out c) (decode $ mapParseStructure getKnowledgeBase $ doParse s)
+replaceMode c@CS.Replace{} = do
+  case input c of
+    Nothing   -> error "No input FilePath was found"
+    -- TODO from Pier to Wilmer: this error above is never reached
+    Just i_fp -> do
+      s <- readFile i_fp
+      case kb c of
+        Nothing    -> error "No KB FilePath was found"
+        -- source: https://stackoverflow.com/questions/16952335/is-there-any-way-to-use-io-bool-in-if-statement-without-binding-to-a-name-in-has
+        Just kb_fp -> doesFileExist kb_fp >>= \case
+          False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
+          True  -> do
+            putStrLn kb_fp
+            csvData <- BL.readFile kb_fp
+            case decodeByName csvData of
+              Left  err       -> error ("decoding error: " ++ err)
+              Right (_, kb_v) -> returnOutput
+                (out c)
+                (decode (mapParseStructure (getKnowledgeBase kb_v) (doParse s)))
 -- Impossible case because of the mockCliHandler
 replaceMode _ = undefined
 
 ----------------------------
--- Executable entrypoiny: --
+-- Executable entrypoint: --
 ----------------------------
 
 -- |Main entrypoint of the CLI application.
