@@ -11,78 +11,45 @@
 
 
 module LibCli.Spec
-data Expansion
-[Re] :: Replace -> Expansion
-[Ex] :: Expand -> Expansion
-data KnowledgeBaseTypes
-[Lst] :: List -> KnowledgeBaseTypes
-[Ad] :: Add -> KnowledgeBaseTypes
-[Up] :: Update -> KnowledgeBaseTypes
-[Del] :: Delete -> KnowledgeBaseTypes
-data ShortHndrModes
-[Exp] :: Expansion -> ShortHndrModes
-[Kbt] :: KnowledgeBaseTypes -> ShortHndrModes
-[Hlp] :: ShortHndrModes
+cliModes :: [ShortHndr]
 
--- | ShortHndr CLI interface specification. |Defines the arguments for the
---   replace command
-data Replace
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> Replace
-[input] :: Replace -> Maybe FilePath
-[out] :: Replace -> Maybe FilePath
-[inplace] :: Replace -> Maybe Bool
-[replace_kb] :: Replace -> Maybe FilePath
+-- | ShortHndr CLI interface specification.
+data ShortHndr
+
+-- | Defines the arguments for the replace command
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
+[input] :: ShortHndr -> Maybe FilePath
+[out] :: ShortHndr -> Maybe FilePath
+[inplace] :: ShortHndr -> Maybe Bool
+[kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
-data Expand
-Expand :: String -> Maybe FilePath -> Expand
-[expand_abbr] :: Expand -> String
-[expand_kb] :: Expand -> Maybe FilePath
+Expand :: String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the list command
-newtype List
-List :: Maybe FilePath -> List
-[list_kb] :: List -> Maybe FilePath
+List :: Maybe FilePath -> ShortHndr
+[kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the add command
-data Add
-Add :: String -> String -> Maybe FilePath -> Add
-[add_abbr] :: Add -> String
-[add_expansion] :: Add -> String
-[add_kb] :: Add -> Maybe FilePath
+Add :: String -> String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[expansion] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the update command
-data Update
-Update :: String -> String -> Maybe FilePath -> Update
-[update_abbr] :: Update -> String
-[update_expansion] :: Update -> String
-[update_kb] :: Update -> Maybe FilePath
+Update :: String -> String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[expansion] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the delete command
-data Delete
-Delete :: String -> Maybe FilePath -> Delete
-[delete_abbr] :: Delete -> String
-[delete_kb] :: Delete -> Maybe FilePath
-defaultMode :: ShortHndrModes
-helpMode :: ShortHndrModes -> ShortHndrModes
-arguments :: Mode ShortHndrModes
-replaceArgs :: Mode ShortHndrModes
-setInplace :: Bool -> ShortHndrModes -> ShortHndrModes
-expandArgs :: Mode ShortHndrModes
-listArgs :: Mode ShortHndrModes
-addArgs :: Mode ShortHndrModes
-updateArgs :: Mode ShortHndrModes
-deleteArgs :: Mode ShortHndrModes
-updateMode :: String -> String -> ShortHndrModes -> Either String ShortHndrModes
-instance GHC.Show.Show LibCli.Spec.Replace
-instance GHC.Show.Show LibCli.Spec.Expand
-instance GHC.Show.Show LibCli.Spec.Expansion
-instance GHC.Show.Show LibCli.Spec.List
-instance GHC.Show.Show LibCli.Spec.Add
-instance GHC.Show.Show LibCli.Spec.Update
-instance GHC.Show.Show LibCli.Spec.Delete
-instance GHC.Show.Show LibCli.Spec.KnowledgeBaseTypes
-instance GHC.Show.Show LibCli.Spec.ShortHndrModes
+Delete :: String -> Maybe FilePath -> ShortHndr
+[abbreviation] :: ShortHndr -> String
+[kb] :: ShortHndr -> Maybe FilePath
+instance GHC.Show.Show LibCli.Spec.ShortHndr
+instance Data.Data.Data LibCli.Spec.ShortHndr
 
 
 module LibCore.InputInterface
@@ -182,9 +149,8 @@ tokenToString :: Token -> String
 
 
 module LibCli.Main
-handleExpMode :: Expansion -> IO ()
-handleKbtMode :: KnowledgeBaseTypes -> IO ()
-replaceMode :: Replace -> IO ()
+mockCliHandler :: ShortHndr -> IO ()
+replaceMode :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
 --   

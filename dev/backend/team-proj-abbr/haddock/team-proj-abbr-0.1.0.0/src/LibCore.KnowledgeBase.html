@@ -1,21 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
-Description : TODO: defines the knowledge base
+Description : Defines the knowledge base, and a way to parse it from a file.
+              For now, only '.csv' is supported
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
 Stability   : experimental
 -}</span><span>
-</span><span id="line-8"></span><span>
-</span><span id="line-9"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCore.KnowledgeBase</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-10"></span><span>
-</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">empty</span></span><span class="hs-special">)</span><span>
-</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Models.html"><span class="hs-identifier">LibCore.Models</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-13"></span><span>
-</span><span id="line-14"></span><span class="hs-keyword">type</span><span> </span><span id="KnowledgeBaseStructure"><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-var">KnowledgeBaseStructure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
-</span><span id="line-15"></span><span>
-</span><span id="line-16"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-type">getKnowledgeBase</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span>
-</span><span id="line-17"></span><span id="getKnowledgeBase"><span class="annot"><span class="annottext">getKnowledgeBase :: KnowledgeBaseStructure
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCore.KnowledgeBase</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-11"></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Map</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">empty</span></span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Models.html"><span class="hs-identifier">LibCore.Models</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">type</span><span> </span><span id="KnowledgeBaseStructure"><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-var">KnowledgeBaseStructure</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Map</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
+</span><span id="line-16"></span><span>
+</span><span id="line-17"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-type">getKnowledgeBase</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span>
+</span><span id="line-18"></span><span id="getKnowledgeBase"><span class="annot"><span class="annottext">getKnowledgeBase :: KnowledgeBaseStructure
 </span><a href="LibCore.KnowledgeBase.html#getKnowledgeBase"><span class="hs-identifier hs-var hs-var">getKnowledgeBase</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
 forall k a. Map k a
 </span><span class="hs-identifier hs-var">empty</span></span><span>
-</span><span id="line-18"></span></pre></body></html>
+</span><span id="line-19"></span></pre></body></html>
