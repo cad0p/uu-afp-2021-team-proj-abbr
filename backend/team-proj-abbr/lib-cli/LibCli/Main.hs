@@ -38,6 +38,11 @@ mockCliHandler c@CS.Add{}     = print $ "adding! --> " ++ show c
 mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
 mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 
+
+{- 'replaceMode' does the replacind heavy lifting
+
+  Under the hood it checks for errors in the input file (TODO input file) and the KB
+-}
 replaceMode :: ShortHndr -> IO ()
 replaceMode c@CS.Replace{} = do
   case input c of

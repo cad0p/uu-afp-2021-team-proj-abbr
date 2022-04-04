@@ -12,30 +12,29 @@ Stability   : experimental
 
 module LibCore.KnowledgeBase where
 
-import           Control.Applicative  hiding (empty)
-import qualified Data.ByteString.Lazy as BL
-import           Data.Csv
-import qualified Data.Csv             as V
-import           Data.Map             (Map, empty, fromList, singleton)
-import qualified Data.Vector          as V
-import           LibCore.Models       (Keyword (Keyword, keyword, plural))
+import           Data.Csv       (FromNamedRecord (parseNamedRecord), (.:))
+import           Data.Map       (Map, fromList)
+import qualified Data.Vector    as V
+import           LibCore.Models (Keyword (Keyword, keyword, plural))
 
 
 
 type KnowledgeBaseStructure = Map Keyword Keyword
 
-
+-- | 'KbEntry' is an entry on the file containing the KB
 data KbEntry
   = KbEntry
       { abbreviation :: String
       , expansion    :: String
       }
 
+-- | 'FromNamedRecord' describes how to parse the record
 instance FromNamedRecord KbEntry where
   parseNamedRecord r = KbEntry <$> r .: "abbreviation" <*> r .: "expansion"
 
 
-
+{- 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
+-}
 mapEntries :: KbEntry -> (Keyword, Keyword)
 mapEntries e =
   ( (Keyword { keyword = abbreviation e, plural = False })
@@ -49,6 +48,6 @@ mapEntries e =
 
 -}
 getKnowledgeBase
-  :: V.Vector KbEntry -- ^ it is assumed to be a valid path to an existing KB with the format "*.csv"
+  :: V.Vector KbEntry -- ^ it is the result of the low level parsing of the file, represented as a vector of entries
   -> KnowledgeBaseStructure
 getKnowledgeBase v = fromList (map mapEntries (V.toList v))
