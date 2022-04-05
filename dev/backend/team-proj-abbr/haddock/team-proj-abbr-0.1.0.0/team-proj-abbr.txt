@@ -189,6 +189,11 @@ KbEntry :: String -> String -> KbEntry
 
 -- | <a>mapEntries</a> maps entries to a pair of (<a>abbreviation</a>,
 --   <a>expansion</a>)
+--   
+--   <pre>
+--   &gt;&gt;&gt; mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
+--   (Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+--   </pre>
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
 -- | <a>getKnowledgeBase</a> parses from a CSV file to a
@@ -240,10 +245,6 @@ abbrParser :: String -> Parser Token
 
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
-
--- | Parser to process punctuation. We added this because abbreviations
---   followed by punctuation were consumed
-punctuationParser :: Parser Token
 
 
 module LibCore.Mapper
