@@ -11,6 +11,7 @@ module LibCli.Main where
 
 import           LibCli.Handlers
     ( addHandler
+    , deleteHandler
     , expandHandler
     , listHandler
     , replaceHandler
@@ -28,15 +29,17 @@ import qualified System.Console.CmdArgs as CMD
 
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
 cliController :: CS.ShortHndr -> IO ()
+-- Expansion commands
 cliController CS.Replace { input = ifp, kb = kbfp, out = ofp } =
   replaceHandler kbfp ifp ofp
 cliController CS.Expand { abbreviation = abbr, kb = kbfp } =
   expandHandler kbfp abbr
+-- CRUD commands
 cliController CS.List { kb = kbfp } = listHandler kbfp
 cliController CS.Add { kb = kbfp, abbreviation = a, expansion = e } =
   addHandler kbfp a e
 cliController c@CS.Update{} = print $ "updating! --> " ++ show c
-cliController c@CS.Delete{} = print $ "deleting! --> " ++ show c
+cliController CS.Delete { kb = kbfp, abbreviation = a } = deleteHandler kbfp a
 
 ----------------------------
 -- Executable entrypoint: --

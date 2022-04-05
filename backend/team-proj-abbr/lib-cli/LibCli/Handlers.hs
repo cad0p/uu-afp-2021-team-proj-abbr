@@ -192,9 +192,10 @@ deleteHandler kbfp a = do
   process (_, kbp) = do
     lkb <- loadKb kbp
     let k = pure $ Keyword { keyword = a, plural = False }
+    let s = (\k' -> "Removed: " ++ show k') <$> k
     case remove <$> lkb <*> k of
       Left  er -> error $ show er
-      Right e  -> return $ (show k, ) <$> e
+      Right e  -> return $ (,) <$> s <*> e
 
 
 -- | List command handler.
