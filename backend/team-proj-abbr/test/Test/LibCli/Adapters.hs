@@ -44,7 +44,7 @@ huGetKb :: TestTree
 huGetKb = testGroup
   "huGetKb"
   [ testCase
-      "1"
+      "abbr"
       (   getKnowledgeBase (V.fromList [exampleEntryAbbr])
       @?= M.fromList [examplePairAbbr]
       )
