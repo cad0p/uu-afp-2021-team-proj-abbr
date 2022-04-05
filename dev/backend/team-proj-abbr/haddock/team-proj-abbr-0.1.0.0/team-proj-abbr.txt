@@ -277,7 +277,8 @@ expandHandler :: Maybe FilePath -> String -> IO ()
 --   file.
 replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
 
--- | Add command handler.
+-- | Add command handler. Adds new abbreviation with the associated
+--   expansion to the KB.
 addHandler :: Maybe FilePath -> String -> String -> IO ()
 
 -- | List command handler. Displays all the contents of the specified
