@@ -15,6 +15,7 @@ import           LibCli.Handlers
     , expandHandler
     , listHandler
     , replaceHandler
+    , updateHandler
     )
 import           LibCli.Spec
     ( ShortHndr (abbreviation, expansion, input, kb, out)
@@ -38,7 +39,8 @@ cliController CS.Expand { abbreviation = abbr, kb = kbfp } =
 cliController CS.List { kb = kbfp } = listHandler kbfp
 cliController CS.Add { kb = kbfp, abbreviation = a, expansion = e } =
   addHandler kbfp a e
-cliController c@CS.Update{} = print $ "updating! --> " ++ show c
+cliController CS.Update { kb = kbfp, abbreviation = a, expansion = e } =
+  updateHandler kbfp a e
 cliController CS.Delete { kb = kbfp, abbreviation = a } = deleteHandler kbfp a
 
 ----------------------------
