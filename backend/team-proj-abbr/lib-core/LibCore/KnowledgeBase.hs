@@ -8,15 +8,11 @@ Stability   : experimental
 
 module LibCore.KnowledgeBase where
 
-import           Data.Map       (Map, empty, fromList)
+import           Data.Map       (Map, fromList)
 import           LibCore.Models (Keyword)
 
 
 type KnowledgeBaseStructure = Map Keyword Keyword
-
-
-getKnowledgeBase :: KnowledgeBaseStructure
-getKnowledgeBase = empty
 
 
 -- |Build a new Knowledge Base from the supplied keyword pair list.
