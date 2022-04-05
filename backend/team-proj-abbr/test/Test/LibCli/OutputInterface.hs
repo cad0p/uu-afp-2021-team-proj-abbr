@@ -1,10 +1,13 @@
-module Test.LibCore.OutputInterface (qcOutputInterface, huOutputInterface) where
+module Test.LibCli.OutputInterface
+  ( qcOutputInterface
+  , huOutputInterface
+  ) where
 
 
 import           Test.Tasty
 import           Test.Tasty.HUnit
 
-import           LibCore.OutputInterface
+import           LibCli.OutputInterface
 
 
 qcOutputInterface :: TestTree
