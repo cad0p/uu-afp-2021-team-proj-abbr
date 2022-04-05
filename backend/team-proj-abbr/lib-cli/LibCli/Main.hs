@@ -45,6 +45,7 @@ mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 -}
 replaceMode :: ShortHndr -> IO ()
 replaceMode c@CS.Replace{} = do
+  -- TODO Pier: implement inplace here
   case input c of
     Nothing   -> error "No input FilePath was found"
     -- TODO from Pier to Wilmer: this error above is never reached

@@ -9,9 +9,9 @@ Stability   : experimental
 -}
 
 module LibCli.Spec
-    ( cliModes
-    , ShortHndr(..)
-    ) where
+  ( cliModes
+  , ShortHndr(..)
+  ) where
 
 import qualified System.Console.CmdArgs as CMD
 
@@ -25,7 +25,9 @@ data ShortHndr
   = Replace
       { input   :: Maybe FilePath
       , out     :: Maybe FilePath
-      , inplace :: Maybe Bool
+      , inplace :: Maybe FilePath
+        -- ^ this argument replaces input and output with what is provided here,
+        -- and has precedence over the others
       , kb      :: Maybe FilePath
       }
   -- |Defines the arguments for the expand command
@@ -71,25 +73,26 @@ defaultKB = "data/shorthndr-kb.csv"
 
 replace :: ShortHndr
 replace =
-    Replace
-            { input   = fileFlags "Source file" (pure "shorthndr-input.txt")
-            , out     = fileFlags "Output file" (pure "shorthndr--out.txt")
-            , kb      = fileFlags "Knowledge Base source file"
-                                  (pure defaultKB)
-            , inplace = CMD.def
-            }
-        CMD.&= CMD.help
-                   "Replace all abreviations in the provided file with their expansions"
+  Replace
+      { input   = fileFlags "Source file" (pure "shorthndr-input.txt")
+      , out     = fileFlags "Output file" (pure "shorthndr--out.txt")
+      , kb      = fileFlags "Knowledge Base source file" (pure defaultKB)
+      , inplace = fileFlags
+        ("Source (and Output) file: this argument replaces input and output with"
+        ++ " what is provided here, and has precedence over the others"
+        )
+        (pure "shorthndr-inout.txt")
+      }
+    CMD.&= CMD.help
+             "Replace all abreviations in the provided file with their expansions"
 
 expand :: ShortHndr
 expand =
-    Expand
-            { abbreviation = CMD.def
-            , kb           = fileFlags "Knowledge Base source file"
-                                       (pure defaultKB)
-            }
-        CMD.&= CMD.help
-                   "Expand a provided abbreviation abbreviation if one is found"
+  Expand { abbreviation = CMD.def
+         , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
+         }
+    CMD.&= CMD.help
+             "Expand a provided abbreviation abbreviation if one is found"
 
 expansionModes :: [ShortHndr]
 expansionModes = [replace, expand]
@@ -99,38 +102,33 @@ expansionModes = [replace, expand]
 ------------------------------
 
 list :: ShortHndr
-list =
-    List { kb = fileFlags "Knowledge Base source file" (pure defaultKB)
-         }
-        CMD.&= CMD.help "List all records of the Knowledge Base"
+list = List { kb = fileFlags "Knowledge Base source file" (pure defaultKB) }
+  CMD.&= CMD.help "List all records of the Knowledge Base"
 
 add :: ShortHndr
 add =
-    Add { abbreviation = CMD.def
-        , expansion = CMD.def
-        , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
-        }
-        CMD.&= CMD.help "Add a new abbreviation record to the Knowledge Base"
+  Add { abbreviation = CMD.def
+      , expansion    = CMD.def
+      , kb           = fileFlags "Knowledge Base source file" (pure defaultKB)
+      }
+    CMD.&= CMD.help "Add a new abbreviation record to the Knowledge Base"
+    -- TODO from Pier to Dmitri: is there a way to sync haddock documentation and CLI documentation?
 
 update :: ShortHndr
 update =
-    Update
-            { abbreviation = CMD.def
-            , expansion    = CMD.def
-            , kb           = fileFlags "Knowledge Base source file"
-                                       (pure defaultKB)
-            }
-        CMD.&= CMD.help
-                   "Update an existing abbreviation record in the Knowledge Base"
+  Update { abbreviation = CMD.def
+         , expansion = CMD.def
+         , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
+         }
+    CMD.&= CMD.help
+             "Update an existing abbreviation record in the Knowledge Base"
 
 delete :: ShortHndr
 delete =
-    Delete
-            { abbreviation = CMD.def
-            , kb           = fileFlags "Knowledge Base source file"
-                                       (pure defaultKB)
-            }
-        CMD.&= CMD.help "Delete an abbreviation record from the Knowledge Base"
+  Delete { abbreviation = CMD.def
+         , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
+         }
+    CMD.&= CMD.help "Delete an abbreviation record from the Knowledge Base"
 
 kbModes :: [ShortHndr]
 kbModes = [list, add, update, delete]
