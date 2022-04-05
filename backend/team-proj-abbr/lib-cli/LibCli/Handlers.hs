@@ -38,8 +38,8 @@ loadInput p = do
   return $ Right s
 
 -- TODO: describe
-exec :: KnowledgeBaseStructure -> String -> IO String
-exec kb s = do
+doExpansion :: KnowledgeBaseStructure -> String -> IO String
+doExpansion kb s = do
   return $ D.decode $ M.mapParseStructure kb $ P.doParse s
 
 --------------------------
@@ -65,7 +65,7 @@ expandHandler kbfp abbr = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
   process (_, kbp) s = do
     lkb <- loadKb kbp
-    case (`exec` s) <$> lkb of
+    case (`doExpansion` s) <$> lkb of
       Left  er  -> return $ Left $ StandardError $ show er
       Right ios -> Right <$> ios
 
@@ -97,14 +97,9 @@ replaceHandler kbfp inpfp ofp = do
   process (_, kbp) (_, inp) = do
     lkb <- loadKb kbp
     lin <- loadInput inp
-    case exec <$> lkb <*> lin of
+    case doExpansion <$> lkb <*> lin of
       Left  er  -> return $ Left $ StandardError $ show er
       Right ios -> Right <$> ios
-
-  -- TODO: maybe remove this completely?
-  -- writeOutput :: Maybe FilePath -> String -> IO ()
-  -- writeOutput = returnOutput
-
 
 -------------------------
 -- Knowledge Base CRUD --
