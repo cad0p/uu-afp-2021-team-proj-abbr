@@ -43,6 +43,19 @@ doExpansion :: KnowledgeBaseStructure -> String -> IO String
 doExpansion kb s = do
   return $ D.decode $ M.mapParseStructure kb $ P.doParse s
 
+-- TODO: describe
+formatRecord :: (Keyword, Keyword) -> String
+formatRecord (Keyword kk kpl, Keyword vk vpl) =
+  "Key: "
+    ++ kk
+    ++ (if kpl then "(plural)" else "")
+    ++ " --> "
+    ++ "Value: "
+    ++ vk
+    ++ if vpl then "(plural)" else ""
+
+
+
 --------------------------
 -- Expansion Operations --
 --------------------------
@@ -111,7 +124,8 @@ replaceHandler kbfp inpfp ofp = do
 -- update
 -- delete
 
--- list
+-- | List command handler.
+-- Displays all the contents of the specified Knowledge base.
 listHandler
   :: Maybe FilePath -- ^ KB file path
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
@@ -130,17 +144,6 @@ listHandler kbfp = do
     lkb <- loadKb kbp
     let rs = map formatRecord . listAll <$> lkb
     return $ intercalate "\n" <$> rs
-
-  formatRecord :: (Keyword, Keyword) -> String
-  formatRecord (Keyword kk kpl, Keyword vk vpl) =
-    "Key: "
-      ++ kk
-      ++ (if kpl then "(plural)" else "")
-      ++ " --> "
-      ++ "Value: "
-      ++ vk
-      ++ if vpl then "(plural)" else ""
-
 
 -- get
 

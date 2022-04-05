@@ -64,3 +64,14 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     # remove the demo files:
     $ rm data/demo_file.txt ./demo_file_o.txt
     ```
+
+3. `List`: - get all the knowledge base contents
+
+    ```bash
+    $ stack exec team-proj-abbr-cli -- list -k="data/kb_example.csv"
+    Key: ax --> Value: axiom
+    Key: hl --> Value: hello
+    Key: lmm --> Value: lemma
+    Key: prf --> Value: proof
+    Key: thm --> Value: theorem
+    ```
