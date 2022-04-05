@@ -23,13 +23,6 @@ data Keyword
       }
   deriving (Eq, Ord, Show)
 
--- |Standard representation of the abbreviation record.
-data AbbreviationRecord
-  = AbbreviationRecord
-      { keyword   :: Keyword
-      , expansion :: Keyword
-      }
-
 -- |Reserved domain-level error indications.
 newtype Error
   = StandardError String
