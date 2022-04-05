@@ -34,20 +34,20 @@ Stability   : experimental
 </span><span id="line-32"></span><span>
 </span><span id="line-33"></span><span class="hs-comment">-- | 'FromNamedRecord' describes how to parse the record</span><span>
 </span><span id="line-34"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromNamedRecord</span></span><span> </span><span class="annot"><a href="LibCli.Adapters.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-35"></span><span>  </span><span id="local-6989586621679051256"><span class="annot"><span class="annottext">parseNamedRecord :: NamedRecord -&gt; Parser KbEntry
-</span><a href="#local-6989586621679051256"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseNamedRecord</span></a></span></span><span> </span><span id="local-6989586621679051255"><span class="annot"><span class="annottext">NamedRecord
-</span><a href="#local-6989586621679051255"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; KbEntry
+</span><span id="line-35"></span><span>  </span><span id="local-6989586621679051249"><span class="annot"><span class="annottext">parseNamedRecord :: NamedRecord -&gt; Parser KbEntry
+</span><a href="#local-6989586621679051249"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseNamedRecord</span></a></span></span><span> </span><span id="local-6989586621679051248"><span class="annot"><span class="annottext">NamedRecord
+</span><a href="#local-6989586621679051248"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; KbEntry
 </span><a href="LibCli.Adapters.html#KbEntry"><span class="hs-identifier hs-var">KbEntry</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; KbEntry)
 -&gt; Parser String -&gt; Parser (String -&gt; KbEntry)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">NamedRecord
-</span><a href="#local-6989586621679051255"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">NamedRecord -&gt; ByteString -&gt; Parser String
+</span><a href="#local-6989586621679051248"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">NamedRecord -&gt; ByteString -&gt; Parser String
 forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;abbreviation&quot;</span></span><span> </span><span class="annot"><span class="annottext">Parser (String -&gt; KbEntry) -&gt; Parser String -&gt; Parser KbEntry
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">NamedRecord
-</span><a href="#local-6989586621679051255"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">NamedRecord -&gt; ByteString -&gt; Parser String
+</span><a href="#local-6989586621679051248"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">NamedRecord -&gt; ByteString -&gt; Parser String
 forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">ByteString
 </span><span class="hs-string">&quot;expansion&quot;</span></span><span>
@@ -56,20 +56,20 @@ forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
 </span><span id="line-38"></span><span class="hs-comment">-- |'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')</span><span>
 </span><span id="line-39"></span><span class="annot"><a href="LibCli.Adapters.html#mapEntries"><span class="hs-identifier hs-type">mapEntries</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Adapters.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-40"></span><span id="mapEntries"><span class="annot"><span class="annottext">mapEntries :: KbEntry -&gt; (Keyword, Keyword)
-</span><a href="LibCli.Adapters.html#mapEntries"><span class="hs-identifier hs-var hs-var">mapEntries</span></a></span></span><span> </span><span id="local-6989586621679051252"><span class="annot"><span class="annottext">KbEntry
-</span><a href="#local-6989586621679051252"><span class="hs-identifier hs-var">e</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><a href="LibCli.Adapters.html#mapEntries"><span class="hs-identifier hs-var hs-var">mapEntries</span></a></span></span><span> </span><span id="local-6989586621679051245"><span class="annot"><span class="annottext">KbEntry
+</span><a href="#local-6989586621679051245"><span class="hs-identifier hs-var">e</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-41"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword :: String -&gt; Bool -&gt; Keyword
 </span><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">keyword :: String
 </span><a href="LibCore.Models.html#keyword"><span class="hs-identifier hs-var">keyword</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KbEntry -&gt; String
 </span><a href="LibCli.Adapters.html#abbreviation"><span class="hs-identifier hs-var hs-var">abbreviation</span></a></span><span> </span><span class="annot"><span class="annottext">KbEntry
-</span><a href="#local-6989586621679051252"><span class="hs-identifier hs-var">e</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">plural :: Bool
+</span><a href="#local-6989586621679051245"><span class="hs-identifier hs-var">e</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">plural :: Bool
 </span><a href="LibCore.Models.html#plural"><span class="hs-identifier hs-var">plural</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-special">}</span><span class="hs-special">)</span><span>
 </span><span id="line-42"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword :: String -&gt; Bool -&gt; Keyword
 </span><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">keyword :: String
 </span><a href="LibCore.Models.html#keyword"><span class="hs-identifier hs-var">keyword</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">KbEntry -&gt; String
 </span><a href="LibCli.Adapters.html#expansion"><span class="hs-identifier hs-var hs-var">expansion</span></a></span><span> </span><span class="annot"><span class="annottext">KbEntry
-</span><a href="#local-6989586621679051252"><span class="hs-identifier hs-var">e</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">plural :: Bool
+</span><a href="#local-6989586621679051245"><span class="hs-identifier hs-var">e</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">plural :: Bool
 </span><a href="LibCore.Models.html#plural"><span class="hs-identifier hs-var">plural</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-special">}</span><span class="hs-special">)</span><span>
 </span><span id="line-43"></span><span>  </span><span class="hs-special">)</span><span>
@@ -79,8 +79,8 @@ forall a. FromField a =&gt; NamedRecord -&gt; ByteString -&gt; Parser a
 </span><span id="line-47"></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">V.Vector</span></span><span> </span><span class="annot"><a href="LibCli.Adapters.html#KbEntry"><span class="hs-identifier hs-type">KbEntry</span></a></span><span> </span><span class="hs-comment">-- ^ it is the result of the low level parsing of the file, represented as a vector of entries</span><span>
 </span><span id="line-48"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KB.KnowledgeBaseStructure</span></a></span><span>
 </span><span id="line-49"></span><span id="getKnowledgeBase"><span class="annot"><span class="annottext">getKnowledgeBase :: Vector KbEntry -&gt; KnowledgeBaseStructure
-</span><a href="LibCli.Adapters.html#getKnowledgeBase"><span class="hs-identifier hs-var hs-var">getKnowledgeBase</span></a></span></span><span> </span><span id="local-6989586621679051247"><span class="annot"><span class="annottext">Vector KbEntry
-</span><a href="#local-6989586621679051247"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Keyword, Keyword)] -&gt; KnowledgeBaseStructure
+</span><a href="LibCli.Adapters.html#getKnowledgeBase"><span class="hs-identifier hs-var hs-var">getKnowledgeBase</span></a></span></span><span> </span><span id="local-6989586621679051240"><span class="annot"><span class="annottext">Vector KbEntry
+</span><a href="#local-6989586621679051240"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Keyword, Keyword)] -&gt; KnowledgeBaseStructure
 </span><a href="LibCore.KnowledgeBase.html#build"><span class="hs-identifier hs-var">KB.build</span></a></span><span> </span><span class="annot"><span class="annottext">([(Keyword, Keyword)] -&gt; KnowledgeBaseStructure)
 -&gt; [(Keyword, Keyword)] -&gt; KnowledgeBaseStructure
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -94,5 +94,5 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Vector KbEntry -&gt; [KbEntry]
 forall a. Vector a -&gt; [a]
 </span><span class="hs-identifier hs-var">V.toList</span></span><span> </span><span class="annot"><span class="annottext">Vector KbEntry
-</span><a href="#local-6989586621679051247"><span class="hs-identifier hs-var">v</span></a></span><span>
+</span><a href="#local-6989586621679051240"><span class="hs-identifier hs-var">v</span></a></span><span>
 </span><span id="line-50"></span></pre></body></html>
