@@ -14,9 +14,9 @@ import           Data.Maybe             (fromMaybe)
 import           LibCli.Adapters        (getKnowledgeBase)
 import           LibCli.OutputInterface (returnOutput)
 import           LibCore.Decoder        as D (decode)
-import           LibCore.KnowledgeBase  (KnowledgeBaseStructure, listAll)
+import           LibCore.KnowledgeBase  (KnowledgeBaseStructure, add, listAll)
 import           LibCore.Mapper         as M (mapParseStructure)
-import           LibCore.Models         (Error (..), Keyword (Keyword))
+import           LibCore.Models         (Error (..), Keyword (..))
 import           LibCore.Parser         as P (doParse)
 import           System.Directory       (doesFileExist)
 
@@ -73,6 +73,7 @@ expandHandler kbfp abbr = do
   case res of
     Left  err -> error $ show err
     Right s   -> putStrLn s
+
  where
   process :: (Bool, FilePath) -> String -> IO (Either Error String)
   process (False, p) _ = do
@@ -101,6 +102,7 @@ replaceHandler kbfp inpfp ofp = do
   case res of
     Left  err -> error $ show err
     Right s   -> returnOutput ofp s
+
  where
   -- | Connecting handling the file access and logic.
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
@@ -119,8 +121,38 @@ replaceHandler kbfp inpfp ofp = do
 -- Knowledge Base CRUD --
 -------------------------
 
--- TODO:
--- add
+-- | Add command handler.
+addHandler
+  :: Maybe FilePath -- ^ KB file path
+  -> String -- ^ Abbreviation keyword
+  -> String -- ^ Expansion keyword
+  -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
+addHandler kbfp a e = do
+  let kbp = fromMaybe "" kbfp
+  kb_exists <- doesFileExist kbp
+  res       <- process (kb_exists, kbp)
+  case res of
+    Left  err -> error $ show err
+    Right s   -> do
+      putStrLn s
+
+ where
+  process :: (Bool, FilePath) -> IO (Either Error String)
+  process (False, p) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ p
+  process (_, kbp) = do
+    lkb <- loadKb kbp
+    let k   = pure $ Keyword { keyword = a, plural = False }
+    let v   = pure $ Keyword { keyword = e, plural = False }
+    let res = add <$> lkb <*> k <*> v
+    case res of
+      Left er ->
+        return $ Left $ StandardError $ "Could not add new keyword: " ++ show er
+      Right (nk, _) -> do
+        return $ pure $ "Added: " ++ show nk
+
+
+
 -- update
 -- delete
 
@@ -136,6 +168,7 @@ listHandler kbfp = do
   case res of
     Left  err -> error $ show err
     Right s   -> putStrLn s
+
  where
   process :: (Bool, FilePath) -> IO (Either Error String)
   process (False, p) = do
@@ -145,5 +178,4 @@ listHandler kbfp = do
     let rs = map formatRecord . listAll <$> lkb
     return $ intercalate "\n" <$> rs
 
--- get
-
+-- TODO(tech debt): add get command to Spec
