@@ -62,6 +62,7 @@ replaceMode c@CS.Replace{} = do
               Right (_, kb_v) -> returnOutput
                 (out c)
                 (decode (mapParseStructure (getKnowledgeBase kb_v) (doParse s)))
+-- TODO(tech debt): refactor to avoid undefined
 -- Impossible case because of the cliController
 replaceMode _ = undefined
 
