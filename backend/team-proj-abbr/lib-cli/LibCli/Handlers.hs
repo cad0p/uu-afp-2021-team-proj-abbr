@@ -23,24 +23,56 @@ import           System.Directory       (doesFileExist)
 -- Utilities --
 ---------------
 
--- | Wraps the file reading in a predefined error handling.
--- If the file path was not provided, returns Nothing.
--- Otherwise, executes the given function.
-readWrapper
-  :: (FilePath -> a) -- ^ File access function
-  -> Maybe FilePath  -- ^ File path
-  -> Maybe a         -- ^ Operation result
-readWrapper f mfp = f <$> mfp
+-- TODO: add description.
+loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
+loadKb p = do
+  csvData <- BL.readFile p
+  case decodeByName csvData of
+    Left  s      -> return $ Left $ StandardError s
+    Right (_, v) -> return $ Right $ getKnowledgeBase v
 
+-- TODO: describe.
+loadInput :: FilePath -> IO (Either Error String)
+loadInput p = do
+  s <- readFile p
+  return $ Right s
+
+-- TODO: describe
+exec :: KnowledgeBaseStructure -> String -> IO String
+exec kb s = do
+  return $ D.decode $ M.mapParseStructure kb $ P.doParse s
 
 --------------------------
 -- Expansion Operations --
 --------------------------
 
--- TODO:
--- expand
+-- | Expand command handler.
+-- Deal with single input expansion without reading an input file.
+expandHandler
+  :: Maybe FilePath -- ^ KB file path
+  -> String -- ^ Abbreviation to expand
+  -> IO () -- ^ Writes the modified file out to the specified location
+expandHandler kbfp abbr = do
+  let kbp = fromMaybe "" kbfp
+  kb_exists <- doesFileExist kbp
+  res       <- process (kb_exists, kbp) abbr
+  case res of
+    Left  err -> error $ show err
+    Right s   -> putStrLn s
+ where
+  process :: (Bool, FilePath) -> String -> IO (Either Error String)
+  process (False, p) _ = do
+    return $ Left $ StandardError $ "KB file not found at " ++ p
+  process (_, kbp) s = do
+    lkb <- loadKb kbp
+    case (`exec` s) <$> lkb of
+      Left  er  -> return $ Left $ StandardError $ show er
+      Right ios -> Right <$> ios
+
 
 -- | Replace command handler.
+-- Does all the replacing heavy-lifting.
+-- Loads the required files, produces the expansions and writes the output file.
 replaceHandler
   :: Maybe FilePath -- ^ KB file path
   -> Maybe FilePath -- ^ Input file path
@@ -54,8 +86,9 @@ replaceHandler kbfp inpfp ofp = do
   res        <- process (kb_exists, kbp) (inp_exists, inp)
   case res of
     Left  err -> error $ show err
-    Right s   -> writeOutput ofp s
+    Right s   -> returnOutput ofp s
  where
+  -- | Connecting handling the file access and logic.
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
   process (False, p) _ = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
@@ -68,25 +101,9 @@ replaceHandler kbfp inpfp ofp = do
       Left  er  -> return $ Left $ StandardError $ show er
       Right ios -> Right <$> ios
 
-  loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
-  loadKb p = do
-    putStrLn p
-    csvData <- BL.readFile p
-    case decodeByName csvData of
-      Left  s      -> return $ Left $ StandardError s
-      Right (_, v) -> return $ Right $ getKnowledgeBase v
-
-  loadInput :: FilePath -> IO (Either Error String)
-  loadInput p = do
-    s <- readFile p
-    return $ Right s
-
-  exec :: KnowledgeBaseStructure -> String -> IO String
-  exec kb s = do
-    return $ D.decode $ M.mapParseStructure kb $ P.doParse s
-
-  writeOutput :: Maybe FilePath -> String -> IO ()
-  writeOutput = returnOutput
+  -- TODO: maybe remove this completely?
+  -- writeOutput :: Maybe FilePath -> String -> IO ()
+  -- writeOutput = returnOutput
 
 
 -------------------------
