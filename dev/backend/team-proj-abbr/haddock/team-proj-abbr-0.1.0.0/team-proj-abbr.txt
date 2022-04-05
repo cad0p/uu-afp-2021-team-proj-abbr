@@ -10,9 +10,6 @@
 @version 0.1.0.0
 
 
-module LibCli.Handlers
-
-
 module LibCli.OutputInterface
 returnOutput :: Maybe FilePath -> String -> IO ()
 
@@ -260,14 +257,24 @@ decode :: ParseStructure -> String
 tokenToString :: Token -> String
 
 
+module LibCli.Handlers
+loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
+loadInput :: FilePath -> IO (Either Error String)
+doExpansion :: KnowledgeBaseStructure -> String -> IO String
+
+-- | Expand command handler. Deal with single input expansion without
+--   reading an input file.
+expandHandler :: Maybe FilePath -> String -> IO ()
+
+-- | Replace command handler. Does all the replacing heavy-lifting. Loads
+--   the required files, produces the expansions and writes the output
+--   file.
+replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
+listHandler :: Maybe FilePath -> IO ()
+
+
 module LibCli.Main
 cliController :: ShortHndr -> IO ()
-
--- | <a>replaceMode</a> does the replacind heavy lifting
---   
---   Under the hood it checks for errors in the input file (TODO input
---   file) and the KB
-replaceMode :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
 --   
