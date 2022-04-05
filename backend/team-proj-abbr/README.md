@@ -75,3 +75,14 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     Key: prf --> Value: proof
     Key: thm --> Value: theorem
     ```
+
+4. `Add`: - add new abbrevation record to the KB
+
+    ```bash
+    $ stack exec team-proj-abbr-cli --  \
+        add                             \
+        -k="data/kb_example.csv"        \
+        -a="brb"                        \
+        -e="be right back"
+    Added: Keyword {keyword = "be right back", plural = False}
+    ```
