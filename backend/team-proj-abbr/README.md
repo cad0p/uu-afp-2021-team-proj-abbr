@@ -34,3 +34,30 @@ And if you want `:r` to work: [(source)](https://stackoverflow.com/questions/399
 ```sh
 stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-abbr-test
 ```
+
+#### Supported demo commands
+
+1. `Expand`: - standard input/output approach
+
+    ```bash
+    $ stack exec team-proj-abbr-cli -- expand -k="data/kb_example.csv" -a="@@hl"
+    hello
+    $ stack exec team-proj-abbr-cli -- expand -k="data/kb_example.csv" -a="@@hl @@hl people" 
+    hello hello people
+    ```
+
+2. `Replace`: - expansion of the full file content
+
+    ```bash
+    # create demo file:
+    $ echo "@@hl @@hl people" >> data/demo_file.txt
+    $ stack exec team-proj-abbr-cli --  \
+        replace                         \
+        --input="data/demo_file.txt"    \
+        -o="./demo_file_o.txt"          \
+        -k="data/kb_example.csv"
+    $ cat ./demo_file_o.txt
+    hello hello people
+    # remove the demo files:
+    $ rm data/demo_file.txt ./demo_file_o.txt
+    ```
