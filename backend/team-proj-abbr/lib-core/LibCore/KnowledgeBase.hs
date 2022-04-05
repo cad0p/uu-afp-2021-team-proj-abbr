@@ -29,6 +29,7 @@ getKnowledgeBase = M.empty
 buildKnowledgeBase :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 buildKnowledgeBase = M.fromList
 
+
 -- |Get the list of all the stored records in the Knowledge Base.
 --
 -- Examples:
@@ -38,6 +39,7 @@ buildKnowledgeBase = M.fromList
 -- [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
 listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 listAll = M.toList
+
 
 -- |Retrieve a single element by its keyword.
 --
@@ -54,6 +56,7 @@ get kb k = case M.lookup k kb of
   Nothing ->
     Left $ StandardError $ "no record found for this keyword : " ++ show k
   Just x -> Right x
+
 
 -- |Add new item to the Knowledge Base.
 -- Adds the item to the KB as a new record if the key was notseen before,
@@ -73,6 +76,7 @@ add
   -> Keyword
   -> (Keyword, KnowledgeBaseStructure)
 add kb k r = (r, M.insert k r kb)
+
 
 -- |Updates the record at given key with the new value.
 -- Only full updates are supported.
