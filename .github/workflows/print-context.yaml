@@ -1,5 +1,8 @@
+name: Print Context
+
 on:
   push:
+
 jobs:
   print-context:
     runs-on: ubuntu-latest
