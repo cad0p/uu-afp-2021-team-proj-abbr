@@ -267,6 +267,7 @@ loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
 loadInput :: FilePath -> IO (Either Error String)
 doExpansion :: KnowledgeBaseStructure -> String -> IO String
 formatRecord :: (Keyword, Keyword) -> String
+dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 
 -- | Expand command handler. Deal with single input expansion without
 --   reading an input file.
@@ -280,6 +281,9 @@ replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
 -- | Add command handler. Adds new abbreviation with the associated
 --   expansion to the KB.
 addHandler :: Maybe FilePath -> String -> String -> IO ()
+
+-- | Delete command handler. Deletes an existing abbreviation from the KB.
+deleteHandler :: Maybe FilePath -> String -> IO ()
 
 -- | List command handler. Displays all the contents of the specified
 --   Knowledge base.
