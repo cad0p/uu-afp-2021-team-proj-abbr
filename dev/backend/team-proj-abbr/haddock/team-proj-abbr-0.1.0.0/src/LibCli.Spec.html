@@ -9,9 +9,9 @@ Stability   : experimental
 -}</span><span>
 </span><span id="line-10"></span><span>
 </span><span id="line-11"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">LibCli.Spec</span><span>
-</span><span id="line-12"></span><span>    </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="LibCli.Spec.html#cliModes"><span class="hs-identifier">cliModes</span></a></span><span>
-</span><span id="line-13"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier">ShortHndr</span></a></span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
-</span><span id="line-14"></span><span>    </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-12"></span><span>  </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="LibCli.Spec.html#cliModes"><span class="hs-identifier">cliModes</span></a></span><span>
+</span><span id="line-13"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier">ShortHndr</span></a></span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-15"></span><span>
 </span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">System.Console.CmdArgs</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">CMD</span></span><span>
 </span><span id="line-17"></span><span>
@@ -27,40 +27,42 @@ Stability   : experimental
 </span><a href="LibCli.Spec.html#input"><span class="hs-identifier hs-var hs-var">input</span></a></span></span><span>   </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
 </span><span id="line-27"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="out"><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#out"><span class="hs-identifier hs-var hs-var">out</span></a></span></span><span>     </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-28"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="inplace"><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe Bool
-</span><a href="LibCli.Spec.html#inplace"><span class="hs-identifier hs-var hs-var">inplace</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
-</span><span id="line-29"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe FilePath
+</span><span id="line-28"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="inplace"><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe FilePath
+</span><a href="LibCli.Spec.html#inplace"><span class="hs-identifier hs-var hs-var">inplace</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-29"></span><span>        </span><span class="hs-comment">-- ^ this argument replaces input and output with what is provided here,</span><span>
+</span><span id="line-30"></span><span>        </span><span class="hs-comment">-- and has precedence over the others</span><span>
+</span><span id="line-31"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var hs-var">kb</span></a></span></span><span>      </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-30"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-31"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the expand command</span><span>
-</span><span id="line-32"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Expand"><span class="annot"><a href="LibCli.Spec.html#Expand"><span class="hs-identifier hs-var">Expand</span></a></span></span><span>
-</span><span id="line-33"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><span class="annottext">ShortHndr -&gt; FilePath
+</span><span id="line-32"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-33"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the expand command</span><span>
+</span><span id="line-34"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Expand"><span class="annot"><a href="LibCli.Spec.html#Expand"><span class="hs-identifier hs-var">Expand</span></a></span></span><span>
+</span><span id="line-35"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><span class="annottext">ShortHndr -&gt; FilePath
 </span><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-34"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-35"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-36"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the list command</span><span>
-</span><span id="line-37"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="List"><span class="annot"><a href="LibCli.Spec.html#List"><span class="hs-identifier hs-var">List</span></a></span></span><span>
-</span><span id="line-38"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-39"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-40"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the add command</span><span>
-</span><span id="line-41"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Add"><span class="annot"><a href="LibCli.Spec.html#Add"><span class="hs-identifier hs-var">Add</span></a></span></span><span>
-</span><span id="line-42"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-43"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="expansion"><span class="annot"><span class="annottext">ShortHndr -&gt; FilePath
+</span><span id="line-36"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-37"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-38"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the list command</span><span>
+</span><span id="line-39"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="List"><span class="annot"><a href="LibCli.Spec.html#List"><span class="hs-identifier hs-var">List</span></a></span></span><span>
+</span><span id="line-40"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-41"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-42"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the add command</span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Add"><span class="annot"><a href="LibCli.Spec.html#Add"><span class="hs-identifier hs-var">Add</span></a></span></span><span>
+</span><span id="line-44"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-45"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="expansion"><span class="annot"><span class="annottext">ShortHndr -&gt; FilePath
 </span><a href="LibCli.Spec.html#expansion"><span class="hs-identifier hs-var hs-var">expansion</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-44"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-45"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-46"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the update command</span><span>
-</span><span id="line-47"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Update"><span class="annot"><a href="LibCli.Spec.html#Update"><span class="hs-identifier hs-var">Update</span></a></span></span><span>
-</span><span id="line-48"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-49"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="expansion"><span class="annot"><a href="LibCli.Spec.html#expansion"><span class="hs-identifier hs-var">expansion</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-50"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-51"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-52"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the delete command</span><span>
-</span><span id="line-53"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Delete"><span class="annot"><a href="LibCli.Spec.html#Delete"><span class="hs-identifier hs-var">Delete</span></a></span></span><span>
-</span><span id="line-54"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-55"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-56"></span><span>      </span><span class="hs-special">}</span><span>
-</span><span id="line-57"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="%24cDelete"><span id="%24cUpdate"><span id="%24cAdd"><span id="%24cList"><span id="%24cExpand"><span id="%24cReplace"><span id="%24tShortHndr"><span id="local-6989586621679050714"><span id="local-6989586621679050716"><span id="local-6989586621679050718"><span id="local-6989586621679050720"><span id="local-6989586621679050722"><span id="local-6989586621679050724"><span id="local-6989586621679050726"><span id="local-6989586621679050728"><span id="local-6989586621679050730"><span id="local-6989586621679050732"><span id="local-6989586621679050734"><span id="local-6989586621679050736"><span id="local-6989586621679050738"><span id="local-6989586621679050740"><span class="annot"><span class="annottext">Typeable ShortHndr
+</span><span id="line-46"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-47"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-48"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the update command</span><span>
+</span><span id="line-49"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Update"><span class="annot"><a href="LibCli.Spec.html#Update"><span class="hs-identifier hs-var">Update</span></a></span></span><span>
+</span><span id="line-50"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-51"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="expansion"><span class="annot"><a href="LibCli.Spec.html#expansion"><span class="hs-identifier hs-var">expansion</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-52"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-53"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-54"></span><span>  </span><span class="hs-comment">-- |Defines the arguments for the delete command</span><span>
+</span><span id="line-55"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Delete"><span class="annot"><a href="LibCli.Spec.html#Delete"><span class="hs-identifier hs-var">Delete</span></a></span></span><span>
+</span><span id="line-56"></span><span>      </span><span class="hs-special">{</span><span> </span><span id="abbreviation"><span class="annot"><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-57"></span><span>      </span><span class="hs-special">,</span><span> </span><span id="kb"><span class="annot"><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span></span><span>           </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-58"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-59"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="%24cDelete"><span id="%24cUpdate"><span id="%24cAdd"><span id="%24cList"><span id="%24cExpand"><span id="%24cReplace"><span id="%24tShortHndr"><span id="local-6989586621679050709"><span id="local-6989586621679050711"><span id="local-6989586621679050713"><span id="local-6989586621679050715"><span id="local-6989586621679050717"><span id="local-6989586621679050719"><span id="local-6989586621679050721"><span id="local-6989586621679050723"><span id="local-6989586621679050725"><span id="local-6989586621679050727"><span id="local-6989586621679050729"><span id="local-6989586621679050731"><span id="local-6989586621679050733"><span id="local-6989586621679050735"><span class="annot"><span class="annottext">Typeable ShortHndr
 DataType
 Constr
 Typeable ShortHndr
@@ -222,7 +224,7 @@ $cgfoldl :: forall (c :: * -&gt; *).
 (forall d b. Data d =&gt; c (d -&gt; b) -&gt; d -&gt; c b)
 -&gt; (forall g. g -&gt; c g) -&gt; ShortHndr -&gt; c ShortHndr
 $cp1Data :: Typeable ShortHndr
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">CMD.Data</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">CMD.Typeable</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679050700"><span id="local-6989586621679050702"><span id="local-6989586621679050704"><span class="annot"><span class="annottext">Int -&gt; ShortHndr -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">CMD.Data</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">CMD.Typeable</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679050695"><span id="local-6989586621679050697"><span id="local-6989586621679050699"><span class="annot"><span class="annottext">Int -&gt; ShortHndr -&gt; ShowS
 [ShortHndr] -&gt; ShowS
 ShortHndr -&gt; FilePath
 (Int -&gt; ShortHndr -&gt; ShowS)
@@ -238,222 +240,224 @@ $cshow :: ShortHndr -&gt; FilePath
 showsPrec :: Int -&gt; ShortHndr -&gt; ShowS
 $cshowsPrec :: Int -&gt; ShortHndr -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-58"></span><span>
-</span><span id="line-59"></span><span class="hs-comment">-- |Utility function to provide help for the file type arguments.</span><span>
-</span><span id="line-60"></span><span class="annot"><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-type">fileFlags</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-61"></span><span id="fileFlags"><span class="annot"><span class="annottext">fileFlags :: FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
-</span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var hs-var">fileFlags</span></a></span></span><span> </span><span id="local-6989586621679050697"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679050697"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621679050696"><span class="annot"><span class="annottext">Maybe FilePath
-</span><a href="#local-6989586621679050696"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
-</span><a href="#local-6989586621679050696"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath -&gt; Ann -&gt; Maybe FilePath
+</span><span id="line-60"></span><span>
+</span><span id="line-61"></span><span class="hs-comment">-- |Utility function to provide help for the file type arguments.</span><span>
+</span><span id="line-62"></span><span class="annot"><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-type">fileFlags</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-63"></span><span id="fileFlags"><span class="annot"><span class="annottext">fileFlags :: FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
+</span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var hs-var">fileFlags</span></a></span></span><span> </span><span id="local-6989586621679050692"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050692"><span class="hs-identifier hs-var">h</span></a></span></span><span> </span><span id="local-6989586621679050691"><span class="annot"><span class="annottext">Maybe FilePath
+</span><a href="#local-6989586621679050691"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
+</span><a href="#local-6989586621679050691"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath -&gt; Ann -&gt; Maybe FilePath
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
 </span><span class="hs-identifier hs-var">CMD.help</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679050697"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath -&gt; Ann -&gt; Maybe FilePath
+</span><a href="#local-6989586621679050692"><span class="hs-identifier hs-var">h</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath -&gt; Ann -&gt; Maybe FilePath
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">Ann
 </span><span class="hs-identifier hs-var">CMD.typFile</span></span><span>
-</span><span id="line-62"></span><span>
-</span><span id="line-63"></span><span>
-</span><span id="line-64"></span><span class="hs-comment">-- | ShortHndr default KB</span><span>
-</span><span id="line-65"></span><span class="annot"><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-type">defaultKB</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-66"></span><span id="defaultKB"><span class="annot"><span class="annottext">defaultKB :: FilePath
+</span><span id="line-64"></span><span>
+</span><span id="line-65"></span><span>
+</span><span id="line-66"></span><span class="hs-comment">-- | ShortHndr default KB</span><span>
+</span><span id="line-67"></span><span class="annot"><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-type">defaultKB</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-68"></span><span id="defaultKB"><span class="annot"><span class="annottext">defaultKB :: FilePath
 </span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var hs-var">defaultKB</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;data/shorthndr-kb.csv&quot;</span></span><span>
-</span><span id="line-67"></span><span>
-</span><span id="line-68"></span><span class="hs-comment">-------------------------</span><span>
-</span><span id="line-69"></span><span class="hs-comment">-- Expansion commands: --</span><span>
+</span><span id="line-69"></span><span>
 </span><span id="line-70"></span><span class="hs-comment">-------------------------</span><span>
-</span><span id="line-71"></span><span>
-</span><span id="line-72"></span><span class="annot"><a href="LibCli.Spec.html#replace"><span class="hs-identifier hs-type">replace</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
-</span><span id="line-73"></span><span id="replace"><span class="annot"><span class="annottext">replace :: ShortHndr
+</span><span id="line-71"></span><span class="hs-comment">-- Expansion commands: --</span><span>
+</span><span id="line-72"></span><span class="hs-comment">-------------------------</span><span>
+</span><span id="line-73"></span><span>
+</span><span id="line-74"></span><span class="annot"><a href="LibCli.Spec.html#replace"><span class="hs-identifier hs-type">replace</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
+</span><span id="line-75"></span><span id="replace"><span class="annot"><span class="annottext">replace :: ShortHndr
 </span><a href="LibCli.Spec.html#replace"><span class="hs-identifier hs-var hs-var">replace</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">Replace :: Maybe FilePath
--&gt; Maybe FilePath -&gt; Maybe Bool -&gt; Maybe FilePath -&gt; ShortHndr
+</span><span id="line-76"></span><span>  </span><span class="annot"><span class="annottext">Replace :: Maybe FilePath
+-&gt; Maybe FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath -&gt; ShortHndr
 </span><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">Replace</span></a></span><span>
-</span><span id="line-75"></span><span>            </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">input :: Maybe FilePath
+</span><span id="line-77"></span><span>      </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">input :: Maybe FilePath
 </span><a href="LibCli.Spec.html#input"><span class="hs-identifier hs-var">input</span></a></span><span>   </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;shorthndr-input.txt&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-76"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">out :: Maybe FilePath
+</span><span id="line-78"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">out :: Maybe FilePath
 </span><a href="LibCli.Spec.html#out"><span class="hs-identifier hs-var">out</span></a></span><span>     </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Output file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;shorthndr--out.txt&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-77"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
+</span><span id="line-79"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
 </span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span>      </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span>
-</span><span id="line-78"></span><span>                                  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
+</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-79"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">inplace :: Maybe Bool
-</span><a href="LibCli.Spec.html#inplace"><span class="hs-identifier hs-var">inplace</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe Bool
-forall a. Default a =&gt; a
-</span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-80"></span><span>            </span><span class="hs-special">}</span><span>
-</span><span id="line-81"></span><span>        </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
+</span><span id="line-80"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">inplace :: Maybe FilePath
+</span><a href="LibCli.Spec.html#inplace"><span class="hs-identifier hs-var">inplace</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
+</span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span>
+</span><span id="line-81"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;Source (and Output) file: this argument replaces input and output with&quot;</span></span><span>
+</span><span id="line-82"></span><span>        </span><span class="annot"><span class="annottext">FilePath -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot; what is provided here, and has precedence over the others&quot;</span></span><span>
+</span><span id="line-83"></span><span>        </span><span class="hs-special">)</span><span>
+</span><span id="line-84"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;shorthndr-inout.txt&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-85"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-86"></span><span>    </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
 </span><span class="hs-identifier hs-var">CMD.help</span></span><span>
-</span><span id="line-82"></span><span>                   </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-87"></span><span>             </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Replace all abreviations in the provided file with their expansions&quot;</span></span><span>
-</span><span id="line-83"></span><span>
-</span><span id="line-84"></span><span class="annot"><a href="LibCli.Spec.html#expand"><span class="hs-identifier hs-type">expand</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
-</span><span id="line-85"></span><span id="expand"><span class="annot"><span class="annottext">expand :: ShortHndr
+</span><span id="line-88"></span><span>
+</span><span id="line-89"></span><span class="annot"><a href="LibCli.Spec.html#expand"><span class="hs-identifier hs-type">expand</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
+</span><span id="line-90"></span><span id="expand"><span class="annot"><span class="annottext">expand :: ShortHndr
 </span><a href="LibCli.Spec.html#expand"><span class="hs-identifier hs-var hs-var">expand</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-86"></span><span>    </span><span class="annot"><span class="annottext">Expand :: FilePath -&gt; Maybe FilePath -&gt; ShortHndr
-</span><a href="LibCli.Spec.html#Expand"><span class="hs-identifier hs-type">Expand</span></a></span><span>
-</span><span id="line-87"></span><span>            </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
+</span><span id="line-91"></span><span>  </span><span class="annot"><span class="annottext">Expand :: FilePath -&gt; Maybe FilePath -&gt; ShortHndr
+</span><a href="LibCli.Spec.html#Expand"><span class="hs-identifier hs-type">Expand</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
 </span><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
 forall a. Default a =&gt; a
 </span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-88"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
-</span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span>           </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
+</span><span id="line-92"></span><span>         </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
+</span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span>
-</span><span id="line-89"></span><span>                                       </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
+</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-90"></span><span>            </span><span class="hs-special">}</span><span>
-</span><span id="line-91"></span><span>        </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
+</span><span id="line-93"></span><span>         </span><span class="hs-special">}</span><span>
+</span><span id="line-94"></span><span>    </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
 </span><span class="hs-identifier hs-var">CMD.help</span></span><span>
-</span><span id="line-92"></span><span>                   </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-95"></span><span>             </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Expand a provided abbreviation abbreviation if one is found&quot;</span></span><span>
-</span><span id="line-93"></span><span>
-</span><span id="line-94"></span><span class="annot"><a href="LibCli.Spec.html#expansionModes"><span class="hs-identifier hs-type">expansionModes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-95"></span><span id="expansionModes"><span class="annot"><span class="annottext">expansionModes :: [ShortHndr]
+</span><span id="line-96"></span><span>
+</span><span id="line-97"></span><span class="annot"><a href="LibCli.Spec.html#expansionModes"><span class="hs-identifier hs-type">expansionModes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-98"></span><span id="expansionModes"><span class="annot"><span class="annottext">expansionModes :: [ShortHndr]
 </span><a href="LibCli.Spec.html#expansionModes"><span class="hs-identifier hs-var hs-var">expansionModes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="LibCli.Spec.html#replace"><span class="hs-identifier hs-var">replace</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="LibCli.Spec.html#expand"><span class="hs-identifier hs-var">expand</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-96"></span><span>
-</span><span id="line-97"></span><span class="hs-comment">------------------------------</span><span>
-</span><span id="line-98"></span><span class="hs-comment">-- Knowledge Base commands: --</span><span>
-</span><span id="line-99"></span><span class="hs-comment">------------------------------</span><span>
-</span><span id="line-100"></span><span>
-</span><span id="line-101"></span><span class="annot"><a href="LibCli.Spec.html#list"><span class="hs-identifier hs-type">list</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
-</span><span id="line-102"></span><span id="list"><span class="annot"><span class="annottext">list :: ShortHndr
-</span><a href="LibCli.Spec.html#list"><span class="hs-identifier hs-var hs-var">list</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-103"></span><span>    </span><span class="annot"><span class="annottext">List :: Maybe FilePath -&gt; ShortHndr
+</span><span id="line-99"></span><span>
+</span><span id="line-100"></span><span class="hs-comment">------------------------------</span><span>
+</span><span id="line-101"></span><span class="hs-comment">-- Knowledge Base commands: --</span><span>
+</span><span id="line-102"></span><span class="hs-comment">------------------------------</span><span>
+</span><span id="line-103"></span><span>
+</span><span id="line-104"></span><span class="annot"><a href="LibCli.Spec.html#list"><span class="hs-identifier hs-type">list</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
+</span><span id="line-105"></span><span id="list"><span class="annot"><span class="annottext">list :: ShortHndr
+</span><a href="LibCli.Spec.html#list"><span class="hs-identifier hs-var hs-var">list</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">List :: Maybe FilePath -&gt; ShortHndr
 </span><a href="LibCli.Spec.html#List"><span class="hs-identifier hs-type">List</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
 </span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-104"></span><span>         </span><span class="hs-special">}</span><span>
-</span><span id="line-105"></span><span>        </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
+</span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">}</span><span>
+</span><span id="line-106"></span><span>  </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
 </span><span class="hs-identifier hs-var">CMD.help</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;List all records of the Knowledge Base&quot;</span></span><span>
-</span><span id="line-106"></span><span>
-</span><span id="line-107"></span><span class="annot"><a href="LibCli.Spec.html#add"><span class="hs-identifier hs-type">add</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
-</span><span id="line-108"></span><span id="add"><span class="annot"><span class="annottext">add :: ShortHndr
+</span><span id="line-107"></span><span>
+</span><span id="line-108"></span><span class="annot"><a href="LibCli.Spec.html#add"><span class="hs-identifier hs-type">add</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
+</span><span id="line-109"></span><span id="add"><span class="annot"><span class="annottext">add :: ShortHndr
 </span><a href="LibCli.Spec.html#add"><span class="hs-identifier hs-var hs-var">add</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-109"></span><span>    </span><span class="annot"><span class="annottext">Add :: FilePath -&gt; FilePath -&gt; Maybe FilePath -&gt; ShortHndr
+</span><span id="line-110"></span><span>  </span><span class="annot"><span class="annottext">Add :: FilePath -&gt; FilePath -&gt; Maybe FilePath -&gt; ShortHndr
 </span><a href="LibCli.Spec.html#Add"><span class="hs-identifier hs-type">Add</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
 </span><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
 forall a. Default a =&gt; a
 </span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-110"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">expansion :: FilePath
+</span><span id="line-111"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">expansion :: FilePath
+</span><a href="LibCli.Spec.html#expansion"><span class="hs-identifier hs-var">expansion</span></a></span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
+forall a. Default a =&gt; a
+</span><span class="hs-identifier hs-var">CMD.def</span></span><span>
+</span><span id="line-112"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
+</span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span>           </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
+</span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-113"></span><span>      </span><span class="hs-special">}</span><span>
+</span><span id="line-114"></span><span>    </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
+forall val. Data val =&gt; val -&gt; Ann -&gt; val
+</span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
+</span><span class="hs-identifier hs-var">CMD.help</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;Add a new abbreviation record to the Knowledge Base&quot;</span></span><span>
+</span><span id="line-115"></span><span>    </span><span class="hs-comment">-- TODO from Pier to Dmitri: is there a way to sync haddock documentation and CLI documentation?</span><span>
+</span><span id="line-116"></span><span>
+</span><span id="line-117"></span><span class="annot"><a href="LibCli.Spec.html#update"><span class="hs-identifier hs-type">update</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
+</span><span id="line-118"></span><span id="update"><span class="annot"><span class="annottext">update :: ShortHndr
+</span><a href="LibCli.Spec.html#update"><span class="hs-identifier hs-var hs-var">update</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-119"></span><span>  </span><span class="annot"><span class="annottext">Update :: FilePath -&gt; FilePath -&gt; Maybe FilePath -&gt; ShortHndr
+</span><a href="LibCli.Spec.html#Update"><span class="hs-identifier hs-type">Update</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
+</span><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
+forall a. Default a =&gt; a
+</span><span class="hs-identifier hs-var">CMD.def</span></span><span>
+</span><span id="line-120"></span><span>         </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">expansion :: FilePath
 </span><a href="LibCli.Spec.html#expansion"><span class="hs-identifier hs-var">expansion</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
 forall a. Default a =&gt; a
 </span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-111"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
+</span><span id="line-121"></span><span>         </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
 </span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-112"></span><span>        </span><span class="hs-special">}</span><span>
-</span><span id="line-113"></span><span>        </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
-forall val. Data val =&gt; val -&gt; Ann -&gt; val
-</span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
-</span><span class="hs-identifier hs-var">CMD.help</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><span class="hs-string">&quot;Add a new abbreviation record to the Knowledge Base&quot;</span></span><span>
-</span><span id="line-114"></span><span>
-</span><span id="line-115"></span><span class="annot"><a href="LibCli.Spec.html#update"><span class="hs-identifier hs-type">update</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
-</span><span id="line-116"></span><span id="update"><span class="annot"><span class="annottext">update :: ShortHndr
-</span><a href="LibCli.Spec.html#update"><span class="hs-identifier hs-var hs-var">update</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-117"></span><span>    </span><span class="annot"><span class="annottext">Update :: FilePath -&gt; FilePath -&gt; Maybe FilePath -&gt; ShortHndr
-</span><a href="LibCli.Spec.html#Update"><span class="hs-identifier hs-type">Update</span></a></span><span>
-</span><span id="line-118"></span><span>            </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
-</span><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
-forall a. Default a =&gt; a
-</span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-119"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">expansion :: FilePath
-</span><a href="LibCli.Spec.html#expansion"><span class="hs-identifier hs-var">expansion</span></a></span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
-forall a. Default a =&gt; a
-</span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-120"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
-</span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span>           </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
-</span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span>
-</span><span id="line-121"></span><span>                                       </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
-forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-122"></span><span>            </span><span class="hs-special">}</span><span>
-</span><span id="line-123"></span><span>        </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
+</span><span id="line-122"></span><span>         </span><span class="hs-special">}</span><span>
+</span><span id="line-123"></span><span>    </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
 </span><span class="hs-identifier hs-var">CMD.help</span></span><span>
-</span><span id="line-124"></span><span>                   </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-124"></span><span>             </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Update an existing abbreviation record in the Knowledge Base&quot;</span></span><span>
 </span><span id="line-125"></span><span>
 </span><span id="line-126"></span><span class="annot"><a href="LibCli.Spec.html#delete"><span class="hs-identifier hs-type">delete</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span>
 </span><span id="line-127"></span><span id="delete"><span class="annot"><span class="annottext">delete :: ShortHndr
 </span><a href="LibCli.Spec.html#delete"><span class="hs-identifier hs-var hs-var">delete</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-128"></span><span>    </span><span class="annot"><span class="annottext">Delete :: FilePath -&gt; Maybe FilePath -&gt; ShortHndr
-</span><a href="LibCli.Spec.html#Delete"><span class="hs-identifier hs-type">Delete</span></a></span><span>
-</span><span id="line-129"></span><span>            </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
+</span><span id="line-128"></span><span>  </span><span class="annot"><span class="annottext">Delete :: FilePath -&gt; Maybe FilePath -&gt; ShortHndr
+</span><a href="LibCli.Spec.html#Delete"><span class="hs-identifier hs-type">Delete</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">abbreviation :: FilePath
 </span><a href="LibCli.Spec.html#abbreviation"><span class="hs-identifier hs-var">abbreviation</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath
 forall a. Default a =&gt; a
 </span><span class="hs-identifier hs-var">CMD.def</span></span><span>
-</span><span id="line-130"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
-</span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span>           </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
+</span><span id="line-129"></span><span>         </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">kb :: Maybe FilePath
+</span><a href="LibCli.Spec.html#kb"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath -&gt; Maybe FilePath
 </span><a href="LibCli.Spec.html#fileFlags"><span class="hs-identifier hs-var">fileFlags</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span>
-</span><span id="line-131"></span><span>                                       </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
+</span><span class="hs-string">&quot;Knowledge Base source file&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="LibCli.Spec.html#defaultKB"><span class="hs-identifier hs-var">defaultKB</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-132"></span><span>            </span><span class="hs-special">}</span><span>
-</span><span id="line-133"></span><span>        </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
+</span><span id="line-130"></span><span>         </span><span class="hs-special">}</span><span>
+</span><span id="line-131"></span><span>    </span><span class="annot"><span class="annottext">ShortHndr -&gt; Ann -&gt; ShortHndr
 forall val. Data val =&gt; val -&gt; Ann -&gt; val
 </span><span class="hs-operator hs-var">CMD.&amp;=</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Ann
 </span><span class="hs-identifier hs-var">CMD.help</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Delete an abbreviation record from the Knowledge Base&quot;</span></span><span>
-</span><span id="line-134"></span><span>
-</span><span id="line-135"></span><span class="annot"><a href="LibCli.Spec.html#kbModes"><span class="hs-identifier hs-type">kbModes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-136"></span><span id="kbModes"><span class="annot"><span class="annottext">kbModes :: [ShortHndr]
+</span><span id="line-132"></span><span>
+</span><span id="line-133"></span><span class="annot"><a href="LibCli.Spec.html#kbModes"><span class="hs-identifier hs-type">kbModes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-134"></span><span id="kbModes"><span class="annot"><span class="annottext">kbModes :: [ShortHndr]
 </span><a href="LibCli.Spec.html#kbModes"><span class="hs-identifier hs-var hs-var">kbModes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="LibCli.Spec.html#list"><span class="hs-identifier hs-var">list</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="LibCli.Spec.html#add"><span class="hs-identifier hs-var">add</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="LibCli.Spec.html#update"><span class="hs-identifier hs-var">update</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><a href="LibCli.Spec.html#delete"><span class="hs-identifier hs-var">delete</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-137"></span><span>
+</span><span id="line-135"></span><span>
+</span><span id="line-136"></span><span class="hs-comment">-----------------------------</span><span>
+</span><span id="line-137"></span><span class="hs-comment">-- All exported CLI modes: --</span><span>
 </span><span id="line-138"></span><span class="hs-comment">-----------------------------</span><span>
-</span><span id="line-139"></span><span class="hs-comment">-- All exported CLI modes: --</span><span>
-</span><span id="line-140"></span><span class="hs-comment">-----------------------------</span><span>
-</span><span id="line-141"></span><span>
-</span><span id="line-142"></span><span class="annot"><a href="LibCli.Spec.html#cliModes"><span class="hs-identifier hs-type">cliModes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-143"></span><span id="cliModes"><span class="annot"><span class="annottext">cliModes :: [ShortHndr]
+</span><span id="line-139"></span><span>
+</span><span id="line-140"></span><span class="annot"><a href="LibCli.Spec.html#cliModes"><span class="hs-identifier hs-type">cliModes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-141"></span><span id="cliModes"><span class="annot"><span class="annottext">cliModes :: [ShortHndr]
 </span><a href="LibCli.Spec.html#cliModes"><span class="hs-identifier hs-var hs-var">cliModes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[ShortHndr]
 </span><a href="LibCli.Spec.html#expansionModes"><span class="hs-identifier hs-var">expansionModes</span></a></span><span> </span><span class="annot"><span class="annottext">[ShortHndr] -&gt; [ShortHndr] -&gt; [ShortHndr]
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[ShortHndr]
 </span><a href="LibCli.Spec.html#kbModes"><span class="hs-identifier hs-var">kbModes</span></a></span><span>
-</span><span id="line-144"></span></pre></body></html>
+</span><span id="line-142"></span></pre></body></html>
