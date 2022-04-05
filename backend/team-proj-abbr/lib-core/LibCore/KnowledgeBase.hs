@@ -8,29 +8,41 @@ Stability   : experimental
 
 module LibCore.KnowledgeBase where
 
-import           Data.Map       (Map, empty, toList)
+import           Data.Map       as M (Map, empty, fromList, lookup, toList)
 import           LibCore.Models (Error (StandardError), Keyword (..))
 
-type KnowledgeBaseStructure = Map Keyword Keyword
+type KnowledgeBaseStructure = M.Map Keyword Keyword
 
 getKnowledgeBase :: KnowledgeBaseStructure
-getKnowledgeBase = empty
+getKnowledgeBase = M.empty
 
-buildKnowledgeBase :: [Keyword] -> KnowledgeBaseStructure
-buildKnowledgeBase _ = undefined
+buildKnowledgeBase :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
+buildKnowledgeBase = M.fromList
 
 -- |Get the list of all the stored records in the Knowledge Base.
 --
 -- Examples:
 --
--- >>> testKB = Data.Map.fromList [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
 -- >>> listAll testKB
 -- [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
 listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
-listAll = toList
+listAll = M.toList
 
+-- |Retrieve a single element by its keyword.
+--
+-- Examples
+--
+-- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> get testKB (Keyword {keyword = "brb", plural = False})
+-- Right (Keyword {keyword = "be right back", plural = False})
+--
+-- >>> get testKB (Keyword {keyword = "beb", plural = False})
+-- Left (StandardError "no record found for this keyword")
 get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
-get _ _ = Left $ StandardError "fail"
+get kb k = case M.lookup k kb of
+  Nothing -> Left $ StandardError "no record found for this keyword"
+  Just x  -> Right x
 
 add :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 add _ _ = Left $ StandardError "fail"
