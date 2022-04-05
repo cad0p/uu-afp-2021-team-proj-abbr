@@ -114,7 +114,7 @@ listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 --   
 --   <pre>
 --   &gt;&gt;&gt; get testKB (Keyword {keyword = "beb", plural = False})
---   Left (StandardError "no record found for this keyword")
+--   Left (StandardError "no record found for this keyword : Keyword {keyword = \"beb\", plural = False}")
 --   </pre>
 get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 
@@ -136,8 +136,42 @@ get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 --   (Keyword {keyword = "by the way!", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way!", plural = False})])
 --   </pre>
 add :: KnowledgeBaseStructure -> Keyword -> Keyword -> (Keyword, KnowledgeBaseStructure)
-update :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
-delete :: KnowledgeBaseStructure -> Keyword -> Either Error Bool
+
+-- | Updates the record at given key with the new value. Only full updates
+--   are supported. If the key is not in the KB, returns an error.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   
+--   &gt;&gt;&gt; put testKB (Keyword {keyword = "brb", plural = False}) (Keyword {keyword = "BE RIGHT BACK", plural = False})
+--   Right (Keyword {keyword = "BE RIGHT BACK", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "BE RIGHT BACK", plural = False})])
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; put testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
+--   Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+--   </pre>
+put :: KnowledgeBaseStructure -> Keyword -> Keyword -> Either Error (Keyword, KnowledgeBaseStructure)
+
+-- | Removes an existing item at the given key form the Knowledge Base. If
+--   the key is not present, return as error.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   
+--   &gt;&gt;&gt; remove testKB (Keyword {keyword = "brb", plural = False})
+--   Right (fromList [])
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; remove testKB (Keyword {keyword = "btw", plural = False})
+--   Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+--   </pre>
+remove :: KnowledgeBaseStructure -> Keyword -> Either Error KnowledgeBaseStructure
 
 
 module LibCore.OutputInterface
