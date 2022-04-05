@@ -108,3 +108,17 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     team-proj-abbr-cli: StandardError "no record found for this keyword : Keyword {keyword = \"hl\", plural = False}"
     ...
     ```
+
+6. `Update`: - update an existing abbrevation record in the KB
+
+    ```bash
+    $ stack exec team-proj-abbr-cli --  \
+        update                          \
+        -k="data/kb_example.csv"        \
+        -a="hl"                         \
+        -e="HELLO!"
+    Updated: Keyword {keyword = "hl", plural = False} to Keyword {keyword = "HELLO", plural = False}
+    # check modification:
+    $ cat data/kb_example.csv | grep hl
+    hl,"HELLO"
+    ```
