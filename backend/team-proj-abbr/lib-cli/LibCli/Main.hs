@@ -1,4 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
 {-|
 Description : Command Line Interface - Main
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
