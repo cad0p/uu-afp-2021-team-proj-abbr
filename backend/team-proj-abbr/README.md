@@ -116,9 +116,9 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
         update                          \
         -k="data/kb_example.csv"        \
         -a="hl"                         \
-        -e="HELLO!"
-    Updated: Keyword {keyword = "hl", plural = False} to Keyword {keyword = "HELLO", plural = False}
+        -e="HELLO\!"
+    Updated: Keyword {keyword = "hl", plural = False} to Keyword {keyword = "HELLO!", plural = False}
     # check modification:
     $ cat data/kb_example.csv | grep hl
-    hl,"HELLO"
+    hl,"HELLO!"
     ```
