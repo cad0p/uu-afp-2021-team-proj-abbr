@@ -94,9 +94,9 @@ forall a b. b -&gt; Either a b
 </span><a href="#local-6989586621679051467"><span class="hs-identifier hs-var">s</span></a></span><span>
 </span><span id="line-39"></span><span>
 </span><span id="line-40"></span><span class="hs-comment">-- TODO: describe</span><span>
-</span><span id="line-41"></span><span class="annot"><a href="LibCli.Handlers.html#exec"><span class="hs-identifier hs-type">exec</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-42"></span><span id="exec"><span class="annot"><span class="annottext">exec :: KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath
-</span><a href="LibCli.Handlers.html#exec"><span class="hs-identifier hs-var hs-var">exec</span></a></span></span><span> </span><span id="local-6989586621679051464"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><span id="line-41"></span><span class="annot"><a href="LibCli.Handlers.html#doExpansion"><span class="hs-identifier hs-type">doExpansion</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-42"></span><span id="doExpansion"><span class="annot"><span class="annottext">doExpansion :: KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath
+</span><a href="LibCli.Handlers.html#doExpansion"><span class="hs-identifier hs-var hs-var">doExpansion</span></a></span></span><span> </span><span id="local-6989586621679051464"><span class="annot"><span class="annottext">KnowledgeBaseStructure
 </span><a href="#local-6989586621679051464"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051463"><span class="annot"><span class="annottext">FilePath
 </span><a href="#local-6989586621679051463"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-43"></span><span>  </span><span class="annot"><span class="annottext">FilePath -&gt; IO FilePath
@@ -193,7 +193,7 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><a href="LibCli.Handlers.html#loadKb"><span class="hs-identifier hs-var">loadKb</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="#local-6989586621679051449"><span class="hs-identifier hs-var">kbp</span></a></span><span>
 </span><span id="line-68"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath
-</span><a href="LibCli.Handlers.html#exec"><span class="hs-operator hs-var">`exec`</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="LibCli.Handlers.html#doExpansion"><span class="hs-operator hs-var">`doExpansion`</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="#local-6989586621679051448"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(KnowledgeBaseStructure -&gt; IO FilePath)
 -&gt; Either Error KnowledgeBaseStructure
 -&gt; Either Error (IO FilePath)
@@ -343,7 +343,7 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><a href="LibCli.Handlers.html#loadInput"><span class="hs-identifier hs-var">loadInput</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><a href="#local-6989586621679051428"><span class="hs-identifier hs-var">inp</span></a></span><span>
 </span><span id="line-100"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath
-</span><a href="LibCli.Handlers.html#exec"><span class="hs-identifier hs-var">exec</span></a></span><span> </span><span class="annot"><span class="annottext">(KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath)
+</span><a href="LibCli.Handlers.html#doExpansion"><span class="hs-identifier hs-var">doExpansion</span></a></span><span> </span><span class="annot"><span class="annottext">(KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath)
 -&gt; Either Error KnowledgeBaseStructure
 -&gt; Either Error (FilePath -&gt; IO FilePath)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -379,20 +379,15 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">IO FilePath
 </span><a href="#local-6989586621679051424"><span class="hs-identifier hs-var">ios</span></a></span><span>
 </span><span id="line-103"></span><span>
-</span><span id="line-104"></span><span>  </span><span class="hs-comment">-- TODO: maybe remove this completely?</span><span>
-</span><span id="line-105"></span><span>  </span><span class="hs-comment">-- writeOutput :: Maybe FilePath -&gt; String -&gt; IO ()</span><span>
-</span><span id="line-106"></span><span>  </span><span class="hs-comment">-- writeOutput = returnOutput</span><span>
+</span><span id="line-104"></span><span class="hs-comment">-------------------------</span><span>
+</span><span id="line-105"></span><span class="hs-comment">-- Knowledge Base CRUD --</span><span>
+</span><span id="line-106"></span><span class="hs-comment">-------------------------</span><span>
 </span><span id="line-107"></span><span>
-</span><span id="line-108"></span><span>
-</span><span id="line-109"></span><span class="hs-comment">-------------------------</span><span>
-</span><span id="line-110"></span><span class="hs-comment">-- Knowledge Base CRUD --</span><span>
-</span><span id="line-111"></span><span class="hs-comment">-------------------------</span><span>
-</span><span id="line-112"></span><span>
-</span><span id="line-113"></span><span class="hs-comment">-- TODO:</span><span>
-</span><span id="line-114"></span><span class="hs-comment">-- add</span><span>
-</span><span id="line-115"></span><span class="hs-comment">-- update</span><span>
-</span><span id="line-116"></span><span class="hs-comment">-- delete</span><span>
-</span><span id="line-117"></span><span class="hs-comment">-- list</span><span>
-</span><span id="line-118"></span><span class="hs-comment">-- get</span><span>
-</span><span id="line-119"></span><span>
-</span><span id="line-120"></span></pre></body></html>
+</span><span id="line-108"></span><span class="hs-comment">-- TODO:</span><span>
+</span><span id="line-109"></span><span class="hs-comment">-- add</span><span>
+</span><span id="line-110"></span><span class="hs-comment">-- update</span><span>
+</span><span id="line-111"></span><span class="hs-comment">-- delete</span><span>
+</span><span id="line-112"></span><span class="hs-comment">-- list</span><span>
+</span><span id="line-113"></span><span class="hs-comment">-- get</span><span>
+</span><span id="line-114"></span><span>
+</span><span id="line-115"></span></pre></body></html>

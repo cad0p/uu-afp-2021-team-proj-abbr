@@ -260,7 +260,7 @@ tokenToString :: Token -> String
 module LibCli.Handlers
 loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
 loadInput :: FilePath -> IO (Either Error String)
-exec :: KnowledgeBaseStructure -> String -> IO String
+doExpansion :: KnowledgeBaseStructure -> String -> IO String
 
 -- | Expand command handler. Deal with single input expansion without
 --   reading an input file.
