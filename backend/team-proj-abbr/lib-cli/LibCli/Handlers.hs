@@ -13,7 +13,7 @@ import           Data.Maybe             (fromMaybe)
 import           LibCli.Adapters        (getKnowledgeBase)
 import           LibCli.OutputInterface (returnOutput)
 import           LibCore.Decoder        as D (decode)
-import           LibCore.KnowledgeBase  (KnowledgeBaseStructure)
+import           LibCore.KnowledgeBase  (KnowledgeBaseStructure, listAll)
 import           LibCore.Mapper         as M (mapParseStructure)
 import           LibCore.Models         (Error (..))
 import           LibCore.Parser         as P (doParse)
@@ -51,7 +51,7 @@ doExpansion kb s = do
 expandHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation to expand
-  -> IO () -- ^ Writes the modified file out to the specified location
+  -> IO () -- ^ Writes the expansion result to the STDOUT.
 expandHandler kbfp abbr = do
   let kbp = fromMaybe "" kbfp
   kb_exists <- doesFileExist kbp
@@ -109,6 +109,37 @@ replaceHandler kbfp inpfp ofp = do
 -- add
 -- update
 -- delete
+
 -- list
+listHandler
+  :: Maybe FilePath -- ^ KB file path
+  -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
+listHandler kbfp = do
+  let kbp = fromMaybe "" kbfp
+  kb_exists <- doesFileExist kbp
+  res       <- process (kb_exists, kbp)
+  case res of
+    Left  err -> error $ show err
+    Right s   -> putStrLn s
+ where
+  process :: (Bool, FilePath) -> IO (Either Error String)
+  process (False, p) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ p
+  process (_, kbp) = do
+    lkb <- loadKb kbp
+    let rs = map show . listAll <$> lkb
+    return $ unwords <$> rs
+
+  -- formatRecord :: (Keyword, Keyword) -> String
+  -- formatRecord (Keyword kk kpl, Keyword vk vpl) =
+  --   "Key: "
+  --     ++ kk
+  --     ++ (if kpl then "(plural)" else "")
+  --     ++ " --> "
+  --     ++ "Value: "
+  --     ++ vk
+  --     ++ if vpl then "(plural)" else ""
+
+
 -- get
 
