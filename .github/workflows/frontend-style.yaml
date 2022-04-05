@@ -24,14 +24,3 @@ jobs:
           elm_files: src/
           elm_glob: false
           working-directory: frontend
-
-  code-build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    needs:
-      - style
-    steps:
-      - name: ✅ Everything is good!
-        run: "echo LGTM!"
