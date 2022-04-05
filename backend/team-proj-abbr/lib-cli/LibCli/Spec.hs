@@ -84,8 +84,7 @@ expand =
   Expand { abbreviation = CMD.def
          , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
          }
-    CMD.&= CMD.help
-             "Expand a provided abbreviation abbreviation if one is found"
+    CMD.&= CMD.help "Expand a provided abbreviation expansion if one is found"
 
 expansionModes :: [ShortHndr]
 expansionModes = [replace, expand]
