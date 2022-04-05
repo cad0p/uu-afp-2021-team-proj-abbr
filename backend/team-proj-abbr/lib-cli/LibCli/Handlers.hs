@@ -1,4 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
 {-|
 Description : Environment agnostic command handlers for the CLI.
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
@@ -8,7 +7,6 @@ Stability   : experimental
 -}
 
 module LibCli.Handlers where
-import           Control.Applicative    (Alternative (empty))
 import qualified Data.ByteString.Lazy   as BL
 import           Data.Csv               (decodeByName)
 import           Data.Maybe             (fromMaybe)
@@ -79,8 +77,9 @@ replaceHandler kbfp inpfp ofp = do
       Right (_, v) -> return $ Right $ getKnowledgeBase v
 
   loadInput :: FilePath -> IO (Either Error String)
-  loadInput _ = do
-    return $ Left $ StandardError "Load input is not implemented"
+  loadInput p = do
+    s <- readFile p
+    return $ Right s
 
   exec :: KnowledgeBaseStructure -> String -> IO String
   exec kb s = do
