@@ -261,6 +261,7 @@ module LibCli.Handlers
 loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
 loadInput :: FilePath -> IO (Either Error String)
 doExpansion :: KnowledgeBaseStructure -> String -> IO String
+formatRecord :: (Keyword, Keyword) -> String
 
 -- | Expand command handler. Deal with single input expansion without
 --   reading an input file.
@@ -270,6 +271,9 @@ expandHandler :: Maybe FilePath -> String -> IO ()
 --   the required files, produces the expansions and writes the output
 --   file.
 replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
+
+-- | List command handler. Displays all the contents of the specified
+--   Knowledge base.
 listHandler :: Maybe FilePath -> IO ()
 
 
