@@ -1,3 +1,4 @@
+{-# LANGUAGE TupleSections #-}
 {-|
 Description : Environment agnostic command handlers for the CLI.
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
@@ -17,7 +18,12 @@ import           Data.Maybe             (fromMaybe)
 import           LibCli.Adapters        (getKnowledgeBase, mapKeywordPair)
 import           LibCli.OutputInterface (returnOutput)
 import           LibCore.Decoder        as D (decode)
-import           LibCore.KnowledgeBase  (KnowledgeBaseStructure, add, listAll)
+import           LibCore.KnowledgeBase
+    ( KnowledgeBaseStructure
+    , add
+    , listAll
+    , remove
+    )
 import           LibCore.Mapper         as M (mapParseStructure)
 import           LibCore.Models         (Error (..), Keyword (..))
 import           LibCore.Parser         as P (doParse)
@@ -57,6 +63,12 @@ formatRecord (Keyword kk kpl, Keyword vk vpl) =
     ++ vk
     ++ if vpl then "(plural)" else ""
 
+-- TODO: describe
+dump :: FilePath -> KnowledgeBaseStructure -> IO ()
+dump kbp kb = do
+  let entries = map mapKeywordPair $ listAll kb
+  BL.writeFile kbp $ encodeDefaultOrderedByName entries
+
 
 --------------------------
 -- Expansion Operations --
@@ -75,7 +87,6 @@ expandHandler kbfp abbr = do
   case res of
     Left  err -> error $ show err
     Right s   -> putStrLn s
-
  where
   process :: (Bool, FilePath) -> String -> IO (Either Error String)
   process (False, p) _ = do
@@ -104,7 +115,6 @@ replaceHandler kbfp inpfp ofp = do
   case res of
     Left  err -> error $ show err
     Right s   -> returnOutput ofp s
-
  where
   -- | Connecting handling the file access and logic.
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
@@ -138,10 +148,7 @@ addHandler kbfp a e = do
     Left  err     -> error $ show err
     Right (s, kb) -> do
       putStrLn s
-      -- TODO: provide a simpler encode function
-      let entries = map mapKeywordPair $ listAll kb
-      BL.writeFile kbp $ encodeDefaultOrderedByName entries
-
+      dump kbp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -158,10 +165,37 @@ addHandler kbfp a e = do
       Right (nk, kb') -> do
         return $ pure ("Added: " ++ show nk, kb')
 
-
-
 -- update
--- delete
+
+
+
+-- | Delete command handler.
+-- Deletes an existing abbreviation from the KB.
+deleteHandler
+  :: Maybe FilePath -- ^ KB file path
+  -> String -- ^ Abbreviation keyword
+  -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
+deleteHandler kbfp a = do
+  let kbp = fromMaybe "" kbfp
+  kb_exists <- doesFileExist kbp
+  res       <- process (kb_exists, kbp)
+  case res of
+    Left  err     -> error $ show err
+    Right (s, kb) -> do
+      putStrLn s
+      dump kbp kb
+ where
+  process
+    :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
+  process (False, p) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ p
+  process (_, kbp) = do
+    lkb <- loadKb kbp
+    let k = pure $ Keyword { keyword = a, plural = False }
+    case remove <$> lkb <*> k of
+      Left  er -> error $ show er
+      Right e  -> return $ (show k, ) <$> e
+
 
 -- | List command handler.
 -- Displays all the contents of the specified Knowledge base.
@@ -175,7 +209,6 @@ listHandler kbfp = do
   case res of
     Left  err -> error $ show err
     Right s   -> putStrLn s
-
  where
   process :: (Bool, FilePath) -> IO (Either Error String)
   process (False, p) = do
