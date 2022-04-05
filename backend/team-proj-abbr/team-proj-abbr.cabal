@@ -33,6 +33,7 @@ library
       LibCore.Models
       LibCore.OutputInterface
       LibCore.Parser
+      LibCli.Adapters
       LibCli.Main
       LibCli.Spec
   other-modules:
