@@ -7,11 +7,14 @@ Stability   : experimental
 -}
 
 module LibCli.Handlers where
-import qualified Data.ByteString.Lazy   as BL
-import           Data.Csv               (decodeByName)
+import qualified Data.ByteString.Lazy   as BL (readFile, writeFile)
+import           Data.Csv
+    ( decodeByName
+    , encodeDefaultOrderedByName
+    )
 import           Data.List              (intercalate)
 import           Data.Maybe             (fromMaybe)
-import           LibCli.Adapters        (getKnowledgeBase)
+import           LibCli.Adapters        (getKnowledgeBase, mapKeywordPair)
 import           LibCli.OutputInterface (returnOutput)
 import           LibCore.Decoder        as D (decode)
 import           LibCore.KnowledgeBase  (KnowledgeBaseStructure, add, listAll)
@@ -53,7 +56,6 @@ formatRecord (Keyword kk kpl, Keyword vk vpl) =
     ++ "Value: "
     ++ vk
     ++ if vpl then "(plural)" else ""
-
 
 
 --------------------------
@@ -132,12 +134,16 @@ addHandler kbfp a e = do
   kb_exists <- doesFileExist kbp
   res       <- process (kb_exists, kbp)
   case res of
-    Left  err -> error $ show err
-    Right s   -> do
+    Left  err     -> error $ show err
+    Right (s, kb) -> do
       putStrLn s
+      -- TODO: provide a simpler encode function
+      let entries = map mapKeywordPair $ listAll kb
+      BL.writeFile kbp $ encodeDefaultOrderedByName entries
 
  where
-  process :: (Bool, FilePath) -> IO (Either Error String)
+  process
+    :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
   process (False, p) = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
   process (_, kbp) = do
@@ -148,8 +154,8 @@ addHandler kbfp a e = do
     case res of
       Left er ->
         return $ Left $ StandardError $ "Could not add new keyword: " ++ show er
-      Right (nk, _) -> do
-        return $ pure $ "Added: " ++ show nk
+      Right (nk, kb') -> do
+        return $ pure ("Added: " ++ show nk, kb')
 
 
 

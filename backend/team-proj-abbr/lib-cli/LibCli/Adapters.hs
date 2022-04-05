@@ -11,8 +11,13 @@ Stability   : experimental
 module LibCli.Adapters where
 
 import           Data.Csv
-    ( FromNamedRecord (parseNamedRecord)
+    ( DefaultOrdered (headerOrder)
+    , FromNamedRecord (parseNamedRecord)
+    , ToNamedRecord (toNamedRecord)
+    , header
+    , namedRecord
     , (.:)
+    , (.=)
     )
 import qualified Data.Vector           as V
 import qualified LibCore.KnowledgeBase as KB (KnowledgeBaseStructure, build)
@@ -30,9 +35,18 @@ data KbEntry
       , expansion    :: String
       }
 
+-- TODO(tech debt): make use of the Generics as in this example:
+--    https://hackage.haskell.org/package/cassava-0.5.2.0/docs/Data-Csv.html#g:4
 -- | 'FromNamedRecord' describes how to parse the record
 instance FromNamedRecord KbEntry where
   parseNamedRecord r = KbEntry <$> r .: "abbreviation" <*> r .: "expansion"
+
+instance ToNamedRecord KbEntry where
+  toNamedRecord KbEntry { abbreviation = a, expansion = e } =
+    namedRecord ["abbreviation" .= a, "expansion" .= e]
+
+instance DefaultOrdered KbEntry where
+  headerOrder _ = header ["abbreviation", "expansion"]
 
 
 -- |'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
@@ -42,8 +56,13 @@ mapEntries e =
   , (Keyword { keyword = expansion e, plural = False })
   )
 
+-- |`mapKeywords` maps keyword pairs to their entries
+mapKeywordPair :: (Keyword, Keyword) -> KbEntry
+mapKeywordPair (Keyword kk _, Keyword vk _) = KbEntry kk vk
+
 -- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
 getKnowledgeBase
   :: V.Vector KbEntry -- ^ it is the result of the low level parsing of the file, represented as a vector of entries
   -> KB.KnowledgeBaseStructure
 getKnowledgeBase v = KB.build $ map mapEntries $ V.toList v
+
