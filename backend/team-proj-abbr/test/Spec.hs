@@ -7,6 +7,7 @@ import           Test.LibCore.InputInterface
     )
 import           Test.LibCore.KnowledgeBase   (huKnowledgeBase, qcKnowledgeBase)
 import           Test.LibCore.Mapper          (huMapper, qcMapper)
+import           Test.LibCore.Models          (huModels, qcModels)
 import           Test.LibCore.OutputInterface
     ( huOutputInterface
     , qcOutputInterface
@@ -34,6 +35,7 @@ qcProps = testGroup
   , qcInputInterface
   , qcKnowledgeBase
   , qcMapper
+  , qcModels
   , qcOutputInterface
   , qcParser
   ]
@@ -52,6 +54,7 @@ hUnit = testGroup
   , huInputInterface
   , huKnowledgeBase
   , huMapper
+  , huModels
   , huOutputInterface
   , huParser
   ]
