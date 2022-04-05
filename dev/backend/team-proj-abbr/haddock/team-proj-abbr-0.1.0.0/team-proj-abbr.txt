@@ -82,7 +82,6 @@ instance GHC.Classes.Eq LibCore.Models.Token
 
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
-getKnowledgeBase :: KnowledgeBaseStructure
 
 -- | Build a new Knowledge Base from the supplied keyword pair list.
 build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
