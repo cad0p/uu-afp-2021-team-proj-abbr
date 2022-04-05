@@ -1,4 +1,3 @@
-{-# LANGUAGE TupleSections #-}
 {-|
 Description : Environment agnostic command handlers for the CLI.
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
