@@ -259,8 +259,10 @@ tokenToString :: Token -> String
 
 module LibCli.Handlers
 
--- | Wraps the file loading in a predefined error handling.
-readWrapper :: (FilePath -> a) -> Maybe FilePath -> Either Error a
+-- | Wraps the file reading in a predefined error handling. If the file
+--   path was not provided, returns Nothing. Otherwise, executes the given
+--   function.
+readWrapper :: (FilePath -> a) -> Maybe FilePath -> Maybe a
 
 -- | Replace command handler.
 replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
