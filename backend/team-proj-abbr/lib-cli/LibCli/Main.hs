@@ -10,12 +10,13 @@ Stability   : experimental
 module LibCli.Main where
 
 import           LibCli.Handlers
-    ( expandHandler
+    ( addHandler
+    , expandHandler
     , listHandler
     , replaceHandler
     )
 import           LibCli.Spec
-    ( ShortHndr (abbreviation, input, kb, out)
+    ( ShortHndr (abbreviation, expansion, input, kb, out)
     )
 import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
 import qualified System.Console.CmdArgs as CMD
@@ -32,9 +33,10 @@ cliController CS.Replace { input = ifp, kb = kbfp, out = ofp } =
 cliController CS.Expand { abbreviation = abbr, kb = kbfp } =
   expandHandler kbfp abbr
 cliController CS.List { kb = kbfp } = listHandler kbfp
-cliController c@CS.Add{}            = print $ "adding! --> " ++ show c
-cliController c@CS.Update{}         = print $ "updating! --> " ++ show c
-cliController c@CS.Delete{}         = print $ "deleting! --> " ++ show c
+cliController CS.Add { kb = kbfp, abbreviation = a, expansion = e } =
+  addHandler kbfp a e
+cliController c@CS.Update{} = print $ "updating! --> " ++ show c
+cliController c@CS.Delete{} = print $ "deleting! --> " ++ show c
 
 ----------------------------
 -- Executable entrypoint: --

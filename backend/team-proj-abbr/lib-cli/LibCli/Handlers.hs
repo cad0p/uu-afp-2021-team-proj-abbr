@@ -124,6 +124,7 @@ replaceHandler kbfp inpfp ofp = do
 -------------------------
 
 -- | Add command handler.
+-- Adds new abbreviation with the associated expansion to the KB.
 addHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation keyword
