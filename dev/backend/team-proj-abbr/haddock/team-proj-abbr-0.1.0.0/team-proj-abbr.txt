@@ -188,10 +188,15 @@ KbEntry :: String -> String -> KbEntry
 --   <a>expansion</a>)
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
+-- | <tt>mapKeywords</tt> maps keyword pairs to their entries
+mapKeywordPair :: (Keyword, Keyword) -> KbEntry
+
 -- | <a>getKnowledgeBase</a> parses from a CSV file to a
 --   <tt>KnowledgeBaseStructure</tt>.
 getKnowledgeBase :: Vector KbEntry -> KnowledgeBaseStructure
 instance Data.Csv.Conversion.FromNamedRecord LibCli.Adapters.KbEntry
+instance Data.Csv.Conversion.ToNamedRecord LibCli.Adapters.KbEntry
+instance Data.Csv.Conversion.DefaultOrdered LibCli.Adapters.KbEntry
 
 
 module LibCore.Parser
@@ -271,6 +276,9 @@ expandHandler :: Maybe FilePath -> String -> IO ()
 --   the required files, produces the expansions and writes the output
 --   file.
 replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
+
+-- | Add command handler.
+addHandler :: Maybe FilePath -> String -> String -> IO ()
 
 -- | List command handler. Displays all the contents of the specified
 --   Knowledge base.
