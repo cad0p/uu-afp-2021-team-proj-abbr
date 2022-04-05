@@ -44,7 +44,9 @@ huGetKb :: TestTree
 huGetKb = testGroup
   "huGetKb"
   [ testCase
-      "abbr"
+      (  "(abbr) getKnowledgeBase from a vector of KbEntries produces"
+      ++ " a Map of a list of pairs equivalent to those KbEntries"
+      )
       (   getKnowledgeBase (V.fromList [exampleEntryAbbr])
       @?= M.fromList [examplePairAbbr]
       )
