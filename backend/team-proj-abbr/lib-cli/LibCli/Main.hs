@@ -10,17 +10,17 @@ Stability   : experimental
 
 module LibCli.Main where
 
-import qualified Data.ByteString.Lazy    as BL
-import           Data.Csv                (decodeByName)
-import           LibCli.Spec             (ShortHndr (input, kb, out))
-import qualified LibCli.Spec             as CS (ShortHndr (..), cliModes)
-import           LibCore.Decoder         (decode)
-import           LibCore.KnowledgeBase   (getKnowledgeBase)
-import           LibCore.Mapper          (mapParseStructure)
-import           LibCore.OutputInterface (returnOutput)
-import           LibCore.Parser          (doParse)
-import qualified System.Console.CmdArgs  as CMD
-import           System.Directory        (doesFileExist)
+import qualified Data.ByteString.Lazy   as BL
+import           Data.Csv               (decodeByName)
+import           LibCli.Adapters        (getKnowledgeBase)
+import           LibCli.OutputInterface (returnOutput)
+import           LibCli.Spec            (ShortHndr (input, kb, out))
+import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
+import           LibCore.Decoder        (decode)
+import           LibCore.Mapper         (mapParseStructure)
+import           LibCore.Parser         (doParse)
+import qualified System.Console.CmdArgs as CMD
+import           System.Directory       (doesFileExist)
 
 
 -----------------------
@@ -29,14 +29,13 @@ import           System.Directory        (doesFileExist)
 
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
 -- TODO: (future task) implement the actual handlers with the business logic.
-mockCliHandler :: CS.ShortHndr -> IO ()
--- mockCliHandler c@CS.Replace{} = print $ "replacing! --> " ++ show c
-mockCliHandler c@CS.Replace{} = replaceMode c
-mockCliHandler c@CS.Expand{}  = print $ "expanding! --> " ++ show c
-mockCliHandler c@CS.List{}    = print $ "listing! --> " ++ show c
-mockCliHandler c@CS.Add{}     = print $ "adding! --> " ++ show c
-mockCliHandler c@CS.Update{}  = print $ "updating! --> " ++ show c
-mockCliHandler c@CS.Delete{}  = print $ "deleting! --> " ++ show c
+cliController :: CS.ShortHndr -> IO ()
+cliController c@CS.Replace{} = replaceMode c
+cliController c@CS.Expand{}  = print $ "expanding! --> " ++ show c
+cliController c@CS.List{}    = print $ "listing! --> " ++ show c
+cliController c@CS.Add{}     = print $ "adding! --> " ++ show c
+cliController c@CS.Update{}  = print $ "updating! --> " ++ show c
+cliController c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 
 
 {-| 'replaceMode' does the replacind heavy lifting
@@ -64,7 +63,8 @@ replaceMode c@CS.Replace{} = do
               Right (_, kb_v) -> returnOutput
                 (out c)
                 (decode (mapParseStructure (getKnowledgeBase kb_v) (doParse s)))
--- Impossible case because of the mockCliHandler
+-- TODO(tech debt): refactor to avoid undefined
+-- Impossible case because of the cliController
 replaceMode _ = undefined
 
 ----------------------------
@@ -91,4 +91,4 @@ replaceMode _ = undefined
 --
 --    * See 'LibCli.Spec' for more information about the CLI endpoints.
 cliMain :: IO ()
-cliMain = mockCliHandler =<< CMD.cmdArgs (CMD.modes CS.cliModes)
+cliMain = cliController =<< CMD.cmdArgs (CMD.modes CS.cliModes)

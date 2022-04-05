@@ -2,19 +2,12 @@
 name: Dev - Continuous Integration / Core (CLI)
 
 on:
-  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
-  # pull_request:
-  #   # branches: [ "main" ]
-  #   paths-ignore:
-  #     - 'frontend/**'
   push:
-    # branches: [ "main" ]
-    # tags: [ "*.*.*" ]
-    paths:
-      - 'backend/**'
+    branches-ignore:
+      - main
 
 jobs:
-  code-build:
+  backend-build-dev:
     strategy:
       matrix:
         os: [ubuntu-latest]

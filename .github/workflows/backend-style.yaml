@@ -1,21 +1,10 @@
 name: Backend Code Style
 
 on:
-  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
-  # pull_request:
-  #   # branches: [ "main" ]
-  #   paths-ignore:
-  #     - 'frontend/**'
   push:
-    # branches: [ "main" ]
-    # tags: [ "*.*.*" ]
-    paths:
-      - "backend/**"
-      - ".github/workflows/**"
-      - "!frontend/**"
 
 jobs:
-  style:
+  backend-style:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -38,14 +27,3 @@ jobs:
           fi
         # https://stackoverflow.com/questions/57806624/github-actions-how-to-build-project-in-sub-directory
         working-directory: backend
-
-  code-build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    needs:
-      - style
-    steps:
-      - name: ✅ Everything is good!
-        run: "echo LGTM!"

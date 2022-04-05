@@ -31,9 +31,11 @@ library
       LibCore.KnowledgeBase
       LibCore.Mapper
       LibCore.Models
-      LibCore.OutputInterface
       LibCore.Parser
+      LibCli.Adapters
+      LibCli.Handlers
       LibCli.Main
+      LibCli.OutputInterface
       LibCli.Spec
   other-modules:
       Paths_team_proj_abbr
@@ -95,11 +97,11 @@ test-suite team-proj-abbr-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.LibCli.OutputInterface
       Test.LibCore.Decoder
       Test.LibCore.InputInterface
       Test.LibCore.KnowledgeBase
       Test.LibCore.Mapper
-      Test.LibCore.OutputInterface
       Test.LibCore.Parser
       Paths_team_proj_abbr
   hs-source-dirs:

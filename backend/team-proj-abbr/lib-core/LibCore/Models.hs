@@ -22,3 +22,8 @@ data Keyword
       , plural  :: Bool
       }
   deriving (Eq, Ord, Show)
+
+-- |Reserved domain-level error indications.
+newtype Error
+  = StandardError String
+  deriving (Show)
