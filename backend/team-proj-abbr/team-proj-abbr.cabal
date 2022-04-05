@@ -31,10 +31,10 @@ library
       LibCore.KnowledgeBase
       LibCore.Mapper
       LibCore.Models
-      LibCore.OutputInterface
       LibCore.Parser
       LibCli.Adapters
       LibCli.Main
+      LibCli.OutputInterface
       LibCli.Spec
   other-modules:
       Paths_team_proj_abbr
