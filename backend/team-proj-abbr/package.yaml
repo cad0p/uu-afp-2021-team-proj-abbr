@@ -36,6 +36,7 @@ dependencies:
 - directory
 - bytestring
 - vector
+- filepath
 
 library:
   source-dirs: [lib-core, lib-cli]

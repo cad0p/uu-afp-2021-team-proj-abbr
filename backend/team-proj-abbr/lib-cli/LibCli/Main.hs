@@ -14,13 +14,14 @@ import qualified Data.ByteString.Lazy   as BL
 import           Data.Csv               (decodeByName)
 import           LibCli.Adapters        (getKnowledgeBase)
 import           LibCli.OutputInterface (returnOutput)
-import           LibCli.Spec            (ShortHndr (input, kb, out))
+import           LibCli.Spec            (ShortHndr (inplace, input, kb, out))
 import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
 import           LibCore.Decoder        (decode)
 import           LibCore.Mapper         (mapParseStructure)
 import           LibCore.Parser         (doParse)
 import qualified System.Console.CmdArgs as CMD
 import           System.Directory       (doesFileExist)
+import           System.FilePath        (dropExtension, takeExtension)
 
 
 -----------------------
@@ -45,24 +46,56 @@ cliController c@CS.Delete{}  = print $ "deleting! --> " ++ show c
 replaceMode :: ShortHndr -> IO ()
 replaceMode c@CS.Replace{} = do
   -- TODO Pier: implement inplace here
-  case input c of
-    Nothing   -> error "No input FilePath was found"
-    -- TODO from Pier to Wilmer: this error above is never reached
-    Just i_fp -> do
-      s <- readFile i_fp
-      case kb c of
-        Nothing    -> error "No KB FilePath was found"
-        -- source: https://stackoverflow.com/questions/16952335/is-there-any-way-to-use-io-bool-in-if-statement-without-binding-to-a-name-in-has
-        Just kb_fp -> doesFileExist kb_fp >>= \case
-          False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
-          True  -> do
-            putStrLn kb_fp
-            csvData <- BL.readFile kb_fp
-            case decodeByName csvData of
-              Left  err       -> error ("decoding error: " ++ err)
-              Right (_, kb_v) -> returnOutput
-                (out c)
+  -- 1. check kb
+  case kb c of
+    Nothing    -> error "No KB FilePath was found"
+    -- source: https://stackoverflow.com/questions/16952335/is-there-any-way-to-use-io-bool-in-if-statement-without-binding-to-a-name-in-has
+    Just kb_fp -> doesFileExist kb_fp >>= \case
+      False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
+      True  -> do
+        csvData <- BL.readFile kb_fp
+        case decodeByName csvData of
+          Left  err       -> error ("decoding error:" ++ err)
+          Right (_, kb_v) -> case inplace c of
+  -- 2. check i/o
+            Nothing -> case input c of
+-- 2.1 check input
+              Nothing   -> error "No input FilePath was found"
+              Just i_fp -> do
+                s <- readFile i_fp
+                -- source string
+                returnOutput
+                  (out c)
+                  (decode
+                    (mapParseStructure (getKnowledgeBase kb_v) (doParse s))
+                  )
+-- 2.2 handle inplace
+            Just io_fp -> do
+              s <- readFile io_fp
+              returnOutput
+                (Just (dropExtension io_fp ++ "_copy" ++ takeExtension io_fp))
+                -- TODO from Pier to Dmitri: error shared lock
+                -- team-proj-abbr-cli: data/test_file.txt: openFile: resource busy (file is locked)
                 (decode (mapParseStructure (getKnowledgeBase kb_v) (doParse s)))
+
+  -- case input c of
+  --   Nothing   -> error "No input FilePath was found"
+  --   -- TODO from Pier to Wilmer: this error above is never reached
+  --   Just i_fp -> do
+  --     s <- readFile i_fp
+  --     case kb c of
+  --       Nothing    -> error "No KB FilePath was found"
+  --       -- source: https://stackoverflow.com/questions/16952335/is-there-any-way-to-use-io-bool-in-if-statement-without-binding-to-a-name-in-has
+  --       Just kb_fp -> doesFileExist kb_fp >>= \case
+  --         False -> error ("The KB File '" ++ kb_fp ++ "' does not exist")
+  --         True  -> do
+  --           putStrLn kb_fp
+  --           csvData <- BL.readFile kb_fp
+  --           case decodeByName csvData of
+  --             Left  err       -> error ("decoding error: " ++ err)
+  --             Right (_, kb_v) -> returnOutput
+  --               (out c)
+  --               (decode (mapParseStructure (getKnowledgeBase kb_v) (doParse s)))
 -- TODO(tech debt): refactor to avoid undefined
 -- Impossible case because of the cliController
 replaceMode _ = undefined

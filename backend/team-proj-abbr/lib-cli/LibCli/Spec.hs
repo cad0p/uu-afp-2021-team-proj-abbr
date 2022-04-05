@@ -81,7 +81,7 @@ replace =
         ("Source (and Output) file: this argument replaces input and output with"
         ++ " what is provided here, and has precedence over the others"
         )
-        (pure "shorthndr-inout.txt")
+        Nothing
       }
     CMD.&= CMD.help
              "Replace all abreviations in the provided file with their expansions"
