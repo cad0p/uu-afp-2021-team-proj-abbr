@@ -1,5 +1,5 @@
 {-|
-Description : The knowledge base implementation.
+Description : Defines the knowledge base implementation and abstractions.
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -11,7 +11,6 @@ module LibCore.KnowledgeBase where
 import           Data.Map       as M
     ( Map
     , delete
-    , empty
     , fromList
     , insert
     , lookup
@@ -20,21 +19,20 @@ import           Data.Map       as M
     )
 import           LibCore.Models (Error (StandardError), Keyword (..))
 
--- TODO(future focus): support partial updates and state? RWS monad?
+-- TODO(future ideas): support partial updates and state? RWS monad?
 type KnowledgeBaseStructure = M.Map Keyword Keyword
 
-getKnowledgeBase :: KnowledgeBaseStructure
-getKnowledgeBase = M.empty
 
-buildKnowledgeBase :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
-buildKnowledgeBase = M.fromList
+-- |Build a new Knowledge Base from the supplied keyword pair list.
+build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
+build = M.fromList
 
 
 -- |Get the list of all the stored records in the Knowledge Base.
 --
 -- Examples:
 --
--- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
 -- >>> listAll testKB
 -- [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
 listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
@@ -45,7 +43,7 @@ listAll = M.toList
 --
 -- Examples
 --
--- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
 -- >>> get testKB (Keyword {keyword = "brb", plural = False})
 -- Right (Keyword {keyword = "be right back", plural = False})
 --
@@ -64,7 +62,7 @@ get kb k = case M.lookup k kb of
 --
 -- Examples
 --
--- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
 -- >>> add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way", plural = False})
 -- (Keyword {keyword = "by the way", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way", plural = False})])
 --
@@ -84,7 +82,7 @@ add kb k r = (r, M.insert k r kb)
 --
 -- Examples:
 --
--- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
 -- >>> put testKB (Keyword {keyword = "brb", plural = False}) (Keyword {keyword = "BE RIGHT BACK", plural = False})
 -- Right (Keyword {keyword = "BE RIGHT BACK", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "BE RIGHT BACK", plural = False})])
 --
@@ -105,7 +103,7 @@ put kb k r = case get kb k of
 --
 -- Examples:
 --
--- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
 -- >>> remove testKB (Keyword {keyword = "brb", plural = False})
 -- Right (fromList [])
 --
@@ -116,5 +114,4 @@ remove
 remove kb k = case get kb k of
   Left  er -> Left er
   Right _  -> Right $ M.delete k kb
-
 

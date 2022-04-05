@@ -31,10 +31,11 @@ library
       LibCore.KnowledgeBase
       LibCore.Mapper
       LibCore.Models
-      LibCore.OutputInterface
       LibCore.Parser
+      LibCli.Adapters
       LibCli.Handlers
       LibCli.Main
+      LibCli.OutputInterface
       LibCli.Spec
   other-modules:
       Paths_team_proj_abbr
@@ -44,9 +45,13 @@ library
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -fwarn-identities
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , cmdargs >=0.10.21
     , containers
+    , directory
     , parsec
+    , vector
   default-language: Haskell2010
 
 executable team-proj-abbr-cli
@@ -58,10 +63,14 @@ executable team-proj-abbr-cli
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , cmdargs >=0.10.21
     , containers
+    , directory
     , parsec
     , team-proj-abbr
+    , vector
   default-language: Haskell2010
 
 test-suite team-proj-abbr-doctest
@@ -74,21 +83,25 @@ test-suite team-proj-abbr-doctest
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base
+    , bytestring
+    , cassava
     , cmdargs >=0.10.21
     , containers
+    , directory
     , doctest >=0.8
     , parsec
+    , vector
   default-language: Haskell2010
 
 test-suite team-proj-abbr-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.LibCli.OutputInterface
       Test.LibCore.Decoder
       Test.LibCore.InputInterface
       Test.LibCore.KnowledgeBase
       Test.LibCore.Mapper
-      Test.LibCore.OutputInterface
       Test.LibCore.Parser
       Paths_team_proj_abbr
   hs-source-dirs:
@@ -96,10 +109,14 @@ test-suite team-proj-abbr-test
   ghc-options: -Wall -fwarn-tabs -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , cmdargs >=0.10.21
     , containers
+    , directory
     , parsec
     , tasty
     , tasty-hunit
     , team-proj-abbr
+    , vector
   default-language: Haskell2010
