@@ -9,13 +9,14 @@ Stability   : experimental
 module LibCli.Handlers where
 import qualified Data.ByteString.Lazy   as BL
 import           Data.Csv               (decodeByName)
+import           Data.List              (intercalate)
 import           Data.Maybe             (fromMaybe)
 import           LibCli.Adapters        (getKnowledgeBase)
 import           LibCli.OutputInterface (returnOutput)
 import           LibCore.Decoder        as D (decode)
 import           LibCore.KnowledgeBase  (KnowledgeBaseStructure, listAll)
 import           LibCore.Mapper         as M (mapParseStructure)
-import           LibCore.Models         (Error (..))
+import           LibCore.Models         (Error (..), Keyword (Keyword))
 import           LibCore.Parser         as P (doParse)
 import           System.Directory       (doesFileExist)
 
@@ -127,18 +128,18 @@ listHandler kbfp = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
   process (_, kbp) = do
     lkb <- loadKb kbp
-    let rs = map show . listAll <$> lkb
-    return $ unwords <$> rs
+    let rs = map formatRecord . listAll <$> lkb
+    return $ intercalate "\n" <$> rs
 
-  -- formatRecord :: (Keyword, Keyword) -> String
-  -- formatRecord (Keyword kk kpl, Keyword vk vpl) =
-  --   "Key: "
-  --     ++ kk
-  --     ++ (if kpl then "(plural)" else "")
-  --     ++ " --> "
-  --     ++ "Value: "
-  --     ++ vk
-  --     ++ if vpl then "(plural)" else ""
+  formatRecord :: (Keyword, Keyword) -> String
+  formatRecord (Keyword kk kpl, Keyword vk vpl) =
+    "Key: "
+      ++ kk
+      ++ (if kpl then "(plural)" else "")
+      ++ " --> "
+      ++ "Value: "
+      ++ vk
+      ++ if vpl then "(plural)" else ""
 
 
 -- get
