@@ -22,7 +22,7 @@ main = do
 tests :: TestTree
 tests = testGroup "Tests" [properties, unitTests]
 
--- |Configuration of the QuickCheck tests
+-- | Configuration of the QuickCheck tests
 --
 -- See: <https://hackage.haskell.org/package/QuickCheck>
 properties :: TestTree
@@ -41,7 +41,7 @@ qcProps = testGroup
   ]
 
 
--- |Configuration of the HUnit tests
+-- | Configuration of the HUnit tests
 --
 -- See: <https://hackage.haskell.org/package/HUnit>
 unitTests :: TestTree

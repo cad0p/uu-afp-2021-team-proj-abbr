@@ -29,11 +29,18 @@ data KbEntry
       }
 
 -- | 'FromNamedRecord' describes how to parse the record
+--
+-- Other examples of this can be found here:
+-- https://github.com/haskell-hvr/cassava/blob/master/examples/
 instance FromNamedRecord KbEntry where
   parseNamedRecord r = KbEntry <$> r .: "abbreviation" <*> r .: "expansion"
 
 
 {-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
+
+>>> mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
+(Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+
 -}
 mapEntries :: KbEntry -> (Keyword, Keyword)
 mapEntries e =
