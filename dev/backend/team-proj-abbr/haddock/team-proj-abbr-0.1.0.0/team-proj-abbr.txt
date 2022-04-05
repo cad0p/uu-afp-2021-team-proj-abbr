@@ -282,6 +282,9 @@ replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
 --   expansion to the KB.
 addHandler :: Maybe FilePath -> String -> String -> IO ()
 
+-- | Update command handler. Updates an existing abbreviation in the KB.
+updateHandler :: Maybe FilePath -> String -> String -> IO ()
+
 -- | Delete command handler. Deletes an existing abbreviation from the KB.
 deleteHandler :: Maybe FilePath -> String -> IO ()
 
