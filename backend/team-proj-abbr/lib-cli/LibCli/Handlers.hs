@@ -22,6 +22,7 @@ import           LibCore.KnowledgeBase
     ( KnowledgeBaseStructure
     , add
     , listAll
+    , put
     , remove
     )
 import           LibCore.Mapper         as M (mapParseStructure)
@@ -165,8 +166,36 @@ addHandler kbfp a e = do
       Right (nk, kb') -> do
         return $ pure ("Added: " ++ show nk, kb')
 
--- update
 
+-- | Update command handler.
+-- Updates an existing abbreviation in the KB.
+updateHandler
+  :: Maybe FilePath -- ^ KB file path
+  -> String -- ^ Abbreviation keyword
+  -> String -- ^ Expansion keyword
+  -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
+updateHandler kbfp a e = do
+  let kbp = fromMaybe "" kbfp
+  kb_exists <- doesFileExist kbp
+  res       <- process (kb_exists, kbp)
+  case res of
+    Left  err     -> error $ show err
+    Right (s, kb) -> do
+      putStrLn s
+      dump kbp kb
+ where
+  process
+    :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
+  process (False, p) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ p
+  process (_, kbp) = do
+    lkb <- loadKb kbp
+    let k = pure $ Keyword { keyword = a, plural = False }
+    let v = pure $ Keyword { keyword = e, plural = False }
+    let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
+    case put <$> lkb <*> k <*> v of
+      Left  er -> error $ show er
+      Right r  -> return $ (\x (_, y) -> (x, y)) <$> s <*> r
 
 
 -- | Delete command handler.
@@ -219,4 +248,6 @@ listHandler kbfp = do
     let rs = map formatRecord . listAll <$> lkb
     return $ intercalate "\n" <$> rs
 
+
 -- TODO(tech debt): add get command to Spec
+-- get
