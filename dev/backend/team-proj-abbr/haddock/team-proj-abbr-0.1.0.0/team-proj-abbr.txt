@@ -117,7 +117,25 @@ listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 --   Left (StandardError "no record found for this keyword")
 --   </pre>
 get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
-add :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
+
+-- | Add new item to the Knowledge Base. Adds the item to the KB as a new
+--   record if the key was notseen before, and replaces the existing record
+--   otherwise.
+--   
+--   Examples
+--   
+--   <pre>
+--   &gt;&gt;&gt; testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   
+--   &gt;&gt;&gt; add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way", plural = False})
+--   (Keyword {keyword = "by the way", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way", plural = False})])
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
+--   (Keyword {keyword = "by the way!", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way!", plural = False})])
+--   </pre>
+add :: KnowledgeBaseStructure -> Keyword -> Keyword -> (Keyword, KnowledgeBaseStructure)
 update :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 delete :: KnowledgeBaseStructure -> Keyword -> Either Error Bool
 

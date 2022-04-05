@@ -27,12 +27,12 @@ Stability   : experimental
 </span><span id="line-27"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-type">mockCliHandler</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">CS.ShortHndr</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-28"></span><span class="hs-comment">-- mockCliHandler c@CS.Replace{} = print $ &quot;replacing! --&gt; &quot; ++ show c</span><span>
 </span><span id="line-29"></span><span id="mockCliHandler"><span class="annot"><span class="annottext">mockCliHandler :: ShortHndr -&gt; IO ()
-</span><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var hs-var">mockCliHandler</span></a></span></span><span> </span><span id="local-6989586621679043929"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043929"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">CS.Replace</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; IO ()
+</span><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var hs-var">mockCliHandler</span></a></span></span><span> </span><span id="local-6989586621679043939"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043939"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">CS.Replace</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; IO ()
 </span><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var">replaceMode</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043929"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-30"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043926"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043926"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Expand"><span class="hs-identifier hs-type">CS.Expand</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679043939"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-30"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043936"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043936"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Expand"><span class="hs-identifier hs-type">CS.Expand</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
 </span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -42,9 +42,9 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; [Char]
 forall a. Show a =&gt; a -&gt; [Char]
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043926"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-31"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043923"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043923"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#List"><span class="hs-identifier hs-type">CS.List</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679043936"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-31"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043933"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043933"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#List"><span class="hs-identifier hs-type">CS.List</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
 </span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -54,9 +54,9 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; [Char]
 forall a. Show a =&gt; a -&gt; [Char]
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043923"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-32"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043921"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043921"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Add"><span class="hs-identifier hs-type">CS.Add</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>     </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679043933"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-32"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043931"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043931"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Add"><span class="hs-identifier hs-type">CS.Add</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>     </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
 </span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -66,9 +66,9 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; [Char]
 forall a. Show a =&gt; a -&gt; [Char]
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043921"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-33"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043919"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043919"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Update"><span class="hs-identifier hs-type">CS.Update</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679043931"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-33"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043929"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043929"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Update"><span class="hs-identifier hs-type">CS.Update</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
 </span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -78,9 +78,9 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; [Char]
 forall a. Show a =&gt; a -&gt; [Char]
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043919"><span class="hs-identifier hs-var">c</span></a></span><span>
-</span><span id="line-34"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043917"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043917"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Delete"><span class="hs-identifier hs-type">CS.Delete</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
+</span><a href="#local-6989586621679043929"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><span id="line-34"></span><span class="annot"><a href="LibCli.Main.html#mockCliHandler"><span class="hs-identifier hs-var">mockCliHandler</span></a></span><span> </span><span id="local-6989586621679043927"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043927"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Delete"><span class="hs-identifier hs-type">CS.Delete</span></a></span><span class="hs-special">{</span><span class="hs-special">}</span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. Show a =&gt; a -&gt; IO ()
 </span><span class="hs-identifier hs-var">print</span></span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; IO ()) -&gt; [Char] -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -90,30 +90,30 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; [Char]
 forall a. Show a =&gt; a -&gt; [Char]
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043917"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><a href="#local-6989586621679043927"><span class="hs-identifier hs-var">c</span></a></span><span>
 </span><span id="line-35"></span><span>
 </span><span id="line-36"></span><span class="annot"><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-type">replaceMode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCli.Spec.html#ShortHndr"><span class="hs-identifier hs-type">ShortHndr</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-37"></span><span id="replaceMode"><span class="annot"><span class="annottext">replaceMode :: ShortHndr -&gt; IO ()
-</span><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var hs-var">replaceMode</span></a></span></span><span> </span><span id="local-6989586621679043915"><span class="annot"><span class="annottext">c :: ShortHndr
-</span><a href="#local-6989586621679043915"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">CS.Replace</span></a></span><span> </span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var hs-var">replaceMode</span></a></span></span><span> </span><span id="local-6989586621679043925"><span class="annot"><span class="annottext">c :: ShortHndr
+</span><a href="#local-6989586621679043925"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-glyph">@</span><span class="annot"><a href="LibCli.Spec.html#Replace"><span class="hs-identifier hs-type">CS.Replace</span></a></span><span> </span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-38"></span><span>    </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe [Char]
 </span><a href="LibCli.Spec.html#input"><span class="hs-identifier hs-var hs-var">input</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043915"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><a href="#local-6989586621679043925"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-39"></span><span>      </span><span class="annot"><span class="annottext">Maybe [Char]
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO ()
 forall a. HasCallStack =&gt; [Char] -&gt; a
 </span><span class="hs-identifier hs-var">error</span></span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;No input file was found&quot;</span></span><span>
-</span><span id="line-40"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679043913"><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679043913"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-41"></span><span>          </span><span id="local-6989586621679043912"><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679043912"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO [Char]
+</span><span id="line-40"></span><span>      </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679043923"><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679043923"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-41"></span><span>          </span><span id="local-6989586621679043922"><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679043922"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; IO [Char]
 </span><span class="hs-identifier hs-var">readFile</span></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679043913"><span class="hs-identifier hs-var">f</span></a></span><span>
+</span><a href="#local-6989586621679043923"><span class="hs-identifier hs-var">f</span></a></span><span>
 </span><span id="line-42"></span><span>          </span><span class="annot"><span class="annottext">Maybe [Char] -&gt; [Char] -&gt; IO ()
 </span><a href="LibCore.OutputInterface.html#returnOutput"><span class="hs-identifier hs-var">returnOutput</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ShortHndr -&gt; Maybe [Char]
 </span><a href="LibCli.Spec.html#out"><span class="hs-identifier hs-var hs-var">out</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndr
-</span><a href="#local-6989586621679043915"><span class="hs-identifier hs-var">c</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ParseStructure -&gt; [Char]
+</span><a href="#local-6989586621679043925"><span class="hs-identifier hs-var">c</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ParseStructure -&gt; [Char]
 </span><a href="LibCore.Decoder.html#decode"><span class="hs-identifier hs-var">decode</span></a></span><span> </span><span class="annot"><span class="annottext">(ParseStructure -&gt; [Char]) -&gt; ParseStructure -&gt; [Char]
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; ParseStructure -&gt; ParseStructure
@@ -123,7 +123,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; ParseStructure
 </span><a href="LibCore.Parser.html#doParse"><span class="hs-identifier hs-var">doParse</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
-</span><a href="#local-6989586621679043912"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679043922"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-43"></span><span class="hs-comment">-- Impossible case because of the mockCliHandler</span><span>
 </span><span id="line-44"></span><span class="annot"><a href="LibCli.Main.html#replaceMode"><span class="hs-identifier hs-var">replaceMode</span></a></span><span> </span><span class="annot"><span class="annottext">ShortHndr
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO ()
