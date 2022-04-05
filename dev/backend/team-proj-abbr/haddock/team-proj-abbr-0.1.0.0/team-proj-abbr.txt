@@ -10,6 +10,9 @@
 @version 0.1.0.0
 
 
+module LibCli.Handlers
+
+
 module LibCli.Spec
 cliModes :: [ShortHndr]
 
@@ -68,31 +71,55 @@ data Keyword
 Keyword :: String -> Bool -> Keyword
 [keyword] :: Keyword -> String
 [plural] :: Keyword -> Bool
+
+-- | Reserved domain-level error indications.
+newtype Error
+StandardError :: String -> Error
 instance GHC.Show.Show LibCore.Models.Keyword
 instance GHC.Classes.Ord LibCore.Models.Keyword
 instance GHC.Classes.Eq LibCore.Models.Keyword
 instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
+instance GHC.Show.Show LibCore.Models.Error
 
 
 module LibCore.KnowledgeBase
 type KnowledgeBaseStructure = Map Keyword Keyword
+getKnowledgeBase :: KnowledgeBaseStructure
+buildKnowledgeBase :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 
--- | <a>KbEntry</a> is an entry on the file containing the KB
-data KbEntry
-KbEntry :: String -> String -> KbEntry
-[abbreviation] :: KbEntry -> String
-[expansion] :: KbEntry -> String
+-- | Get the list of all the stored records in the Knowledge Base.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   
+--   &gt;&gt;&gt; listAll testKB
+--   [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
+--   </pre>
+listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 
--- | <a>mapEntries</a> maps entries to a pair of (<a>abbreviation</a>,
---   <a>expansion</a>)
-mapEntries :: KbEntry -> (Keyword, Keyword)
-
--- | <a>getKnowledgeBase</a> parses from a CSV file to a
---   <a>KnowledgeBaseStructure</a>
-getKnowledgeBase :: Vector KbEntry -> KnowledgeBaseStructure
-instance Data.Csv.Conversion.FromNamedRecord LibCore.KnowledgeBase.KbEntry
+-- | Retrieve a single element by its keyword.
+--   
+--   Examples
+--   
+--   <pre>
+--   &gt;&gt;&gt; testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   
+--   &gt;&gt;&gt; get testKB (Keyword {keyword = "brb", plural = False})
+--   Right (Keyword {keyword = "be right back", plural = False})
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; get testKB (Keyword {keyword = "beb", plural = False})
+--   Left (StandardError "no record found for this keyword")
+--   </pre>
+get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
+add :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
+update :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
+delete :: KnowledgeBaseStructure -> Keyword -> Either Error Bool
 
 
 module LibCore.OutputInterface
@@ -147,13 +174,13 @@ noAbbrParser :: Parser Token
 module LibCore.Mapper
 
 -- | Map a ParseStructure using a KnowledgeBaseStructure to another
---   ParseStructure. The structure of this function makes it possible to
---   apply multiple KnowledgeBases to one ParseStructure
+--   ParseStructure. | The structure of this function makes it possible to
+--   apply multiple | KnowledgeBases to one ParseStructure
 mapParseStructure :: KnowledgeBaseStructure -> ParseStructure -> ParseStructure
 
 -- | Lookup a token in the KnowledgeBaseStructure. If it is not found,
---   return the lookup token. Otherwise, it returns the result of the
---   lookup, which is also a token
+--   return | the lookup token. Otherwise, it returns the result of the
+--   lookup, which | is also a token
 doLookup :: KnowledgeBaseStructure -> Token -> Token
 
 
@@ -164,11 +191,6 @@ tokenToString :: Token -> String
 
 module LibCli.Main
 mockCliHandler :: ShortHndr -> IO ()
-
--- | <a>replaceMode</a> does the replacind heavy lifting
---   
---   Under the hood it checks for errors in the input file (TODO input
---   file) and the KB
 replaceMode :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
