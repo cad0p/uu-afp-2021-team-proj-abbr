@@ -8,7 +8,14 @@ Stability   : experimental
 
 module LibCore.KnowledgeBase where
 
-import           Data.Map       as M (Map, empty, fromList, lookup, toList)
+import           Data.Map       as M
+    ( Map
+    , empty
+    , fromList
+    , insert
+    , lookup
+    , toList
+    )
 import           LibCore.Models (Error (StandardError), Keyword (..))
 
 type KnowledgeBaseStructure = M.Map Keyword Keyword
@@ -44,8 +51,24 @@ get kb k = case M.lookup k kb of
   Nothing -> Left $ StandardError "no record found for this keyword"
   Just x  -> Right x
 
-add :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
-add _ _ = Left $ StandardError "fail"
+-- |Add new item to the Knowledge Base.
+-- Adds the item to the KB as a new record if the key was notseen before,
+-- and replaces the existing record otherwise.
+--
+-- Examples
+--
+-- >>> testKB = buildKnowledgeBase [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way", plural = False})
+-- (Keyword {keyword = "by the way", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way", plural = False})])
+--
+-- >>> add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
+-- (Keyword {keyword = "by the way!", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way!", plural = False})])
+add
+  :: KnowledgeBaseStructure
+  -> Keyword
+  -> Keyword
+  -> (Keyword, KnowledgeBaseStructure)
+add kb k r = (r, M.insert k r kb)
 
 update :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 update _ _ = Left $ StandardError "fail"
