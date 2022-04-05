@@ -1,21 +1,10 @@
 name: Backend Code Style
 
 on:
-  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
-  # pull_request:
-  #   # branches: [ "main" ]
-  #   paths-ignore:
-  #     - 'frontend/**'
   push:
-    # branches: [ "main" ]
-    # tags: [ "*.*.*" ]
-    paths:
-      - "backend/**"
-      - ".github/workflows/**"
-      - "!frontend/**"
 
 jobs:
-  style:
+  backend-style:
     strategy:
       matrix:
         os: [ubuntu-latest]

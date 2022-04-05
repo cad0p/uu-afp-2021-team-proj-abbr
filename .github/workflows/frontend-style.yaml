@@ -2,16 +2,9 @@ name: Frontend Code Style
 
 on:
   push:
-    # Leaving here in case we need to run on other conditions
-    # branches: [ "main" ]
-    # tags: [ "*.*.*" ]
-    paths:
-      - "frontend/**"
-      - ".github/workflows/**"
-      - "!backend/**"
 
 jobs:
-  style:
+  frontend-style:
     strategy:
       matrix:
         os: [ubuntu-latest]
