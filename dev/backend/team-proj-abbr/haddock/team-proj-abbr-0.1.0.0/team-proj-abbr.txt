@@ -17,13 +17,10 @@ cliModes :: [ShortHndr]
 data ShortHndr
 
 -- | Defines the arguments for the replace command
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> ShortHndr
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
 [input] :: ShortHndr -> Maybe FilePath
 [out] :: ShortHndr -> Maybe FilePath
-
--- | this argument replaces input and output with what is provided here,
---   and has precedence over the others
-[inplace] :: ShortHndr -> Maybe FilePath
+[inplace] :: ShortHndr -> Maybe Bool
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
@@ -90,6 +87,11 @@ KbEntry :: String -> String -> KbEntry
 
 -- | <a>mapEntries</a> maps entries to a pair of (<a>abbreviation</a>,
 --   <a>expansion</a>)
+--   
+--   <pre>
+--   &gt;&gt;&gt; mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
+--   (Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+--   </pre>
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
 -- | <a>getKnowledgeBase</a> parses from a CSV file to a
