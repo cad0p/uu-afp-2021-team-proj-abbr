@@ -85,4 +85,10 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
         -a="brb"                        \
         -e="be right back"
     Added: Keyword {keyword = "be right back", plural = False}
+    # check modification:
+    $ cat data/kb_example.csv
+    abbreviation,expansion
+    ...
+    brb,be right back
+    ...
     ```
