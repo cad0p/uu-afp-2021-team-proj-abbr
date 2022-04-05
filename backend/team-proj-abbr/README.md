@@ -1,11 +1,14 @@
 # team-proj-abbr
-## To setup:
+
+## To setup
+
 ```sh
 cd team-proj-abbr
 stack setup
 ```
 
-## To run:
+## To run
+
 ```sh
 stack build
 stack ghci
