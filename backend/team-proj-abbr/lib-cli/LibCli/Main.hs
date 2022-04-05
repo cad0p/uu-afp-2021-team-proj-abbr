@@ -13,6 +13,7 @@ module LibCli.Main where
 import qualified Data.ByteString.Lazy   as BL
 import           Data.Csv               (decodeByName)
 import           LibCli.Adapters        (getKnowledgeBase)
+import           LibCli.Handlers        (replaceHandler)
 import           LibCli.OutputInterface (returnOutput)
 import           LibCli.Spec            (ShortHndr (input, kb, out))
 import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
@@ -30,12 +31,13 @@ import           System.Directory       (doesFileExist)
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
 -- TODO: (future task) implement the actual handlers with the business logic.
 cliController :: CS.ShortHndr -> IO ()
-cliController c@CS.Replace{} = replaceMode c
-cliController c@CS.Expand{}  = print $ "expanding! --> " ++ show c
-cliController c@CS.List{}    = print $ "listing! --> " ++ show c
-cliController c@CS.Add{}     = print $ "adding! --> " ++ show c
-cliController c@CS.Update{}  = print $ "updating! --> " ++ show c
-cliController c@CS.Delete{}  = print $ "deleting! --> " ++ show c
+cliController CS.Replace { input = ifp, kb = kbfp, out = ofp } =
+  replaceHandler kbfp ifp ofp
+cliController c@CS.Expand{} = print $ "expanding! --> " ++ show c
+cliController c@CS.List{}   = print $ "listing! --> " ++ show c
+cliController c@CS.Add{}    = print $ "adding! --> " ++ show c
+cliController c@CS.Update{} = print $ "updating! --> " ++ show c
+cliController c@CS.Delete{} = print $ "deleting! --> " ++ show c
 
 
 {-| 'replaceMode' does the replacind heavy lifting
