@@ -10,9 +10,6 @@
 @version 0.1.0.0
 
 
-module LibCli.Handlers
-
-
 module LibCli.OutputInterface
 returnOutput :: Maybe FilePath -> String -> IO ()
 
@@ -24,13 +21,10 @@ cliModes :: [ShortHndr]
 data ShortHndr
 
 -- | Defines the arguments for the replace command
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> ShortHndr
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
 [input] :: ShortHndr -> Maybe FilePath
 [out] :: ShortHndr -> Maybe FilePath
-
--- | this argument replaces input and output with what is provided here,
---   and has precedence over the others
-[inplace] :: ShortHndr -> Maybe FilePath
+[inplace] :: ShortHndr -> Maybe Bool
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
@@ -261,6 +255,17 @@ doLookup :: KnowledgeBaseStructure -> Token -> Token
 module LibCore.Decoder
 decode :: ParseStructure -> String
 tokenToString :: Token -> String
+
+
+module LibCli.Handlers
+
+-- | Wraps the file reading in a predefined error handling. If the file
+--   path was not provided, returns Nothing. Otherwise, executes the given
+--   function.
+readWrapper :: (FilePath -> a) -> Maybe FilePath -> Maybe a
+
+-- | Replace command handler.
+replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
 
 
 module LibCli.Main
