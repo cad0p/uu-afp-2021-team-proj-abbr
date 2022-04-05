@@ -92,3 +92,19 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     brb,be right back
     ...
     ```
+
+5. `Delete`: - delete an existing abbrevation record from the KB
+
+    ```bash
+    # check the deletion target
+    $ cat data/kb_example.csv | grep hl
+    hl,hello
+    $ stack exec team-proj-abbr-cli -- delete -k="data/kb_example.csv" -a="hl"
+    Removed: Keyword {keyword = "hl", plural = False}
+    # nothing can be found
+    $ cat data/kb_example.csv | grep hl -c 
+    0
+    $ stack exec team-proj-abbr-cli -- delete -k="data/kb_example.csv" -a="hl"
+    team-proj-abbr-cli: StandardError "no record found for this keyword : Keyword {keyword = \"hl\", plural = False}"
+    ...
+    ```
