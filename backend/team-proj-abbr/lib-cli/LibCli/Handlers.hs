@@ -6,7 +6,30 @@ Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering
 Stability   : experimental
 -}
 
-module LibCli.Handlers where
+-- template for haddock docs taken from here:
+-- https://hackage.haskell.org/package/directory-1.3.7.0/docs/src/System.Directory.html
+module LibCli.Handlers
+  (
+  -- $intro
+
+  -- * Utilities
+    loadKb
+  , loadInput
+  , doExpansion
+  , formatRecord
+  , dump
+  , makeDefaultKeyword
+  -- * Expansion Operations
+
+  -- $expansion
+  , expandHandler
+  , replaceHandler
+  -- * Knowledge Base CRUD
+  , addHandler
+  , updateHandler
+  , deleteHandler
+  , listHandler
+  ) where
 import qualified Data.ByteString.Lazy   as BL (readFile, writeFile)
 import           Data.Csv
     ( decodeByName
@@ -34,6 +57,34 @@ import           System.IO.Strict       as SIS (readFile)
 -- TODO: General improvements (tech debt):
 --  [ ] refactor duplication
 --  [ ] try to use nice template for handlers to make them shorter
+
+{- $intro
+
+This is an introduction
+-}
+------------------------------------
+
+{- $expansion
+
+Here we adopt the following convention:
+
+* `fp` is a `FilePath`
+
+* `m` stands for `Maybe`, so `mfp` is `Maybe FilePath`
+
+What precedes is the following:
+
+* `kb` is the `KnowledgeBaseStructure`
+  and if followed by `_fp` it means that the underlying
+  contents of the `File` at `FilePath` `fp` is a `kb`
+
+* `in` is the same, input file
+
+* `o` is output file
+
+* `io` is input/output file (used in `inplace` mode)
+
+-}
 
 
 ---------------
