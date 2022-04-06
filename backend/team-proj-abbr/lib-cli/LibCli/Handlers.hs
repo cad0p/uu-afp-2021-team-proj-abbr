@@ -73,6 +73,16 @@ dump kbp kb = do
   BL.writeFile kbp $ encodeDefaultOrderedByName entries
 
 
+-- | Embeds the string in a keyword.
+-- By default assigns `False` to the plural attribute.
+--
+-- Examples:
+--
+-- >>> makeDefaultKeyword "hello"
+-- Keyword {keyword = "hello", plural = False}
+makeDefaultKeyword :: String -> Keyword
+makeDefaultKeyword s = Keyword { keyword = s, plural = False }
+
 --------------------------
 -- Expansion Operations --
 --------------------------
@@ -159,8 +169,8 @@ addHandler kbfp a e = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
   process (_, kbp) = do
     lkb <- loadKb kbp
-    let k   = pure $ Keyword { keyword = a, plural = False }
-    let v   = pure $ Keyword { keyword = e, plural = False }
+    let k   = pure $ makeDefaultKeyword a
+    let v   = pure $ makeDefaultKeyword e
     let res = add <$> lkb <*> k <*> v
     case res of
       Left er ->
@@ -192,8 +202,8 @@ updateHandler kbfp a e = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
   process (_, kbp) = do
     lkb <- loadKb kbp
-    let k = pure $ Keyword { keyword = a, plural = False }
-    let v = pure $ Keyword { keyword = e, plural = False }
+    let k = pure $ makeDefaultKeyword a
+    let v = pure $ makeDefaultKeyword e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
     case put <$> lkb <*> k <*> v of
       Left  er -> error $ show er
@@ -222,7 +232,7 @@ deleteHandler kbfp a = do
     return $ Left $ StandardError $ "KB file not found at " ++ p
   process (_, kbp) = do
     lkb <- loadKb kbp
-    let k = pure $ Keyword { keyword = a, plural = False }
+    let k = pure $ makeDefaultKeyword a
     let s = (\k' -> "Removed: " ++ show k') <$> k
     case remove <$> lkb <*> k of
       Left  er -> error $ show er
