@@ -28,6 +28,7 @@ import           LibCore.Mapper         as M (mapParseStructure)
 import           LibCore.Models         (Error (..), Keyword (..))
 import           LibCore.Parser         as P (doParse)
 import           System.Directory       (doesFileExist)
+import           System.IO.Strict       as SIS (readFile)
 
 ---------------
 -- Utilities --
@@ -46,7 +47,7 @@ loadKb p = do
 -- Can be any file with contents loadable as String.
 loadInput :: FilePath -> IO (Either Error String)
 loadInput p = do
-  s <- readFile p
+  s <- SIS.readFile p
   return $ Right s
 
 -- | Performs the expansion logic on the provided string.
