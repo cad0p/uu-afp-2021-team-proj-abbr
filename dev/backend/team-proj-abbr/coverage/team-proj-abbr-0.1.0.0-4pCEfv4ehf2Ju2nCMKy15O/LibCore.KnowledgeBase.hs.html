@@ -1,0 +1,140 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+span.lineno { color: white; background: #aaaaaa; border-right: solid white 12px }
+span.nottickedoff { background: yellow}
+span.istickedoff { background: white }
+span.tickonlyfalse { margin: -1px; border: 1px solid #f20913; background: #f20913 }
+span.tickonlytrue  { margin: -1px; border: 1px solid #60de51; background: #60de51 }
+span.funcount { font-size: small; color: orange; z-index: 2; position: absolute; right: 20 }
+span.decl { font-weight: bold }
+span.spaces    { background: white }
+</style>
+</head>
+<body>
+<pre>
+<span class="decl"><span class="nottickedoff">never executed</span> <span class="tickonlytrue">always true</span> <span class="tickonlyfalse">always false</span></span>
+</pre>
+<pre>
+<span class="lineno">    1 </span>{-|
+<span class="lineno">    2 </span>Description : Defines the knowledge base implementation and abstractions.
+<span class="lineno">    3 </span>Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
+<span class="lineno">    4 </span>License     : BSD3
+<span class="lineno">    5 </span>Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
+<span class="lineno">    6 </span>Stability   : experimental
+<span class="lineno">    7 </span>-}
+<span class="lineno">    8 </span>
+<span class="lineno">    9 </span>module LibCore.KnowledgeBase where
+<span class="lineno">   10 </span>
+<span class="lineno">   11 </span>import           Data.Map       as M
+<span class="lineno">   12 </span>    ( Map
+<span class="lineno">   13 </span>    , delete
+<span class="lineno">   14 </span>    , fromList
+<span class="lineno">   15 </span>    , insert
+<span class="lineno">   16 </span>    , lookup
+<span class="lineno">   17 </span>    , toList
+<span class="lineno">   18 </span>    , update
+<span class="lineno">   19 </span>    )
+<span class="lineno">   20 </span>import           LibCore.Models (Error (StandardError), Keyword (..))
+<span class="lineno">   21 </span>
+<span class="lineno">   22 </span>-- TODO(future ideas): support partial updates and state? RWS monad?
+<span class="lineno">   23 </span>type KnowledgeBaseStructure = M.Map Keyword Keyword
+<span class="lineno">   24 </span>
+<span class="lineno">   25 </span>
+<span class="lineno">   26 </span>-- | Build a new Knowledge Base from the supplied keyword pair list.
+<span class="lineno">   27 </span>build :: [(Keyword, Keyword)] -&gt; KnowledgeBaseStructure
+<span class="lineno">   28 </span><span class="decl"><span class="istickedoff">build = M.fromList</span></span>
+<span class="lineno">   29 </span>
+<span class="lineno">   30 </span>
+<span class="lineno">   31 </span>-- |Get the list of all the stored records in the Knowledge Base.
+<span class="lineno">   32 </span>--
+<span class="lineno">   33 </span>-- Examples:
+<span class="lineno">   34 </span>--
+<span class="lineno">   35 </span>-- &gt;&gt;&gt; testKB = build [(Keyword {keyword = &quot;brb&quot;, plural = False}, Keyword {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">   36 </span>-- &gt;&gt;&gt; listAll testKB
+<span class="lineno">   37 </span>-- [(Keyword {keyword = &quot;brb&quot;, plural = False},Keyword {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">   38 </span>listAll :: KnowledgeBaseStructure -&gt; [(Keyword, Keyword)]
+<span class="lineno">   39 </span><span class="decl"><span class="nottickedoff">listAll = M.toList</span></span>
+<span class="lineno">   40 </span>
+<span class="lineno">   41 </span>
+<span class="lineno">   42 </span>-- |Retrieve a single element by its keyword.
+<span class="lineno">   43 </span>--
+<span class="lineno">   44 </span>-- Examples
+<span class="lineno">   45 </span>--
+<span class="lineno">   46 </span>-- &gt;&gt;&gt; testKB = build [(Keyword {keyword = &quot;brb&quot;, plural = False}, Keyword {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">   47 </span>-- &gt;&gt;&gt; get testKB (Keyword {keyword = &quot;brb&quot;, plural = False})
+<span class="lineno">   48 </span>-- Right (Keyword {keyword = &quot;be right back&quot;, plural = False})
+<span class="lineno">   49 </span>--
+<span class="lineno">   50 </span>-- &gt;&gt;&gt; get testKB (Keyword {keyword = &quot;beb&quot;, plural = False})
+<span class="lineno">   51 </span>-- Left (StandardError &quot;no record found for this keyword : Keyword {keyword = \&quot;beb\&quot;, plural = False}&quot;)
+<span class="lineno">   52 </span>get :: KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
+<span class="lineno">   53 </span><span class="decl"><span class="nottickedoff">get kb k = case M.lookup k kb of</span>
+<span class="lineno">   54 </span><span class="spaces">  </span><span class="nottickedoff">Nothing -&gt;</span>
+<span class="lineno">   55 </span><span class="spaces">    </span><span class="nottickedoff">Left $ StandardError $ &quot;no record found for this keyword : &quot; ++ show k</span>
+<span class="lineno">   56 </span><span class="spaces">  </span><span class="nottickedoff">Just x -&gt; Right x</span></span>
+<span class="lineno">   57 </span>
+<span class="lineno">   58 </span>
+<span class="lineno">   59 </span>-- |Add new item to the Knowledge Base.
+<span class="lineno">   60 </span>-- Adds the item to the KB as a new record if the key was notseen before,
+<span class="lineno">   61 </span>-- and replaces the existing record otherwise.
+<span class="lineno">   62 </span>--
+<span class="lineno">   63 </span>-- Examples
+<span class="lineno">   64 </span>--
+<span class="lineno">   65 </span>-- &gt;&gt;&gt; testKB = build [(Keyword {keyword = &quot;brb&quot;, plural = False}, Keyword {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">   66 </span>-- &gt;&gt;&gt; add testKB (Keyword {keyword = &quot;btw&quot;, plural = False}) (Keyword {keyword = &quot;by the way&quot;, plural = False})
+<span class="lineno">   67 </span>-- (Keyword {keyword = &quot;by the way&quot;, plural = False},fromList [(Keyword {keyword = &quot;brb&quot;, plural = False},Keyword {keyword = &quot;be right back&quot;, plural = False}),(Keyword {keyword = &quot;btw&quot;, plural = False},Keyword {keyword = &quot;by the way&quot;, plural = False})])
+<span class="lineno">   68 </span>--
+<span class="lineno">   69 </span>-- &gt;&gt;&gt; add testKB (Keyword {keyword = &quot;btw&quot;, plural = False}) (Keyword {keyword = &quot;by the way!&quot;, plural = False})
+<span class="lineno">   70 </span>-- (Keyword {keyword = &quot;by the way!&quot;, plural = False},fromList [(Keyword {keyword = &quot;brb&quot;, plural = False},Keyword {keyword = &quot;be right back&quot;, plural = False}),(Keyword {keyword = &quot;btw&quot;, plural = False},Keyword {keyword = &quot;by the way!&quot;, plural = False})])
+<span class="lineno">   71 </span>add
+<span class="lineno">   72 </span>  :: KnowledgeBaseStructure
+<span class="lineno">   73 </span>  -&gt; Keyword
+<span class="lineno">   74 </span>  -&gt; Keyword
+<span class="lineno">   75 </span>  -&gt; (Keyword, KnowledgeBaseStructure)
+<span class="lineno">   76 </span><span class="decl"><span class="nottickedoff">add kb k r = (r, M.insert k r kb)</span></span>
+<span class="lineno">   77 </span>
+<span class="lineno">   78 </span>
+<span class="lineno">   79 </span>-- |Updates the record at given key with the new value.
+<span class="lineno">   80 </span>-- Only full updates are supported.
+<span class="lineno">   81 </span>-- If the key is not in the KB, returns an error.
+<span class="lineno">   82 </span>--
+<span class="lineno">   83 </span>-- Examples:
+<span class="lineno">   84 </span>--
+<span class="lineno">   85 </span>-- &gt;&gt;&gt; testKB = build [(Keyword {keyword = &quot;brb&quot;, plural = False}, Keyword {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">   86 </span>-- &gt;&gt;&gt; put testKB (Keyword {keyword = &quot;brb&quot;, plural = False}) (Keyword {keyword = &quot;BE RIGHT BACK&quot;, plural = False})
+<span class="lineno">   87 </span>-- Right (Keyword {keyword = &quot;BE RIGHT BACK&quot;, plural = False},fromList [(Keyword {keyword = &quot;brb&quot;, plural = False},Keyword {keyword = &quot;BE RIGHT BACK&quot;, plural = False})])
+<span class="lineno">   88 </span>--
+<span class="lineno">   89 </span>-- &gt;&gt;&gt; put testKB (Keyword {keyword = &quot;btw&quot;, plural = False}) (Keyword {keyword = &quot;by the way!&quot;, plural = False})
+<span class="lineno">   90 </span>-- Left (StandardError &quot;no record found for this keyword : Keyword {keyword = \&quot;btw\&quot;, plural = False}&quot;)
+<span class="lineno">   91 </span>put
+<span class="lineno">   92 </span>  :: KnowledgeBaseStructure
+<span class="lineno">   93 </span>  -&gt; Keyword
+<span class="lineno">   94 </span>  -&gt; Keyword
+<span class="lineno">   95 </span>  -&gt; Either Error (Keyword, KnowledgeBaseStructure)
+<span class="lineno">   96 </span><span class="decl"><span class="nottickedoff">put kb k r = case get kb k of</span>
+<span class="lineno">   97 </span><span class="spaces">  </span><span class="nottickedoff">Left  er -&gt; Left er</span>
+<span class="lineno">   98 </span><span class="spaces">  </span><span class="nottickedoff">Right _  -&gt; Right (r, M.update (\_ -&gt; Just r) k kb)</span></span>
+<span class="lineno">   99 </span>
+<span class="lineno">  100 </span>
+<span class="lineno">  101 </span>-- |Removes an existing item at the given key form the Knowledge Base.
+<span class="lineno">  102 </span>-- If the key is not present, return as error.
+<span class="lineno">  103 </span>--
+<span class="lineno">  104 </span>-- Examples:
+<span class="lineno">  105 </span>--
+<span class="lineno">  106 </span>-- &gt;&gt;&gt; testKB = build [(Keyword {keyword = &quot;brb&quot;, plural = False}, Keyword {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">  107 </span>-- &gt;&gt;&gt; remove testKB (Keyword {keyword = &quot;brb&quot;, plural = False})
+<span class="lineno">  108 </span>-- Right (fromList [])
+<span class="lineno">  109 </span>--
+<span class="lineno">  110 </span>-- &gt;&gt;&gt; remove testKB (Keyword {keyword = &quot;btw&quot;, plural = False})
+<span class="lineno">  111 </span>-- Left (StandardError &quot;no record found for this keyword : Keyword {keyword = \&quot;btw\&quot;, plural = False}&quot;)
+<span class="lineno">  112 </span>remove
+<span class="lineno">  113 </span>  :: KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error KnowledgeBaseStructure
+<span class="lineno">  114 </span><span class="decl"><span class="nottickedoff">remove kb k = case get kb k of</span>
+<span class="lineno">  115 </span><span class="spaces">  </span><span class="nottickedoff">Left  er -&gt; Left er</span>
+<span class="lineno">  116 </span><span class="spaces">  </span><span class="nottickedoff">Right _  -&gt; Right $ M.delete k kb</span></span>
+<span class="lineno">  117 </span>
+
+</pre>
+</body>
+</html>
