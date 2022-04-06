@@ -12,7 +12,7 @@ qcParser :: TestTree
 qcParser = testGroup "Parser" []
 
 huParser :: TestTree
-huParser = testGroup "Parser" [parseNoToken, parseKeyword, parsePlural, parsePluralWord, parsePunctuation, parseSpacing]
+huParser = testGroup "Parser" [parseNoToken, parseKeyword, parsePlural, parsePluralWord, parsePunctuation, parseSpacing, parseSingleAt, parseSingleAtWord, parseEmail]
 
 parseNoToken :: TestTree
 parseNoToken = testCase "Test the parsing of a NoToken" $ assertEqual "" [NoToken "hello"] (doParse "hello")
@@ -31,3 +31,12 @@ parsePunctuation = testCase "Test that an abbreviation with punctuation is parse
 
 parseSpacing :: TestTree
 parseSpacing = testCase "Test the parsing of spacing" $ assertEqual "" [NoToken " \n\t\r"] (doParse " \n\t\r")
+
+parseSingleAt :: TestTree
+parseSingleAt = testCase "Test the parsing of a single @ character" $ assertEqual "" [NoToken "@"] (doParse "@")
+
+parseSingleAtWord :: TestTree
+parseSingleAtWord = testCase "Test the parsing of a single @ character with a word" $ assertEqual "" [NoToken "@", NoToken "hi"] (doParse "@hi")
+
+parseEmail :: TestTree
+parseEmail = testCase "Test the parsing of an email adres" $ assertEqual "" [NoToken "hi@bye.com"] (doParse "hi@bye.com")

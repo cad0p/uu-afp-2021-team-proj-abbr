@@ -53,7 +53,7 @@ parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 -- | The main parser tries to consume all input into a ParseStructure, given an
 -- | abbreviation symbol and a plural symbol
 mainParser :: String -> String -> Parser ParseStructure
-mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, abbrParser s, punctuationParser, noAbbrParser]
+mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]
 
 -- | Inverse of the 'isSpace' function from Data.Char
 notSpace :: Char -> Bool
