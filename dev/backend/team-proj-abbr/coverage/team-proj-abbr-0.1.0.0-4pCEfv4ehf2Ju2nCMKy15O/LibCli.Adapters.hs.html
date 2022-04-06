@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+span.lineno { color: white; background: #aaaaaa; border-right: solid white 12px }
+span.nottickedoff { background: yellow}
+span.istickedoff { background: white }
+span.tickonlyfalse { margin: -1px; border: 1px solid #f20913; background: #f20913 }
+span.tickonlytrue  { margin: -1px; border: 1px solid #60de51; background: #60de51 }
+span.funcount { font-size: small; color: orange; z-index: 2; position: absolute; right: 20 }
+span.decl { font-weight: bold }
+span.spaces    { background: white }
+</style>
+</head>
+<body>
+<pre>
+<span class="decl"><span class="nottickedoff">never executed</span> <span class="tickonlytrue">always true</span> <span class="tickonlyfalse">always false</span></span>
+</pre>
+<pre>
+<span class="lineno">    1 </span>{-|
+<span class="lineno">    2 </span>Description : Support for various IO adapters to the LibCli entities.
+<span class="lineno">    3 </span>Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
+<span class="lineno">    4 </span>License     : BSD3
+<span class="lineno">    5 </span>Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
+<span class="lineno">    6 </span>Stability   : experimental
+<span class="lineno">    7 </span>-}
+<span class="lineno">    8 </span>
+<span class="lineno">    9 </span>{-# LANGUAGE OverloadedStrings #-}
+<span class="lineno">   10 </span>
+<span class="lineno">   11 </span>module LibCli.Adapters where
+<span class="lineno">   12 </span>
+<span class="lineno">   13 </span>import           Data.Csv
+<span class="lineno">   14 </span>    ( FromNamedRecord (parseNamedRecord)
+<span class="lineno">   15 </span>    , (.:)
+<span class="lineno">   16 </span>    )
+<span class="lineno">   17 </span>import qualified Data.Vector           as V
+<span class="lineno">   18 </span>import qualified LibCore.KnowledgeBase as KB (KnowledgeBaseStructure, build)
+<span class="lineno">   19 </span>import           LibCore.Models        (Keyword (..))
+<span class="lineno">   20 </span>
+<span class="lineno">   21 </span>
+<span class="lineno">   22 </span>--------------------------------
+<span class="lineno">   23 </span>-- Knowledge Base CSV loading --
+<span class="lineno">   24 </span>--------------------------------
+<span class="lineno">   25 </span>
+<span class="lineno">   26 </span>-- |'KbEntry' is an entry on the file containing the Knowledge Base.
+<span class="lineno">   27 </span>data KbEntry
+<span class="lineno">   28 </span>  = KbEntry
+<span class="lineno">   29 </span>      { <span class="istickedoff"><span class="decl"><span class="istickedoff">abbreviation</span></span></span> :: String
+<span class="lineno">   30 </span>      , <span class="istickedoff"><span class="decl"><span class="istickedoff">expansion</span></span></span>    :: String
+<span class="lineno">   31 </span>      }
+<span class="lineno">   32 </span>
+<span class="lineno">   33 </span>-- | 'FromNamedRecord' describes how to parse the record
+<span class="lineno">   34 </span>--
+<span class="lineno">   35 </span>-- Other examples of this can be found here:
+<span class="lineno">   36 </span>-- https://github.com/haskell-hvr/cassava/blob/master/examples/
+<span class="lineno">   37 </span>instance FromNamedRecord KbEntry where
+<span class="lineno">   38 </span>  <span class="decl"><span class="nottickedoff">parseNamedRecord r = KbEntry &lt;$&gt; r .: &quot;abbreviation&quot; &lt;*&gt; r .: &quot;expansion&quot;</span></span>
+<span class="lineno">   39 </span>
+<span class="lineno">   40 </span>
+<span class="lineno">   41 </span>{-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
+<span class="lineno">   42 </span>
+<span class="lineno">   43 </span>&gt;&gt;&gt; mapEntries (KbEntry { abbreviation = &quot;abbr&quot;, expansion = &quot;abbreviation&quot; })
+<span class="lineno">   44 </span>(Keyword {keyword = &quot;abbr&quot;, plural = False},Keyword {keyword = &quot;abbreviation&quot;, plural = False})
+<span class="lineno">   45 </span>
+<span class="lineno">   46 </span>-}
+<span class="lineno">   47 </span>mapEntries :: KbEntry -&gt; (Keyword, Keyword)
+<span class="lineno">   48 </span><span class="decl"><span class="istickedoff">mapEntries e =</span>
+<span class="lineno">   49 </span><span class="spaces">  </span><span class="istickedoff">( (Keyword { keyword = abbreviation e, plural = False })</span>
+<span class="lineno">   50 </span><span class="spaces">  </span><span class="istickedoff">, (Keyword { keyword = expansion e, plural = False })</span>
+<span class="lineno">   51 </span><span class="spaces">  </span><span class="istickedoff">)</span></span>
+<span class="lineno">   52 </span>
+<span class="lineno">   53 </span>-- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
+<span class="lineno">   54 </span>getKnowledgeBase
+<span class="lineno">   55 </span>  :: V.Vector KbEntry -- ^ it is the result of the low level parsing of the file, represented as a vector of entries
+<span class="lineno">   56 </span>  -&gt; KB.KnowledgeBaseStructure
+<span class="lineno">   57 </span><span class="decl"><span class="istickedoff">getKnowledgeBase v = KB.build $ map mapEntries $ V.toList v</span></span>
+
+</pre>
+</body>
+</html>
