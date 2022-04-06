@@ -21,7 +21,7 @@ stack haddock
 The CLI can be run as follows:
 
 ```sh
-stack exec team-proj-abbr-cli -- --help
+stack exec shorthndr -- --help
 ```
 
 (the double dash `--` passes all the following command line arguments to the executable)
@@ -41,15 +41,15 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
 #### Supported demo commands
 
 > The CLI execution can be tested using `stack run` or `stack exec`.  
-> `stack run team-proj-abbr-cli -- ...` builds the source each time it is run.  
-> `stack exec team-proj-abbr-cli -- ...` uses the latest available build.  
+> `stack run shorthndr -- ...` builds the source each time it is run.  
+> `stack exec shorthndr -- ...` uses the latest available build.  
 
 1. `Expand`: - standard input/output approach
 
     ```bash
-    $ stack exec team-proj-abbr-cli -- expand -k="data/kb_example.csv" -a="@@hl"
+    $ stack exec shorthndr -- expand -k="data/kb_example.csv" -a="@@hl"
     hello
-    $ stack exec team-proj-abbr-cli -- expand -k="data/kb_example.csv" -a="@@hl @@hl people" 
+    $ stack exec shorthndr -- expand -k="data/kb_example.csv" -a="@@hl @@hl people" 
     hello hello people
     ```
 
@@ -58,7 +58,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     ```bash
     # create demo file:
     $ echo "@@hl @@hl people" >> data/demo_file.txt
-    $ stack exec team-proj-abbr-cli --  \
+    $ stack exec shorthndr --  \
         replace                         \
         --input="data/demo_file.txt"    \
         -o="./demo_file_o.txt"          \
@@ -72,7 +72,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
 3. `List`: - get all the knowledge base contents
 
     ```bash
-    $ stack exec team-proj-abbr-cli -- list -k="data/kb_example.csv"
+    $ stack exec shorthndr -- list -k="data/kb_example.csv"
     Key: ax --> Value: axiom
     Key: hl --> Value: hello
     Key: lmm --> Value: lemma
@@ -83,7 +83,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
 4. `Add`: - add new abbrevation record to the KB
 
     ```bash
-    $ stack exec team-proj-abbr-cli --  \
+    $ stack exec shorthndr --  \
         add                             \
         -k="data/kb_example.csv"        \
         -a="brb"                        \
@@ -103,20 +103,20 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     # check the deletion target
     $ cat data/kb_example.csv | grep hl
     hl,hello
-    $ stack exec team-proj-abbr-cli -- delete -k="data/kb_example.csv" -a="hl"
+    $ stack exec shorthndr -- delete -k="data/kb_example.csv" -a="hl"
     Removed: Keyword {keyword = "hl", plural = False}
     # nothing can be found
     $ cat data/kb_example.csv | grep hl -c 
     0
-    $ stack exec team-proj-abbr-cli -- delete -k="data/kb_example.csv" -a="hl"
-    team-proj-abbr-cli: StandardError "no record found for this keyword : Keyword {keyword = \"hl\", plural = False}"
+    $ stack exec shorthndr -- delete -k="data/kb_example.csv" -a="hl"
+    shorthndr: StandardError "no record found for this keyword : Keyword {keyword = \"hl\", plural = False}"
     ...
     ```
 
 6. `Update`: - update an existing abbrevation record in the KB
 
     ```bash
-    $ stack exec team-proj-abbr-cli --  \
+    $ stack exec shorthndr --  \
         update                          \
         -k="data/kb_example.csv"        \
         -a="hl"                         \
