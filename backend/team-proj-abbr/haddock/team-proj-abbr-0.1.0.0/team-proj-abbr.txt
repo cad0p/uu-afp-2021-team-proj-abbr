@@ -246,6 +246,11 @@ abbrParser :: String -> Parser Token
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
 
+-- | Parser to process punctuation. We added this because abbreviations
+--   followed by | punctuation without a space, such as 'hello!' were
+--   parsed as NoToken
+punctuationParser :: Parser Token
+
 
 module LibCore.Mapper
 
