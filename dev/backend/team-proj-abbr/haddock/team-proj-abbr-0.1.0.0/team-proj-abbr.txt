@@ -218,12 +218,6 @@ abbSymbol :: String
 --   are interpreted as plurals
 pluralSymbol :: String
 
--- | Consume whitespace characters
-whitespace :: Parser ()
-
--- | Lexeme parsers consume the whitespace after them
-lexeme :: Parser a -> Parser a
-
 -- | Given a string, parse it. This function can throw an error if parsing
 --   fails
 doParse :: String -> ParseStructure
@@ -256,6 +250,13 @@ noAbbrParser :: Parser Token
 --   followed by | punctuation without a space, such as 'hello!' were
 --   parsed as NoToken
 punctuationParser :: Parser Token
+
+-- | Parse spaces. We handle spaces separate because they are word
+--   delimiters
+spaceParser :: Parser Token
+
+-- | Given a predicate, parse a character into a NoToken
+noTokenParser :: (Char -> Bool) -> Parser Token
 
 
 module LibCore.Mapper

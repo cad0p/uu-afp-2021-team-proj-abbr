@@ -38,82 +38,79 @@ span.spaces    { background: white }
 <span class="lineno">   19 </span>    , many1
 <span class="lineno">   20 </span>    , parse
 <span class="lineno">   21 </span>    , satisfy
-<span class="lineno">   22 </span>    , spaces
-<span class="lineno">   23 </span>    , string
-<span class="lineno">   24 </span>    , try
-<span class="lineno">   25 </span>    )
-<span class="lineno">   26 </span>import           Text.Parsec.String (Parser)
-<span class="lineno">   27 </span>
-<span class="lineno">   28 </span>type ParseStructure = [Token]
-<span class="lineno">   29 </span>
-<span class="lineno">   30 </span>-- | The abbreviation symbol. Can later be made configurable
-<span class="lineno">   31 </span>abbSymbol :: String
-<span class="lineno">   32 </span><span class="decl"><span class="istickedoff">abbSymbol = &quot;@@&quot;</span></span>
-<span class="lineno">   33 </span>
-<span class="lineno">   34 </span>-- | The plural symbol. String between the abbSymbol and the pluralSymbol are interpreted as plurals
-<span class="lineno">   35 </span>pluralSymbol :: String
-<span class="lineno">   36 </span><span class="decl"><span class="istickedoff">pluralSymbol = &quot;'s&quot;</span></span>
-<span class="lineno">   37 </span>
-<span class="lineno">   38 </span>-- | Consume whitespace characters
-<span class="lineno">   39 </span>whitespace :: Parser ()
-<span class="lineno">   40 </span><span class="decl"><span class="istickedoff">whitespace = void spaces</span></span>
-<span class="lineno">   41 </span>
-<span class="lineno">   42 </span>-- | Lexeme parsers consume the whitespace after them
-<span class="lineno">   43 </span>lexeme :: Parser a -&gt; Parser a
-<span class="lineno">   44 </span><span class="decl"><span class="istickedoff">lexeme p = p &lt;* whitespace</span></span>
-<span class="lineno">   45 </span>
-<span class="lineno">   46 </span>-- | Given a string, parse it. This function can throw an error if parsing fails
-<span class="lineno">   47 </span>doParse :: String -&gt; ParseStructure
-<span class="lineno">   48 </span><span class="decl"><span class="istickedoff">doParse s = case parseInput s of</span>
-<span class="lineno">   49 </span><span class="spaces">  </span><span class="istickedoff">Left err -&gt; <span class="nottickedoff">error $ show err</span></span>
-<span class="lineno">   50 </span><span class="spaces">  </span><span class="istickedoff">Right ps -&gt; ps</span></span>
-<span class="lineno">   51 </span>
-<span class="lineno">   52 </span>-- | Map a string to a list of Tokens. For example:
-<span class="lineno">   53 </span>-- &gt;&gt;&gt; parseInput &quot;@@bob&quot;
-<span class="lineno">   54 </span>-- Right [DoMap (Keyword {keyword = &quot;bob&quot;, plural = False})]
-<span class="lineno">   55 </span>-- &gt;&gt;&gt; parseInput &quot;@@fw's&quot;
-<span class="lineno">   56 </span>-- Right [DoMap (Keyword {keyword = &quot;fw&quot;, plural = True})]
-<span class="lineno">   57 </span>-- &gt;&gt;&gt; parseInput &quot;hello!&quot;
-<span class="lineno">   58 </span>-- Right [NoToken &quot;hello!&quot;]
-<span class="lineno">   59 </span>parseInput :: String -&gt; Either ParseError ParseStructure
-<span class="lineno">   60 </span><span class="decl"><span class="istickedoff">parseInput = parse (mainParser abbSymbol pluralSymbol) <span class="nottickedoff">&quot;&quot;</span></span></span>
+<span class="lineno">   22 </span>    , string
+<span class="lineno">   23 </span>    , try
+<span class="lineno">   24 </span>    )
+<span class="lineno">   25 </span>import           Text.Parsec.String (Parser)
+<span class="lineno">   26 </span>
+<span class="lineno">   27 </span>type ParseStructure = [Token]
+<span class="lineno">   28 </span>
+<span class="lineno">   29 </span>-- | The abbreviation symbol. Can later be made configurable
+<span class="lineno">   30 </span>abbSymbol :: String
+<span class="lineno">   31 </span><span class="decl"><span class="istickedoff">abbSymbol = &quot;@@&quot;</span></span>
+<span class="lineno">   32 </span>
+<span class="lineno">   33 </span>-- | The plural symbol. String between the abbSymbol and the pluralSymbol are interpreted as plurals
+<span class="lineno">   34 </span>pluralSymbol :: String
+<span class="lineno">   35 </span><span class="decl"><span class="istickedoff">pluralSymbol = &quot;'s&quot;</span></span>
+<span class="lineno">   36 </span>
+<span class="lineno">   37 </span>-- | Given a string, parse it. This function can throw an error if parsing fails
+<span class="lineno">   38 </span>doParse :: String -&gt; ParseStructure
+<span class="lineno">   39 </span><span class="decl"><span class="istickedoff">doParse s = case parseInput s of</span>
+<span class="lineno">   40 </span><span class="spaces">  </span><span class="istickedoff">Left err -&gt; <span class="nottickedoff">error $ show err</span></span>
+<span class="lineno">   41 </span><span class="spaces">  </span><span class="istickedoff">Right ps -&gt; ps</span></span>
+<span class="lineno">   42 </span>
+<span class="lineno">   43 </span>-- | Map a string to a list of Tokens. For example:
+<span class="lineno">   44 </span>-- &gt;&gt;&gt; parseInput &quot;@@bob&quot;
+<span class="lineno">   45 </span>-- Right [DoMap (Keyword {keyword = &quot;bob&quot;, plural = False})]
+<span class="lineno">   46 </span>-- &gt;&gt;&gt; parseInput &quot;@@fw's&quot;
+<span class="lineno">   47 </span>-- Right [DoMap (Keyword {keyword = &quot;fw&quot;, plural = True})]
+<span class="lineno">   48 </span>-- &gt;&gt;&gt; parseInput &quot;hello!&quot;
+<span class="lineno">   49 </span>-- Right [NoToken &quot;hello!&quot;]
+<span class="lineno">   50 </span>parseInput :: String -&gt; Either ParseError ParseStructure
+<span class="lineno">   51 </span><span class="decl"><span class="istickedoff">parseInput = parse (mainParser abbSymbol pluralSymbol) <span class="nottickedoff">&quot;&quot;</span></span></span>
+<span class="lineno">   52 </span>
+<span class="lineno">   53 </span>-- | The main parser tries to consume all input into a ParseStructure, given an
+<span class="lineno">   54 </span>-- | abbreviation symbol and a plural symbol
+<span class="lineno">   55 </span>mainParser :: String -&gt; String -&gt; Parser ParseStructure
+<span class="lineno">   56 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, abbrParser s, punctuationParser, noAbbrParser]</span></span>
+<span class="lineno">   57 </span>
+<span class="lineno">   58 </span>-- | Inverse of the 'isSpace' function from Data.Char
+<span class="lineno">   59 </span>notSpace :: Char -&gt; Bool
+<span class="lineno">   60 </span><span class="decl"><span class="istickedoff">notSpace c = not $ isSpace c</span></span>
 <span class="lineno">   61 </span>
-<span class="lineno">   62 </span>-- | The main parser tries to consume all input into a ParseStructure, given an
-<span class="lineno">   63 </span>-- | abbreviation symbol and a plural symbol
-<span class="lineno">   64 </span>mainParser :: String -&gt; String -&gt; Parser ParseStructure
-<span class="lineno">   65 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [try $ lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme punctuationParser, lexeme noAbbrParser]</span></span>
-<span class="lineno">   66 </span>
-<span class="lineno">   67 </span>-- | Inverse of the 'isSpace' function from Data.Char
-<span class="lineno">   68 </span>notSpace :: Char -&gt; Bool
-<span class="lineno">   69 </span><span class="decl"><span class="istickedoff">notSpace c = not $ isSpace c</span></span>
-<span class="lineno">   70 </span>
-<span class="lineno">   71 </span>-- | Given an abbreviation string s and a plural end string p, parse the string between it
-<span class="lineno">   72 </span>pluralAbbrParser :: String -&gt; String -&gt; Parser Token
-<span class="lineno">   73 </span><span class="decl"><span class="istickedoff">pluralAbbrParser s p = do</span>
-<span class="lineno">   74 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
-<span class="lineno">   75 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 alphaNum</span>
-<span class="lineno">   76 </span><span class="spaces">  </span><span class="istickedoff">void $ string p</span>
-<span class="lineno">   77 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a True</span></span>
-<span class="lineno">   78 </span>
-<span class="lineno">   79 </span>-- | Given an abbreviation string s, parse the string after it
-<span class="lineno">   80 </span>abbrParser :: String -&gt; Parser Token
-<span class="lineno">   81 </span><span class="decl"><span class="istickedoff">abbrParser s = do</span>
-<span class="lineno">   82 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
-<span class="lineno">   83 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isAlphaNum</span>
-<span class="lineno">   84 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a False</span></span>
+<span class="lineno">   62 </span>-- | Given an abbreviation string s and a plural end string p, parse the string between it
+<span class="lineno">   63 </span>pluralAbbrParser :: String -&gt; String -&gt; Parser Token
+<span class="lineno">   64 </span><span class="decl"><span class="istickedoff">pluralAbbrParser s p = do</span>
+<span class="lineno">   65 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
+<span class="lineno">   66 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 alphaNum</span>
+<span class="lineno">   67 </span><span class="spaces">  </span><span class="istickedoff">void $ string p</span>
+<span class="lineno">   68 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a True</span></span>
+<span class="lineno">   69 </span>
+<span class="lineno">   70 </span>-- | Given an abbreviation string s, parse the string after it
+<span class="lineno">   71 </span>abbrParser :: String -&gt; Parser Token
+<span class="lineno">   72 </span><span class="decl"><span class="istickedoff">abbrParser s = do</span>
+<span class="lineno">   73 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
+<span class="lineno">   74 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isAlphaNum</span>
+<span class="lineno">   75 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a False</span></span>
+<span class="lineno">   76 </span>
+<span class="lineno">   77 </span>-- | Parse any string into a token
+<span class="lineno">   78 </span>noAbbrParser :: Parser Token
+<span class="lineno">   79 </span><span class="decl"><span class="istickedoff">noAbbrParser = noTokenParser notSpace</span></span>
+<span class="lineno">   80 </span>
+<span class="lineno">   81 </span>-- | Parser to process punctuation. We added this because abbreviations followed by
+<span class="lineno">   82 </span>-- | punctuation without a space, such as 'hello!' were parsed as NoToken
+<span class="lineno">   83 </span>punctuationParser :: Parser Token
+<span class="lineno">   84 </span><span class="decl"><span class="istickedoff">punctuationParser = noTokenParser isPunctuation</span></span>
 <span class="lineno">   85 </span>
-<span class="lineno">   86 </span>-- | Parse any string into a token
-<span class="lineno">   87 </span>noAbbrParser :: Parser Token
-<span class="lineno">   88 </span><span class="decl"><span class="istickedoff">noAbbrParser = do</span>
-<span class="lineno">   89 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy notSpace</span>
-<span class="lineno">   90 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
-<span class="lineno">   91 </span>
-<span class="lineno">   92 </span>-- | Parser to process punctuation. We added this because abbreviations followed by
-<span class="lineno">   93 </span>-- | punctuation without a space, such as 'hello!' were parsed as NoToken
-<span class="lineno">   94 </span>punctuationParser :: Parser Token
-<span class="lineno">   95 </span><span class="decl"><span class="istickedoff">punctuationParser = do</span>
-<span class="lineno">   96 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isPunctuation</span>
-<span class="lineno">   97 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
+<span class="lineno">   86 </span>-- | Parse spaces. We handle spaces separate because they are word delimiters
+<span class="lineno">   87 </span>spaceParser :: Parser Token
+<span class="lineno">   88 </span><span class="decl"><span class="istickedoff">spaceParser = noTokenParser isSpace</span></span>
+<span class="lineno">   89 </span>
+<span class="lineno">   90 </span>-- | Given a predicate, parse a character into a NoToken
+<span class="lineno">   91 </span>noTokenParser :: (Char -&gt; Bool) -&gt; Parser Token
+<span class="lineno">   92 </span><span class="decl"><span class="istickedoff">noTokenParser p = do</span>
+<span class="lineno">   93 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy p</span>
+<span class="lineno">   94 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
 
 </pre>
 </body>
