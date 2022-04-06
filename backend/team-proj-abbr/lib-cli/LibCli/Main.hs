@@ -46,7 +46,6 @@ replaceMode :: ShortHndr -> IO ()
 replaceMode c@CS.Replace{} = do
   case input c of
     Nothing   -> error "No input FilePath was found"
-    -- TODO from Pier to Wilmer: this error above is never reached
     Just i_fp -> do
       s <- readFile i_fp
       case kb c of
