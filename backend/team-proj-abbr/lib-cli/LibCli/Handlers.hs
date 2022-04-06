@@ -33,7 +33,8 @@ import           System.Directory       (doesFileExist)
 -- Utilities --
 ---------------
 
--- TODO: add description.
+-- | Function to load the Knowledge Base from the specified file.
+-- Supports only CSV files.
 loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
 loadKb p = do
   csvData <- BL.readFile p
@@ -41,18 +42,19 @@ loadKb p = do
     Left  s      -> return $ Left $ StandardError s
     Right (_, v) -> return $ Right $ getKnowledgeBase v
 
--- TODO: describe.
+-- | Function to load the abbreviation input file.
+-- Can be any file with contents loadable as String.
 loadInput :: FilePath -> IO (Either Error String)
 loadInput p = do
   s <- readFile p
   return $ Right s
 
--- TODO: describe
+-- | Performs the expansion logic on the provided string.
 doExpansion :: KnowledgeBaseStructure -> String -> IO String
 doExpansion kb s = do
   return $ D.decode $ M.mapParseStructure kb $ P.doParse s
 
--- TODO: describe
+-- | Pretty prints the Keyword pair (key, value) from the Knowledge Base
 formatRecord :: (Keyword, Keyword) -> String
 formatRecord (Keyword kk kpl, Keyword vk vpl) =
   "Key: "
@@ -63,7 +65,8 @@ formatRecord (Keyword kk kpl, Keyword vk vpl) =
     ++ vk
     ++ if vpl then "(plural)" else ""
 
--- TODO: describe
+-- | Dumps the Knowledge Base to the specified file path.
+-- Writes the KB out in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 dump kbp kb = do
   let entries = map mapKeywordPair $ listAll kb
