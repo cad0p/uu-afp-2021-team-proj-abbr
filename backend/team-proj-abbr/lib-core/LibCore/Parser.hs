@@ -1,5 +1,5 @@
 {-|
-Description : TODO: Parses stuff
+Description : The Parser interprets text into a structure of tokens based on our abbreviation syntax
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
