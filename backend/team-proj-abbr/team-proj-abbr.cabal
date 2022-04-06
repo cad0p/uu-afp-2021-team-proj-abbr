@@ -52,6 +52,7 @@ library
     , containers
     , directory
     , parsec
+    , strict
     , vector
   default-language: Haskell2010
 
@@ -70,6 +71,7 @@ executable team-proj-abbr-cli
     , containers
     , directory
     , parsec
+    , strict
     , team-proj-abbr
     , vector
   default-language: Haskell2010
@@ -91,6 +93,7 @@ test-suite team-proj-abbr-doctest
     , directory
     , doctest >=0.8
     , parsec
+    , strict
     , vector
   default-language: Haskell2010
 
@@ -118,6 +121,7 @@ test-suite team-proj-abbr-test
     , containers
     , directory
     , parsec
+    , strict
     , tasty
     , tasty-hunit
     , team-proj-abbr
