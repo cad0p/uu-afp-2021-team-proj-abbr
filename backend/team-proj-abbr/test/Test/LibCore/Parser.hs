@@ -39,4 +39,4 @@ parseSingleAtWord :: TestTree
 parseSingleAtWord = testCase "Test the parsing of a single @ character with a word" $ assertEqual "" [NoToken "@", NoToken "hi"] (doParse "@hi")
 
 parseEmail :: TestTree
-parseEmail = testCase "Test the parsing of an email adres" $ assertEqual "" [NoToken "hi@bye.com"] (doParse "hi@bye.com")
+parseEmail = testCase "Test the parsing of an email adress" $ assertEqual "" [NoToken "hi@bye.com"] (doParse "hi@bye.com")
