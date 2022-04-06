@@ -23,10 +23,13 @@ cliModes :: [ShortHndr]
 data ShortHndr
 
 -- | Defines the arguments for the replace command
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> ShortHndr
 [input] :: ShortHndr -> Maybe FilePath
 [out] :: ShortHndr -> Maybe FilePath
-[inplace] :: ShortHndr -> Maybe Bool
+
+-- | this argument replaces input and output with what is provided here,
+--   and has precedence over the others
+[inplace] :: ShortHndr -> Maybe FilePath
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
