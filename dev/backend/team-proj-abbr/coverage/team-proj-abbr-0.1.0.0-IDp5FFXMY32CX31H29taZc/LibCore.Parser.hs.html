@@ -72,7 +72,7 @@ span.spaces    { background: white }
 <span class="lineno">   53 </span>-- | The main parser tries to consume all input into a ParseStructure, given an
 <span class="lineno">   54 </span>-- | abbreviation symbol and a plural symbol
 <span class="lineno">   55 </span>mainParser :: String -&gt; String -&gt; Parser ParseStructure
-<span class="lineno">   56 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, abbrParser s, punctuationParser, noAbbrParser]</span></span>
+<span class="lineno">   56 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]</span></span>
 <span class="lineno">   57 </span>
 <span class="lineno">   58 </span>-- | Inverse of the 'isSpace' function from Data.Char
 <span class="lineno">   59 </span>notSpace :: Char -&gt; Bool

@@ -57,13 +57,13 @@ forall k a. Map k a -&gt; [(k, a)]
 </span><span id="line-51"></span><span class="hs-comment">-- Left (StandardError &quot;no record found for this keyword : Keyword {keyword = \&quot;beb\&quot;, plural = False}&quot;)</span><span>
 </span><span id="line-52"></span><span class="annot"><a href="LibCore.KnowledgeBase.html#get"><span class="hs-identifier hs-type">get</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span>
 </span><span id="line-53"></span><span id="get"><span class="annot"><span class="annottext">get :: KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
-</span><a href="LibCore.KnowledgeBase.html#get"><span class="hs-identifier hs-var hs-var">get</span></a></span></span><span> </span><span id="local-6989586621679051956"><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051956"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051955"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051955"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; KnowledgeBaseStructure -&gt; Maybe Keyword
+</span><a href="LibCore.KnowledgeBase.html#get"><span class="hs-identifier hs-var hs-var">get</span></a></span></span><span> </span><span id="local-6989586621679051961"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051961"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051960"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051960"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; KnowledgeBaseStructure -&gt; Maybe Keyword
 forall k a. Ord k =&gt; k -&gt; Map k a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">M.lookup</span></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051955"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051956"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><a href="#local-6989586621679051960"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051961"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-54"></span><span>  </span><span class="annot"><span class="annottext">Maybe Keyword
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-55"></span><span>    </span><span class="annot"><span class="annottext">Error -&gt; Either Error Keyword
@@ -79,12 +79,12 @@ forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051955"><span class="hs-identifier hs-var">k</span></a></span><span>
-</span><span id="line-56"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679051953"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051953"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; Either Error Keyword
+</span><a href="#local-6989586621679051960"><span class="hs-identifier hs-var">k</span></a></span><span>
+</span><span id="line-56"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679051958"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051958"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; Either Error Keyword
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051953"><span class="hs-identifier hs-var">x</span></a></span><span>
+</span><a href="#local-6989586621679051958"><span class="hs-identifier hs-var">x</span></a></span><span>
 </span><span id="line-57"></span><span>
 </span><span id="line-58"></span><span>
 </span><span id="line-59"></span><span class="hs-comment">-- |Add new item to the Knowledge Base.</span><span>
@@ -106,17 +106,17 @@ forall a b. b -&gt; Either a b
 </span><span id="line-75"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-76"></span><span id="add"><span class="annot"><span class="annottext">add :: KnowledgeBaseStructure
 -&gt; Keyword -&gt; Keyword -&gt; (Keyword, KnowledgeBaseStructure)
-</span><a href="LibCore.KnowledgeBase.html#add"><span class="hs-identifier hs-var hs-var">add</span></a></span></span><span> </span><span id="local-6989586621679051951"><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051951"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051950"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051950"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span id="local-6989586621679051949"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051949"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051949"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Keyword
+</span><a href="LibCore.KnowledgeBase.html#add"><span class="hs-identifier hs-var hs-var">add</span></a></span></span><span> </span><span id="local-6989586621679051956"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051956"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051955"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051955"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span id="local-6989586621679051954"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051954"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051954"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Keyword
 -&gt; Keyword -&gt; KnowledgeBaseStructure -&gt; KnowledgeBaseStructure
 forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">M.insert</span></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051950"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051949"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051951"><span class="hs-identifier hs-var">kb</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051955"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051954"><span class="hs-identifier hs-var">r</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051956"><span class="hs-identifier hs-var">kb</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-77"></span><span>
 </span><span id="line-78"></span><span>
 </span><span id="line-79"></span><span class="hs-comment">-- |Updates the record at given key with the new value.</span><span>
@@ -140,33 +140,33 @@ forall k a. Ord k =&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
 -&gt; Keyword
 -&gt; Keyword
 -&gt; Either Error (Keyword, KnowledgeBaseStructure)
-</span><a href="LibCore.KnowledgeBase.html#put"><span class="hs-identifier hs-var hs-var">put</span></a></span></span><span> </span><span id="local-6989586621679051947"><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051947"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051946"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051946"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span id="local-6989586621679051945"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051945"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
+</span><a href="LibCore.KnowledgeBase.html#put"><span class="hs-identifier hs-var hs-var">put</span></a></span></span><span> </span><span id="local-6989586621679051952"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051952"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051951"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051951"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span id="local-6989586621679051950"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051950"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
 </span><a href="LibCore.KnowledgeBase.html#get"><span class="hs-identifier hs-var">get</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051947"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051946"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-97"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679051944"><span class="annot"><span class="annottext">Error
-</span><a href="#local-6989586621679051944"><span class="hs-identifier hs-var">er</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Error -&gt; Either Error (Keyword, KnowledgeBaseStructure)
+</span><a href="#local-6989586621679051952"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051951"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-97"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679051949"><span class="annot"><span class="annottext">Error
+</span><a href="#local-6989586621679051949"><span class="hs-identifier hs-var">er</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Error -&gt; Either Error (Keyword, KnowledgeBaseStructure)
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">Error
-</span><a href="#local-6989586621679051944"><span class="hs-identifier hs-var">er</span></a></span><span>
+</span><a href="#local-6989586621679051949"><span class="hs-identifier hs-var">er</span></a></span><span>
 </span><span id="line-98"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="annot"><span class="annottext">Keyword
 </span><span class="hs-identifier">_</span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">(Keyword, KnowledgeBaseStructure)
 -&gt; Either Error (Keyword, KnowledgeBaseStructure)
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051945"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(Keyword -&gt; Maybe Keyword)
+</span><a href="#local-6989586621679051950"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(Keyword -&gt; Maybe Keyword)
 -&gt; Keyword -&gt; KnowledgeBaseStructure -&gt; KnowledgeBaseStructure
 forall k a. Ord k =&gt; (a -&gt; Maybe a) -&gt; k -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">M.update</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="annot"><span class="annottext">Keyword
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; Maybe Keyword
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051945"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051946"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051947"><span class="hs-identifier hs-var">kb</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679051950"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051951"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051952"><span class="hs-identifier hs-var">kb</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-99"></span><span>
 </span><span id="line-100"></span><span>
 </span><span id="line-101"></span><span class="hs-comment">-- |Removes an existing item at the given key form the Knowledge Base.</span><span>
@@ -184,17 +184,17 @@ forall a. a -&gt; Maybe a
 </span><span id="line-113"></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span>
 </span><span id="line-114"></span><span id="remove"><span class="annot"><span class="annottext">remove :: KnowledgeBaseStructure
 -&gt; Keyword -&gt; Either Error KnowledgeBaseStructure
-</span><a href="LibCore.KnowledgeBase.html#remove"><span class="hs-identifier hs-var hs-var">remove</span></a></span></span><span> </span><span id="local-6989586621679051942"><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051942"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051941"><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051941"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
+</span><a href="LibCore.KnowledgeBase.html#remove"><span class="hs-identifier hs-var hs-var">remove</span></a></span></span><span> </span><span id="local-6989586621679051947"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051947"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679051946"><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051946"><span class="hs-identifier hs-var">k</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
 </span><a href="LibCore.KnowledgeBase.html#get"><span class="hs-identifier hs-var">get</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051942"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051941"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-115"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679051940"><span class="annot"><span class="annottext">Error
-</span><a href="#local-6989586621679051940"><span class="hs-identifier hs-var">er</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Error -&gt; Either Error KnowledgeBaseStructure
+</span><a href="#local-6989586621679051947"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">Keyword
+</span><a href="#local-6989586621679051946"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-115"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679051945"><span class="annot"><span class="annottext">Error
+</span><a href="#local-6989586621679051945"><span class="hs-identifier hs-var">er</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Error -&gt; Either Error KnowledgeBaseStructure
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">Error
-</span><a href="#local-6989586621679051940"><span class="hs-identifier hs-var">er</span></a></span><span>
+</span><a href="#local-6989586621679051945"><span class="hs-identifier hs-var">er</span></a></span><span>
 </span><span id="line-116"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="annot"><span class="annottext">Keyword
 </span><span class="hs-identifier">_</span></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; Either Error KnowledgeBaseStructure
 forall a b. b -&gt; Either a b
@@ -204,7 +204,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Keyword -&gt; KnowledgeBaseStructure -&gt; KnowledgeBaseStructure
 forall k a. Ord k =&gt; k -&gt; Map k a -&gt; Map k a
 </span><span class="hs-identifier hs-var">M.delete</span></span><span> </span><span class="annot"><span class="annottext">Keyword
-</span><a href="#local-6989586621679051941"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679051942"><span class="hs-identifier hs-var">kb</span></a></span><span>
+</span><a href="#local-6989586621679051946"><span class="hs-identifier hs-var">k</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679051947"><span class="hs-identifier hs-var">kb</span></a></span><span>
 </span><span id="line-117"></span><span>
 </span><span id="line-118"></span></pre></body></html>
