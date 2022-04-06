@@ -11,6 +11,8 @@
 
 
 module LibCli.OutputInterface
+
+-- | Given a FilePath and a string, write the string to the FilePath
 returnOutput :: Maybe FilePath -> String -> IO ()
 
 
@@ -68,6 +70,8 @@ module LibCore.Models
 data Token
 NoToken :: String -> Token
 DoMap :: Keyword -> Token
+
+-- | A Keyword is a Token that can be mapped. A Keyword can be plural
 data Keyword
 Keyword :: String -> Bool -> Keyword
 [keyword] :: Keyword -> String
@@ -186,6 +190,11 @@ KbEntry :: String -> String -> KbEntry
 
 -- | <a>mapEntries</a> maps entries to a pair of (<a>abbreviation</a>,
 --   <a>expansion</a>)
+--   
+--   <pre>
+--   &gt;&gt;&gt; mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
+--   (Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+--   </pre>
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
 -- | <tt>mapKeywords</tt> maps keyword pairs to their entries
@@ -243,6 +252,11 @@ abbrParser :: String -> Parser Token
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
 
+-- | Parser to process punctuation. We added this because abbreviations
+--   followed by | punctuation without a space, such as 'hello!' were
+--   parsed as NoToken
+punctuationParser :: Parser Token
+
 
 module LibCore.Mapper
 
@@ -258,7 +272,11 @@ doLookup :: KnowledgeBaseStructure -> Token -> Token
 
 
 module LibCore.Decoder
+
+-- | The main entry point to convert a ParseStructure into a String
 decode :: ParseStructure -> String
+
+-- | tokenToString maps each token class to a string representation
 tokenToString :: Token -> String
 
 
