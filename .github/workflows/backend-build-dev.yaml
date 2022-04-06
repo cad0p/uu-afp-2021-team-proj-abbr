@@ -2,19 +2,12 @@
 name: Dev - Continuous Integration / Core (CLI)
 
 on:
-  # leaving here in case we need to also run it on pull requests (if we want to delete it on push for example)
-  # pull_request:
-  #   # branches: [ "main" ]
-  #   paths-ignore:
-  #     - 'frontend/**'
   push:
-    # branches: [ "main" ]
-    # tags: [ "*.*.*" ]
-    paths:
-      - 'backend/**'
+    branches-ignore:
+      - main
 
 jobs:
-  code-build:
+  backend-build-dev:
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -81,21 +74,3 @@ jobs:
         publish_dir: backend/team-proj-abbr/dist
         destination_dir: dev/backend/team-proj-abbr
         enable_jekyll: true
-
-  # release:
-  #   needs: [build]
-  #   if: ${{ startsWith(github.ref, 'refs/tags') }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: 📥 Checkout repository
-  #     uses: actions/checkout@v1
-
-  #   - name: 🚀 Release
-  #     uses: docker://antonyurchenko/git-release:latest
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       DRAFT_RELEASE: "true"
-  #       PRE_RELEASE: "false"
-  #       CHANGELOG_FILE: "ChangeLog.md"
-  #       ALLOW_EMPTY_CHANGELOG: "false"
-  #       ALLOW_TAG_PREFIX: "true"

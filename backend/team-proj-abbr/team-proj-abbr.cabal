@@ -97,11 +97,13 @@ test-suite team-proj-abbr-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.LibCli.Adapters
       Test.LibCli.OutputInterface
       Test.LibCore.Decoder
       Test.LibCore.InputInterface
       Test.LibCore.KnowledgeBase
       Test.LibCore.Mapper
+      Test.LibCore.Models
       Test.LibCore.Parser
       Paths_team_proj_abbr
   hs-source-dirs:
