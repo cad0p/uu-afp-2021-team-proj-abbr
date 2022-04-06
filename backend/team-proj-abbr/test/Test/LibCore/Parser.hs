@@ -12,7 +12,7 @@ qcParser :: TestTree
 qcParser = testGroup "Parser" []
 
 huParser :: TestTree
-huParser = testGroup "Parser" [parseNoToken, parseKeyword, parsePlural, parsePluralWord, parsePunctuation]
+huParser = testGroup "Parser" [parseNoToken, parseKeyword, parsePlural, parsePluralWord, parsePunctuation, parseSpacing]
 
 parseNoToken :: TestTree
 parseNoToken = testCase "Test the parsing of a NoToken" $ assertEqual "" [NoToken "hello"] (doParse "hello")
@@ -28,3 +28,6 @@ parsePluralWord = testCase "Test that a plural word is not parsed as plural" $ a
 
 parsePunctuation :: TestTree
 parsePunctuation = testCase "Test that an abbreviation with punctuation is parsed correctly" $ assertEqual "" [DoMap $ Keyword "hello" False, NoToken "!"] (doParse "@@hello!")
+
+parseSpacing :: TestTree
+parseSpacing = testCase "Test the parsing of spacing" $ assertEqual "" [NoToken " \n\t\r"] (doParse " \n\t\r")
