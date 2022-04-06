@@ -18,7 +18,7 @@ import           LibCli.Handlers
     , updateHandler
     )
 import           LibCli.Spec
-    ( ShortHndr (abbreviation, expansion, input, kb, out)
+    ( ShortHndr (abbreviation, expansion, inplace, input, kb, out)
     )
 import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
 import qualified System.Console.CmdArgs as CMD
@@ -31,6 +31,8 @@ import qualified System.Console.CmdArgs as CMD
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
 cliController :: CS.ShortHndr -> IO ()
 -- Expansion commands
+cliController CS.Replace { inplace = io_fp, kb = kb_fp } =
+  replaceHandler kb_fp io_fp io_fp
 cliController CS.Replace { input = ifp, kb = kbfp, out = ofp } =
   replaceHandler kbfp ifp ofp
 cliController CS.Expand { abbreviation = abbr, kb = kbfp } =
