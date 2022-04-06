@@ -6,7 +6,30 @@ Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering
 Stability   : experimental
 -}
 
-module LibCli.Handlers where
+-- template for haddock docs taken from here:
+-- https://hackage.haskell.org/package/directory-1.3.7.0/docs/src/System.Directory.html
+module LibCli.Handlers
+  (
+  -- $intro
+
+  -- * Utilities
+    loadKb
+  , loadInput
+  , doExpansion
+  , formatRecord
+  , dump
+  , makeDefaultKeyword
+  -- * Expansion Operations
+
+  -- $expansion
+  , expandHandler
+  , replaceHandler
+  -- * Knowledge Base CRUD
+  , addHandler
+  , updateHandler
+  , deleteHandler
+  , listHandler
+  ) where
 import qualified Data.ByteString.Lazy   as BL (readFile, writeFile)
 import           Data.Csv
     ( decodeByName
@@ -35,6 +58,37 @@ import           System.IO.Strict       as SIS (readFile)
 --  [ ] refactor duplication
 --  [ ] try to use nice template for handlers to make them shorter
 
+{- $intro
+
+Handlers are the core part of the CLI, as they handle the commands
+ and how they should behave.
+-}
+
+------------------------------------
+-- Expansion Operations
+
+{- $expansion
+
+Here we adopt the following convention:
+
+* `fp` is a `FilePath`
+
+* `m` stands for `Maybe`, so `mfp` is `Maybe FilePath`
+
+What precedes is the following:
+
+* `kb` is the `KnowledgeBaseStructure`
+  and if followed by `_fp` it means that the underlying
+  contents of the `File` at `FilePath` `fp` is a `kb`
+
+* in is the same, input file
+
+* `o` is output file
+
+* `io` is input/output file (used in `inplace` mode)
+
+-}
+
 
 ---------------
 -- Utilities --
@@ -43,8 +97,8 @@ import           System.IO.Strict       as SIS (readFile)
 -- | Function to load the Knowledge Base from the specified file.
 -- Supports only CSV files.
 loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
-loadKb p = do
-  csvData <- BL.readFile p
+loadKb fp = do
+  csvData <- BL.readFile fp
   case decodeByName csvData of
     Left  s      -> return $ Left $ StandardError s
     Right (_, v) -> return $ Right $ getKnowledgeBase v
@@ -52,8 +106,8 @@ loadKb p = do
 -- | Function to load the abbreviation input file.
 -- Can be any file with contents loadable as String.
 loadInput :: FilePath -> IO (Either Error String)
-loadInput p = do
-  s <- SIS.readFile p
+loadInput fp = do
+  s <- SIS.readFile fp
   return $ Right s
 
 -- | Performs the expansion logic on the provided string.
@@ -75,9 +129,9 @@ formatRecord (Keyword kk kpl, Keyword vk vpl) =
 -- | Dumps the Knowledge Base to the specified file path.
 -- Writes the KB out in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
-dump kbp kb = do
+dump kb_fp kb = do
   let entries = map mapKeywordPair $ listAll kb
-  BL.writeFile kbp $ encodeDefaultOrderedByName entries
+  BL.writeFile kb_fp $ encodeDefaultOrderedByName entries
 
 
 -- | Embeds the string in a keyword.
@@ -100,19 +154,19 @@ expandHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation to expand
   -> IO () -- ^ Writes the expansion result to the STDOUT.
-expandHandler kbfp abbr = do
-  let kbp = fromMaybe "" kbfp
-  kb_exists <- doesFileExist kbp
-  res       <- process (kb_exists, kbp) abbr
+expandHandler kb_mfp abbr = do
+  let kb_fp = fromMaybe "" kb_mfp
+  kb_exists <- doesFileExist kb_fp
+  res       <- process (kb_exists, kb_fp) abbr
   case res of
     Left  err -> error $ show err
     Right s   -> putStrLn s
  where
   process :: (Bool, FilePath) -> String -> IO (Either Error String)
-  process (False, p) _ = do
-    return $ Left $ StandardError $ "KB file not found at " ++ p
-  process (_, kbp) s = do
-    lkb <- loadKb kbp
+  process (False, fp) _ = do
+    return $ Left $ StandardError $ "KB file not found at " ++ fp
+  process (_, kb_fp) s = do
+    lkb <- loadKb kb_fp
     case (`doExpansion` s) <$> lkb of
       Left  er  -> return $ Left $ StandardError $ show er
       Right ios -> Right <$> ios
@@ -126,25 +180,26 @@ replaceHandler
   -> Maybe FilePath -- ^ Input file path
   -> Maybe FilePath -- ^ Output file path
   -> IO () -- ^ Writes the modified file out to the specified location
-replaceHandler kbfp inpfp ofp = do
-  let kbp = fromMaybe "" kbfp
-  let inp = fromMaybe "" inpfp
-  kb_exists  <- doesFileExist kbp
-  inp_exists <- doesFileExist inp
-  res        <- process (kb_exists, kbp) (inp_exists, inp)
+replaceHandler kb_mfp in_mfp o_mfp = do
+  -- here m stands for maybe, fp stands for FilePath
+  let kb_fp = fromMaybe "" kb_mfp
+  let in_fp = fromMaybe "" in_mfp
+  kb_exists <- doesFileExist kb_fp
+  in_exists <- doesFileExist in_fp
+  res       <- process (kb_exists, kb_fp) (in_exists, in_fp)
   case res of
     Left  err -> error $ show err
-    Right s   -> returnOutput ofp s
+    Right s   -> returnOutput o_mfp s
  where
   -- | Connecting handling the file access and logic.
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
-  process (False, p) _ = do
-    return $ Left $ StandardError $ "KB file not found at " ++ p
-  process _ (False, p) = do
-    return $ Left $ StandardError $ "Input file not found at " ++ p
-  process (_, kbp) (_, inp) = do
-    lkb <- loadKb kbp
-    lin <- loadInput inp
+  process (False, fp) _ = do
+    return $ Left $ StandardError $ "KB file not found at " ++ fp
+  process _ (False, fp) = do
+    return $ Left $ StandardError $ "Input file not found at " ++ fp
+  process (_, kb_fp) (_, in_fp) = do
+    lkb <- loadKb kb_fp
+    lin <- loadInput in_fp
     case doExpansion <$> lkb <*> lin of
       Left  er  -> return $ Left $ StandardError $ show er
       Right ios -> Right <$> ios
@@ -160,22 +215,22 @@ addHandler
   -> String -- ^ Abbreviation keyword
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-addHandler kbfp a e = do
-  let kbp = fromMaybe "" kbfp
-  kb_exists <- doesFileExist kbp
-  res       <- process (kb_exists, kbp)
+addHandler kb_mfp a e = do
+  let kb_fp = fromMaybe "" kb_mfp
+  kb_exists <- doesFileExist kb_fp
+  res       <- process (kb_exists, kb_fp)
   case res of
     Left  err     -> error $ show err
     Right (s, kb) -> do
       putStrLn s
-      dump kbp kb
+      dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
-  process (False, p) = do
-    return $ Left $ StandardError $ "KB file not found at " ++ p
-  process (_, kbp) = do
-    lkb <- loadKb kbp
+  process (False, fp) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ fp
+  process (_, kb_fp) = do
+    lkb <- loadKb kb_fp
     let k   = pure $ makeDefaultKeyword a
     let v   = pure $ makeDefaultKeyword e
     let res = add <$> lkb <*> k <*> v
@@ -193,22 +248,22 @@ updateHandler
   -> String -- ^ Abbreviation keyword
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-updateHandler kbfp a e = do
-  let kbp = fromMaybe "" kbfp
-  kb_exists <- doesFileExist kbp
-  res       <- process (kb_exists, kbp)
+updateHandler kb_mfp a e = do
+  let kb_fp = fromMaybe "" kb_mfp
+  kb_exists <- doesFileExist kb_fp
+  res       <- process (kb_exists, kb_fp)
   case res of
     Left  err     -> error $ show err
     Right (s, kb) -> do
       putStrLn s
-      dump kbp kb
+      dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
-  process (False, p) = do
-    return $ Left $ StandardError $ "KB file not found at " ++ p
-  process (_, kbp) = do
-    lkb <- loadKb kbp
+  process (False, fp) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ fp
+  process (_, kb_fp) = do
+    lkb <- loadKb kb_fp
     let k = pure $ makeDefaultKeyword a
     let v = pure $ makeDefaultKeyword e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
@@ -223,22 +278,22 @@ deleteHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-deleteHandler kbfp a = do
-  let kbp = fromMaybe "" kbfp
-  kb_exists <- doesFileExist kbp
-  res       <- process (kb_exists, kbp)
+deleteHandler kb_mfp a = do
+  let kb_fp = fromMaybe "" kb_mfp
+  kb_exists <- doesFileExist kb_fp
+  res       <- process (kb_exists, kb_fp)
   case res of
     Left  err     -> error $ show err
     Right (s, kb) -> do
       putStrLn s
-      dump kbp kb
+      dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
-  process (False, p) = do
-    return $ Left $ StandardError $ "KB file not found at " ++ p
-  process (_, kbp) = do
-    lkb <- loadKb kbp
+  process (False, fp) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ fp
+  process (_, kb_fp) = do
+    lkb <- loadKb kb_fp
     let k = pure $ makeDefaultKeyword a
     let s = (\k' -> "Removed: " ++ show k') <$> k
     case remove <$> lkb <*> k of
@@ -251,19 +306,19 @@ deleteHandler kbfp a = do
 listHandler
   :: Maybe FilePath -- ^ KB file path
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-listHandler kbfp = do
-  let kbp = fromMaybe "" kbfp
-  kb_exists <- doesFileExist kbp
-  res       <- process (kb_exists, kbp)
+listHandler kb_mfp = do
+  let kb_fp = fromMaybe "" kb_mfp
+  kb_exists <- doesFileExist kb_fp
+  res       <- process (kb_exists, kb_fp)
   case res of
     Left  err -> error $ show err
     Right s   -> putStrLn s
  where
   process :: (Bool, FilePath) -> IO (Either Error String)
-  process (False, p) = do
-    return $ Left $ StandardError $ "KB file not found at " ++ p
-  process (_, kbp) = do
-    lkb <- loadKb kbp
+  process (False, fp) = do
+    return $ Left $ StandardError $ "KB file not found at " ++ fp
+  process (_, kb_fp) = do
+    lkb <- loadKb kb_fp
     let rs = map formatRecord . listAll <$> lkb
     return $ intercalate "\n" <$> rs
 
