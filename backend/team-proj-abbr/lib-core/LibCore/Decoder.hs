@@ -13,7 +13,7 @@ import           LibCore.Parser (ParseStructure)
 
 -- | The main entry point to convert a ParseStructure into a String
 decode :: ParseStructure -> String
-decode s = unwords $ map tokenToString s
+decode = concatMap tokenToString
 
 -- | tokenToString maps each token class to a string representation
 tokenToString :: Token -> String

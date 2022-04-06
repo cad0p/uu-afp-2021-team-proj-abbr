@@ -19,7 +19,6 @@ import           Text.Parsec
     , many1
     , parse
     , satisfy
-    , spaces
     , string
     , try
     )
@@ -34,14 +33,6 @@ abbSymbol = "@@"
 -- | The plural symbol. String between the abbSymbol and the pluralSymbol are interpreted as plurals
 pluralSymbol :: String
 pluralSymbol = "'s"
-
--- | Consume whitespace characters
-whitespace :: Parser ()
-whitespace = void spaces
-
--- | Lexeme parsers consume the whitespace after them
-lexeme :: Parser a -> Parser a
-lexeme p = p <* whitespace
 
 -- | Given a string, parse it. This function can throw an error if parsing fails
 doParse :: String -> ParseStructure
@@ -62,7 +53,7 @@ parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 -- | The main parser tries to consume all input into a ParseStructure, given an
 -- | abbreviation symbol and a plural symbol
 mainParser :: String -> String -> Parser ParseStructure
-mainParser s p = do many $ choice [try $ lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme punctuationParser, lexeme noAbbrParser]
+mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]
 
 -- | Inverse of the 'isSpace' function from Data.Char
 notSpace :: Char -> Bool
@@ -85,13 +76,19 @@ abbrParser s = do
 
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
-noAbbrParser = do
-  a <- many1 $ satisfy notSpace
-  return $ NoToken a
+noAbbrParser = noTokenParser notSpace
 
 -- | Parser to process punctuation. We added this because abbreviations followed by
 -- | punctuation without a space, such as 'hello!' were parsed as NoToken
 punctuationParser :: Parser Token
-punctuationParser = do
-  a <- many1 $ satisfy isPunctuation
+punctuationParser = noTokenParser isPunctuation
+
+-- | Parse spaces. We handle spaces separate because they are word delimiters
+spaceParser :: Parser Token
+spaceParser = noTokenParser isSpace
+
+-- | Given a predicate, parse a character into a NoToken
+noTokenParser :: (Char -> Bool) -> Parser Token
+noTokenParser p = do
+  a <- many1 $ satisfy p
   return $ NoToken a
