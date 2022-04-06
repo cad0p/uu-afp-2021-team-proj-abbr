@@ -1,5 +1,5 @@
 {-|
-Description : TODO: Maps stuff
+Description : This module applies a KnowledgeBaseStructure to a ParseStructure
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl

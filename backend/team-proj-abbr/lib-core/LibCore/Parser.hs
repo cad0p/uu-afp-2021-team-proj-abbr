@@ -1,5 +1,5 @@
 {-|
-Description : TODO: Parses stuff
+Description : The Parser interprets text into a structure of tokens based on our abbreviation syntax
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -8,7 +8,7 @@ Stability   : experimental
 
 module LibCore.Parser where
 
-import           Data.Char          (isSpace)
+import           Data.Char          (isAlphaNum, isPunctuation, isSpace)
 import           Data.Functor
 import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
 import           Text.Parsec
@@ -19,7 +19,6 @@ import           Text.Parsec
     , many1
     , parse
     , satisfy
-    , spaces
     , string
     , try
     )
@@ -34,14 +33,6 @@ abbSymbol = "@@"
 -- | The plural symbol. String between the abbSymbol and the pluralSymbol are interpreted as plurals
 pluralSymbol :: String
 pluralSymbol = "'s"
-
--- | Consume whitespace characters
-whitespace :: Parser ()
-whitespace = void spaces
-
--- | Lexeme parsers consume the whitespace after them
-lexeme :: Parser a -> Parser a
-lexeme p = p <* whitespace
 
 -- | Given a string, parse it. This function can throw an error if parsing fails
 doParse :: String -> ParseStructure
@@ -62,7 +53,7 @@ parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 -- | The main parser tries to consume all input into a ParseStructure, given an
 -- | abbreviation symbol and a plural symbol
 mainParser :: String -> String -> Parser ParseStructure
-mainParser s p = do many $ choice [try $lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme noAbbrParser]
+mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]
 
 -- | Inverse of the 'isSpace' function from Data.Char
 notSpace :: Char -> Bool
@@ -80,11 +71,24 @@ pluralAbbrParser s p = do
 abbrParser :: String -> Parser Token
 abbrParser s = do
   void $ string s
-  a <- many1 $ satisfy notSpace
+  a <- many1 $ satisfy isAlphaNum
   return $ DoMap $ Keyword a False
 
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
-noAbbrParser = do
-  a <- many1 $ satisfy notSpace
+noAbbrParser = noTokenParser notSpace
+
+-- | Parser to process punctuation. We added this because abbreviations followed by
+-- | punctuation without a space, such as 'hello!' were parsed as NoToken
+punctuationParser :: Parser Token
+punctuationParser = noTokenParser isPunctuation
+
+-- | Parse spaces. We handle spaces separate because they are word delimiters
+spaceParser :: Parser Token
+spaceParser = noTokenParser isSpace
+
+-- | Given a predicate, parse a character into a NoToken
+noTokenParser :: (Char -> Bool) -> Parser Token
+noTokenParser p = do
+  a <- many1 $ satisfy p
   return $ NoToken a

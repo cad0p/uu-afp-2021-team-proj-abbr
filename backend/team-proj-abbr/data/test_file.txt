@@ -1,1 +1,3 @@
 Hello world. This file is written to test the expansions of kb_example.csv. We should see that @@hl is expanded to hello. This is a @@thm, which we cannot @@prf. No @@lmm or @@ax can be used, because this is not a scientific theorem.
+
+this is a newline, which also works now.

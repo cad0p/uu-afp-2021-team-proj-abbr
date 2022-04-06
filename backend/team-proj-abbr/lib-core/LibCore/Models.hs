@@ -1,5 +1,5 @@
 {-|
-Description : TODO: Models stuff
+Description : The Models module contains the primary types of the project
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -16,6 +16,7 @@ data Token
   | DoMap Keyword
   deriving (Eq, Ord, Show)
 
+-- | A Keyword is a Token that can be mapped. A Keyword can be plural
 data Keyword
   = Keyword
       { keyword :: String
@@ -23,7 +24,7 @@ data Keyword
       }
   deriving (Eq, Ord, Show)
 
--- |Reserved domain-level error indications.
+-- | Reserved domain-level error indications.
 newtype Error
   = StandardError String
   deriving (Show)

@@ -23,7 +23,7 @@ import           LibCore.Models (Error (StandardError), Keyword (..))
 type KnowledgeBaseStructure = M.Map Keyword Keyword
 
 
--- |Build a new Knowledge Base from the supplied keyword pair list.
+-- | Build a new Knowledge Base from the supplied keyword pair list.
 build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 build = M.fromList
 

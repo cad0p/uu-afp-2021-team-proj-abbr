@@ -91,8 +91,7 @@ expand =
   Expand { abbreviation = CMD.def
          , kb = fileFlags "Knowledge Base source file" (pure defaultKB)
          }
-    CMD.&= CMD.help
-             "Expand a provided abbreviation abbreviation if one is found"
+    CMD.&= CMD.help "Expand a provided abbreviation expansion if one is found"
 
 expansionModes :: [ShortHndr]
 expansionModes = [replace, expand]
@@ -112,7 +111,6 @@ add =
       , kb           = fileFlags "Knowledge Base source file" (pure defaultKB)
       }
     CMD.&= CMD.help "Add a new abbreviation record to the Knowledge Base"
-    -- TODO from Pier to Dmitri: is there a way to sync haddock documentation and CLI documentation?
 
 update :: ShortHndr
 update =
