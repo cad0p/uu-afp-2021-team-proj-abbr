@@ -18,7 +18,7 @@ span.spaces    { background: white }
 </pre>
 <pre>
 <span class="lineno">    1 </span>{-|
-<span class="lineno">    2 </span>Description : The Parser interprets text into a structure of tokens based on our abbreviation syntax
+<span class="lineno">    2 </span>Description : TODO: Parses stuff
 <span class="lineno">    3 </span>Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 <span class="lineno">    4 </span>License     : BSD3
 <span class="lineno">    5 </span>Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -27,7 +27,7 @@ span.spaces    { background: white }
 <span class="lineno">    8 </span>
 <span class="lineno">    9 </span>module LibCore.Parser where
 <span class="lineno">   10 </span>
-<span class="lineno">   11 </span>import           Data.Char          (isAlphaNum, isPunctuation, isSpace)
+<span class="lineno">   11 </span>import           Data.Char          (isSpace)
 <span class="lineno">   12 </span>import           Data.Functor
 <span class="lineno">   13 </span>import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
 <span class="lineno">   14 </span>import           Text.Parsec
@@ -81,7 +81,7 @@ span.spaces    { background: white }
 <span class="lineno">   62 </span>-- | The main parser tries to consume all input into a ParseStructure, given an
 <span class="lineno">   63 </span>-- | abbreviation symbol and a plural symbol
 <span class="lineno">   64 </span>mainParser :: String -&gt; String -&gt; Parser ParseStructure
-<span class="lineno">   65 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [try $ lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme punctuationParser, lexeme noAbbrParser]</span></span>
+<span class="lineno">   65 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [try $lexeme $ pluralAbbrParser s p, lexeme $ abbrParser s, lexeme noAbbrParser]</span></span>
 <span class="lineno">   66 </span>
 <span class="lineno">   67 </span>-- | Inverse of the 'isSpace' function from Data.Char
 <span class="lineno">   68 </span>notSpace :: Char -&gt; Bool
@@ -99,7 +99,7 @@ span.spaces    { background: white }
 <span class="lineno">   80 </span>abbrParser :: String -&gt; Parser Token
 <span class="lineno">   81 </span><span class="decl"><span class="istickedoff">abbrParser s = do</span>
 <span class="lineno">   82 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
-<span class="lineno">   83 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isAlphaNum</span>
+<span class="lineno">   83 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy notSpace</span>
 <span class="lineno">   84 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a False</span></span>
 <span class="lineno">   85 </span>
 <span class="lineno">   86 </span>-- | Parse any string into a token
@@ -107,13 +107,6 @@ span.spaces    { background: white }
 <span class="lineno">   88 </span><span class="decl"><span class="istickedoff">noAbbrParser = do</span>
 <span class="lineno">   89 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy notSpace</span>
 <span class="lineno">   90 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
-<span class="lineno">   91 </span>
-<span class="lineno">   92 </span>-- | Parser to process punctuation. We added this because abbreviations followed by
-<span class="lineno">   93 </span>-- | punctuation without a space, such as 'hello!' were parsed as NoToken
-<span class="lineno">   94 </span>punctuationParser :: Parser Token
-<span class="lineno">   95 </span><span class="decl"><span class="istickedoff">punctuationParser = do</span>
-<span class="lineno">   96 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isPunctuation</span>
-<span class="lineno">   97 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
 
 </pre>
 </body>

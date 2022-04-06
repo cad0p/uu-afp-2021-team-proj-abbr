@@ -18,7 +18,7 @@ span.spaces    { background: white }
 </pre>
 <pre>
 <span class="lineno">    1 </span>{-|
-<span class="lineno">    2 </span>Description : The Models module contains the primary types of the project
+<span class="lineno">    2 </span>Description : TODO: Models stuff
 <span class="lineno">    3 </span>Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 <span class="lineno">    4 </span>License     : BSD3
 <span class="lineno">    5 </span>Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -35,18 +35,17 @@ span.spaces    { background: white }
 <span class="lineno">   16 </span>  | DoMap Keyword
 <span class="lineno">   17 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
 <span class="lineno">   18 </span>
-<span class="lineno">   19 </span>-- | A Keyword is a Token that can be mapped. A Keyword can be plural
-<span class="lineno">   20 </span>data Keyword
-<span class="lineno">   21 </span>  = Keyword
-<span class="lineno">   22 </span>      { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">keyword</span></span></span> :: String
-<span class="lineno">   23 </span>      , <span class="nottickedoff"><span class="decl"><span class="nottickedoff">plural</span></span></span>  :: Bool
-<span class="lineno">   24 </span>      }
-<span class="lineno">   25 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
-<span class="lineno">   26 </span>
-<span class="lineno">   27 </span>-- | Reserved domain-level error indications.
-<span class="lineno">   28 </span>newtype Error
-<span class="lineno">   29 </span>  = StandardError String
-<span class="lineno">   30 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   19 </span>data Keyword
+<span class="lineno">   20 </span>  = Keyword
+<span class="lineno">   21 </span>      { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">keyword</span></span></span> :: String
+<span class="lineno">   22 </span>      , <span class="nottickedoff"><span class="decl"><span class="nottickedoff">plural</span></span></span>  :: Bool
+<span class="lineno">   23 </span>      }
+<span class="lineno">   24 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   25 </span>
+<span class="lineno">   26 </span>-- |Reserved domain-level error indications.
+<span class="lineno">   27 </span>newtype Error
+<span class="lineno">   28 </span>  = StandardError String
+<span class="lineno">   29 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
 
 </pre>
 </body>
