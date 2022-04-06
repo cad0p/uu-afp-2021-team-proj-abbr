@@ -154,8 +154,8 @@ expandHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation to expand
   -> IO () -- ^ Writes the expansion result to the STDOUT.
-expandHandler kbfp abbr = do
-  let kb_fp = fromMaybe "" kbfp
+expandHandler kb_fp abbr = do
+  let kb_fp = fromMaybe "" kb_fp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp) abbr
   case res of
@@ -183,10 +183,10 @@ replaceHandler
 replaceHandler kb_mfp in_mfp o_mfp = do
   -- here m stands for maybe, fp stands for FilePath
   let kb_fp = fromMaybe "" kb_mfp
-  let inp   = fromMaybe "" in_mfp
-  kb_exists  <- doesFileExist kb_fp
-  inp_exists <- doesFileExist inp
-  res        <- process (kb_exists, kb_fp) (inp_exists, inp)
+  let in_fp = fromMaybe "" in_mfp
+  kb_exists <- doesFileExist kb_fp
+  in_exists <- doesFileExist in_fp
+  res       <- process (kb_exists, kb_fp) (in_exists, in_fp)
   case res of
     Left  err -> error $ show err
     Right s   -> returnOutput o_mfp s
@@ -197,9 +197,9 @@ replaceHandler kb_mfp in_mfp o_mfp = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process _ (False, fp) = do
     return $ Left $ StandardError $ "Input file not found at " ++ fp
-  process (_, kb_fp) (_, inp) = do
+  process (_, kb_fp) (_, in_fp) = do
     lkb <- loadKb kb_fp
-    lin <- loadInput inp
+    lin <- loadInput in_fp
     case doExpansion <$> lkb <*> lin of
       Left  er  -> return $ Left $ StandardError $ show er
       Right ios -> Right <$> ios
@@ -215,8 +215,8 @@ addHandler
   -> String -- ^ Abbreviation keyword
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-addHandler kbfp a e = do
-  let kb_fp = fromMaybe "" kbfp
+addHandler kb_mfp a e = do
+  let kb_fp = fromMaybe "" kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
@@ -248,8 +248,8 @@ updateHandler
   -> String -- ^ Abbreviation keyword
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-updateHandler kbfp a e = do
-  let kb_fp = fromMaybe "" kbfp
+updateHandler kb_mfp a e = do
+  let kb_fp = fromMaybe "" kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
@@ -278,8 +278,8 @@ deleteHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-deleteHandler kbfp a = do
-  let kb_fp = fromMaybe "" kbfp
+deleteHandler kb_fp a = do
+  let kb_fp = fromMaybe "" kb_fp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
@@ -306,8 +306,8 @@ deleteHandler kbfp a = do
 listHandler
   :: Maybe FilePath -- ^ KB file path
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-listHandler kbfp = do
-  let kb_fp = fromMaybe "" kbfp
+listHandler kb_mfp = do
+  let kb_fp = fromMaybe "" kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
