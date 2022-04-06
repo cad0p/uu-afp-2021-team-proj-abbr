@@ -30,6 +30,12 @@ import           LibCore.Parser         as P (doParse)
 import           System.Directory       (doesFileExist)
 import           System.IO.Strict       as SIS (readFile)
 
+
+-- TODO: General improvements (tech debt):
+--  [ ] refactor duplication
+--  [ ] try to use nice template for handlers to make them shorter
+
+
 ---------------
 -- Utilities --
 ---------------
