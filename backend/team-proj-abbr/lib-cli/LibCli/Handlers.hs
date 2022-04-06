@@ -154,8 +154,8 @@ expandHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation to expand
   -> IO () -- ^ Writes the expansion result to the STDOUT.
-expandHandler kb_fp abbr = do
-  let kb_fp = fromMaybe "" kb_fp
+expandHandler kb_mfp abbr = do
+  let kb_fp = fromMaybe "" kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp) abbr
   case res of
@@ -278,8 +278,8 @@ deleteHandler
   :: Maybe FilePath -- ^ KB file path
   -> String -- ^ Abbreviation keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
-deleteHandler kb_fp a = do
-  let kb_fp = fromMaybe "" kb_fp
+deleteHandler kb_mfp a = do
+  let kb_fp = fromMaybe "" kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
