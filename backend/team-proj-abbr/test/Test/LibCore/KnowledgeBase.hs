@@ -1,4 +1,7 @@
-module Test.LibCore.KnowledgeBase (qcKnowledgeBase, huKnowledgeBase) where
+module Test.LibCore.KnowledgeBase
+  ( qcKnowledgeBase
+  , huKnowledgeBase
+  ) where
 
 
 import           Test.Tasty

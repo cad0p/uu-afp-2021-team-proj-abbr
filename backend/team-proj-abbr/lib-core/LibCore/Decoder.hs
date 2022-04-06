@@ -1,5 +1,5 @@
 {-|
-Description : TODO: Decodes stuff
+Description : Decode a ParseStructure into a string
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -11,9 +11,11 @@ module LibCore.Decoder where
 import           LibCore.Models (Keyword (Keyword), Token (DoMap, NoToken))
 import           LibCore.Parser (ParseStructure)
 
+-- | The main entry point to convert a ParseStructure into a String
 decode :: ParseStructure -> String
 decode s = unwords $ map tokenToString s
 
+-- | tokenToString maps each token class to a string representation
 tokenToString :: Token -> String
 tokenToString (NoToken s)           = s
 tokenToString (DoMap (Keyword k _)) = k
