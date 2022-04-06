@@ -60,9 +60,12 @@ import           System.IO.Strict       as SIS (readFile)
 
 {- $intro
 
-This is an introduction
+Handlers are the core part of the CLI, as they handle the commands
+ and how they should behave.
 -}
+
 ------------------------------------
+-- Expansion Operations
 
 {- $expansion
 
@@ -78,7 +81,7 @@ What precedes is the following:
   and if followed by `_fp` it means that the underlying
   contents of the `File` at `FilePath` `fp` is a `kb`
 
-* `in` is the same, input file
+* in is the same, input file
 
 * `o` is output file
 
