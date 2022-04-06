@@ -282,6 +282,17 @@ formatRecord :: (Keyword, Keyword) -> String
 --   in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 
+-- | Embeds the string in a keyword. By default assigns <a>False</a> to the
+--   plural attribute.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; makeDefaultKeyword "hello"
+--   Keyword {keyword = "hello", plural = False}
+--   </pre>
+makeDefaultKeyword :: String -> Keyword
+
 -- | Expand command handler. Deal with single input expansion without
 --   reading an input file.
 expandHandler :: Maybe FilePath -> String -> IO ()
