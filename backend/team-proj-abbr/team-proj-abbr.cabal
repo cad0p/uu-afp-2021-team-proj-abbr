@@ -32,6 +32,7 @@ library
       LibCore.Mapper
       LibCore.Models
       LibCore.Parser
+      ParserUtils
       LibCli.Adapters
       LibCli.Handlers
       LibCli.Main
