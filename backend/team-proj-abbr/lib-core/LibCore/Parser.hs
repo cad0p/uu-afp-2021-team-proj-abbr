@@ -89,7 +89,8 @@ noAbbrParser = do
   a <- many1 $ satisfy notSpace
   return $ NoToken a
 
--- | Parser to process punctuation. We added this because abbreviations followed by punctuation were consumed
+-- | Parser to process punctuation. We added this because abbreviations followed by
+-- | punctuation without a space, such as 'hello!' were parsed as NoToken
 punctuationParser :: Parser Token
 punctuationParser = do
   a <- many1 $ satisfy isPunctuation
