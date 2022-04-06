@@ -10,9 +10,6 @@
 @version 0.1.0.0
 
 
-module LibCli.Handlers
-
-
 module LibCli.OutputInterface
 
 -- | Given a FilePath and a string, write the string to the FilePath
@@ -200,10 +197,15 @@ KbEntry :: String -> String -> KbEntry
 --   </pre>
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
+-- | <tt>mapKeywords</tt> maps keyword pairs to their entries
+mapKeywordPair :: (Keyword, Keyword) -> KbEntry
+
 -- | <a>getKnowledgeBase</a> parses from a CSV file to a
 --   <tt>KnowledgeBaseStructure</tt>.
 getKnowledgeBase :: Vector KbEntry -> KnowledgeBaseStructure
 instance Data.Csv.Conversion.FromNamedRecord LibCli.Adapters.KbEntry
+instance Data.Csv.Conversion.ToNamedRecord LibCli.Adapters.KbEntry
+instance Data.Csv.Conversion.DefaultOrdered LibCli.Adapters.KbEntry
 
 
 module LibCore.Parser
@@ -278,14 +280,63 @@ decode :: ParseStructure -> String
 tokenToString :: Token -> String
 
 
+module LibCli.Handlers
+
+-- | Function to load the Knowledge Base from the specified file. Supports
+--   only CSV files.
+loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
+
+-- | Function to load the abbreviation input file. Can be any file with
+--   contents loadable as String.
+loadInput :: FilePath -> IO (Either Error String)
+
+-- | Performs the expansion logic on the provided string.
+doExpansion :: KnowledgeBaseStructure -> String -> IO String
+
+-- | Pretty prints the Keyword pair (key, value) from the Knowledge Base
+formatRecord :: (Keyword, Keyword) -> String
+
+-- | Dumps the Knowledge Base to the specified file path. Writes the KB out
+--   in CSV format.
+dump :: FilePath -> KnowledgeBaseStructure -> IO ()
+
+-- | Embeds the string in a keyword. By default assigns <a>False</a> to the
+--   plural attribute.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; makeDefaultKeyword "hello"
+--   Keyword {keyword = "hello", plural = False}
+--   </pre>
+makeDefaultKeyword :: String -> Keyword
+
+-- | Expand command handler. Deal with single input expansion without
+--   reading an input file.
+expandHandler :: Maybe FilePath -> String -> IO ()
+
+-- | Replace command handler. Does all the replacing heavy-lifting. Loads
+--   the required files, produces the expansions and writes the output
+--   file.
+replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
+
+-- | Add command handler. Adds new abbreviation with the associated
+--   expansion to the KB.
+addHandler :: Maybe FilePath -> String -> String -> IO ()
+
+-- | Update command handler. Updates an existing abbreviation in the KB.
+updateHandler :: Maybe FilePath -> String -> String -> IO ()
+
+-- | Delete command handler. Deletes an existing abbreviation from the KB.
+deleteHandler :: Maybe FilePath -> String -> IO ()
+
+-- | List command handler. Displays all the contents of the specified
+--   Knowledge base.
+listHandler :: Maybe FilePath -> IO ()
+
+
 module LibCli.Main
 cliController :: ShortHndr -> IO ()
-
--- | <a>replaceMode</a> does the replacind heavy lifting
---   
---   Under the hood it checks for errors in the input file (TODO input
---   file) and the KB
-replaceMode :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
 --   
