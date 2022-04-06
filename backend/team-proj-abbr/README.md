@@ -40,6 +40,10 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
 
 #### Supported demo commands
 
+> The CLI execution can be tested using `stack run` or `stack exec`.  
+> `stack run team-proj-abbr-cli -- ...` builds the source each time it is run.  
+> `stack exec team-proj-abbr-cli -- ...` uses the latest available build.  
+
 1. `Expand`: - standard input/output approach
 
     ```bash
