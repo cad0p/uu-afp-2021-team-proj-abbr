@@ -27,6 +27,10 @@
         {
           "match": "\\.hs$",
           "cmd": "brittany --write-mode=inplace ${file} && stylish-haskell -i ${file}"
+        },
+        {
+          "match": "\\.txt$",
+          "cmd": "stack run team-proj-abbr-cli -- replace --input=\"${file}\" -o=\"${file}\" -k=\"data/kb_example.csv\""
         }
       ]
     },
