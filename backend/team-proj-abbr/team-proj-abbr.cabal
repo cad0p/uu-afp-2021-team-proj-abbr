@@ -34,8 +34,8 @@ library
       LibCore.Parser
       LibCli.Adapters
       LibCli.Handlers
+      LibCli.HandlerUtils
       LibCli.Main
-      LibCli.OutputInterface
       LibCli.Spec
   other-modules:
       Paths_team_proj_abbr
@@ -101,7 +101,6 @@ test-suite team-proj-abbr-test
   main-is: Spec.hs
   other-modules:
       Test.LibCli.Adapters
-      Test.LibCli.OutputInterface
       Test.LibCore.Decoder
       Test.LibCore.InputInterface
       Test.LibCore.KnowledgeBase
