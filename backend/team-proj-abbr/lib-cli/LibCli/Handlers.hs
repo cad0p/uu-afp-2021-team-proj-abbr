@@ -11,11 +11,11 @@ Stability   : experimental
 module LibCli.Handlers
   (
   -- $intro
-  
+
   -- * Expansion Operations
 
   -- $expansion
-  , expandHandler
+    expandHandler
   , replaceHandler
 
   -- * Knowledge Base CRUD
@@ -24,10 +24,17 @@ module LibCli.Handlers
   , deleteHandler
   , listHandler
   ) where
-import qualified Data.ByteString.Lazy   as BL (readFile, writeFile)
-import           Data.Csv
-    ( decodeByName
-    , encodeDefaultOrderedByName
+
+import           Data.List             (intercalate)
+import           Data.Maybe            (fromMaybe)
+import           LibCli.HandlerUtils
+    ( doExpansion
+    , dump
+    , formatRecord
+    , loadInput
+    , loadKb
+    , makeDefaultKeyword
+    , returnOutput
     )
 import           LibCore.KnowledgeBase
     ( KnowledgeBaseStructure
@@ -38,11 +45,6 @@ import           LibCore.KnowledgeBase
     )
 import           LibCore.Models        (Error (..))
 import           System.Directory      (doesFileExist)
-
-
--- TODO: General improvements (tech debt):
---  [ ] refactor duplication
---  [ ] try to use nice template for handlers to make them shorter
 
 {- $intro
 
@@ -74,6 +76,10 @@ What precedes is the following:
 * TODO `io` is input/output file (used in `inplace` mode)
 
 -}
+
+-- TODO: General improvements (tech debt):
+--  [ ] refactor duplication
+--  [ ] try to use nice template for handlers to make them shorter
 
 -- | Expand command handler.
 -- Deal with single input expansion without reading an input file.
@@ -248,7 +254,3 @@ listHandler kb_mfp = do
     lkb <- loadKb kb_fp
     let rs = map formatRecord . listAll <$> lkb
     return $ intercalate "\n" <$> rs
-
-
--- TODO(tech debt): add get command to Spec
--- get
