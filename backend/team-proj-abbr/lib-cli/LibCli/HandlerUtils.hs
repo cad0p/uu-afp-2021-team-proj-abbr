@@ -18,7 +18,7 @@ import           LibCli.Adapters       (getKnowledgeBase, mapKeywordPair)
 import           LibCore.Decoder       as D (decode)
 import           LibCore.KnowledgeBase (KnowledgeBaseStructure, listAll)
 import           LibCore.Mapper        as M (mapParseStructure)
-import           LibCore.Models        (Error (..), Keyword (..))
+import           LibCore.Models        (AKeyword (..), Error (..), Keyword)
 import           LibCore.Parser        as P (doParse)
 import           System.IO.Strict      as SIS (readFile)
 
@@ -73,15 +73,3 @@ dump kbp kb = do
 returnOutput :: Maybe FilePath -> String -> IO ()
 returnOutput Nothing   = error "No output file found"
 returnOutput (Just fp) = writeFile fp
-
-
--- | Embeds the string in a keyword.
--- By default assigns `False` to the plural attribute.
---
--- Examples:
---
--- >>> makeDefaultKeyword "hello"
--- Keyword {keyword = "hello", plural = False}
-makeDefaultKeyword :: String -> Keyword
-makeDefaultKeyword s = Keyword { keyword = s, plural = False }
-

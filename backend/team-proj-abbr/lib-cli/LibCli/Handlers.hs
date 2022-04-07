@@ -33,7 +33,6 @@ import           LibCli.HandlerUtils
     , formatRecord
     , loadInput
     , loadKb
-    , makeDefaultKeyword
     , returnOutput
     )
 import           LibCore.KnowledgeBase
