@@ -49,7 +49,7 @@ doExpansion kb s = do
 
 -- | Pretty prints the Keyword pair (key, value) from the Knowledge Base
 formatRecord :: (Keyword, Keyword) -> String
-formatRecord (Keyword kk kpl, Keyword vk vpl) =
+formatRecord (KeywordBody kk kpl, KeywordBody vk vpl) =
   "Key: "
     ++ kk
     ++ (if kpl then "(plural)" else "")
