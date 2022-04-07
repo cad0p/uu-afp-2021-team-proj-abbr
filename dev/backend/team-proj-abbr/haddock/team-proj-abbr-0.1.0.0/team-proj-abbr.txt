@@ -72,20 +72,20 @@ DoMap :: Keyword -> Token
 --   
 --   <pre>
 --   &gt;&gt;&gt; pure "hello" :: AKeyword String
---   Keyword {keyword = "hello", plural = False}
+--   KeywordBody {keyword = "hello", plural = False}
 --   </pre>
 --   
 --   <pre>
 --   &gt;&gt;&gt; (map Data.Char.toUpper) &lt;$&gt; (pure "hello" :: AKeyword String)
---   Keyword {keyword = "HELLO", plural = False}
+--   KeywordBody {keyword = "HELLO", plural = False}
 --   </pre>
 --   
 --   <pre>
 --   &gt;&gt;&gt; (pure (map Data.Char.toLower)) &lt;*&gt; (pure "HELLO" :: AKeyword String)
---   Keyword {keyword = "hello", plural = False}
+--   KeywordBody {keyword = "hello", plural = False}
 --   </pre>
 data AKeyword a
-Keyword :: a -> Bool -> AKeyword a
+KeywordBody :: a -> Bool -> AKeyword a
 [keyword] :: AKeyword a -> a
 [plural] :: AKeyword a -> Bool
 
@@ -120,7 +120,7 @@ build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 --   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
 --   &gt;&gt;&gt; listAll testKB
---   [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
+--   [(KeywordBody {keyword = "brb", plural = False},KeywordBody {keyword = "be right back", plural = False})]
 --   </pre>
 listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 
@@ -132,12 +132,12 @@ listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 --   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
 --   &gt;&gt;&gt; get testKB $ pure "brb"
---   Right (Keyword {keyword = "be right back", plural = False})
+--   Right (KeywordBody {keyword = "be right back", plural = False})
 --   </pre>
 --   
 --   <pre>
 --   &gt;&gt;&gt; get testKB $ pure "beb"
---   Left (StandardError "no record found for this keyword : Keyword {keyword = \"beb\", plural = False}")
+--   Left (StandardError "no record found for this keyword : KeywordBody {keyword = \"beb\", plural = False}")
 --   </pre>
 get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 
@@ -151,12 +151,12 @@ get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 --   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
 --   &gt;&gt;&gt; add testKB (pure "btw") (pure "by the way")
---   (Keyword {keyword = "by the way", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way", plural = False})])
+--   (KeywordBody {keyword = "by the way", plural = False},fromList [(KeywordBody {keyword = "brb", plural = False},KeywordBody {keyword = "be right back", plural = False}),(KeywordBody {keyword = "btw", plural = False},KeywordBody {keyword = "by the way", plural = False})])
 --   </pre>
 --   
 --   <pre>
 --   &gt;&gt;&gt; add testKB (pure "btw") (pure "by the way!")
---   (Keyword {keyword = "by the way!", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way!", plural = False})])
+--   (KeywordBody {keyword = "by the way!", plural = False},fromList [(KeywordBody {keyword = "brb", plural = False},KeywordBody {keyword = "be right back", plural = False}),(KeywordBody {keyword = "btw", plural = False},KeywordBody {keyword = "by the way!", plural = False})])
 --   </pre>
 add :: KnowledgeBaseStructure -> Keyword -> Keyword -> (Keyword, KnowledgeBaseStructure)
 
@@ -169,12 +169,12 @@ add :: KnowledgeBaseStructure -> Keyword -> Keyword -> (Keyword, KnowledgeBaseSt
 --   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
 --   &gt;&gt;&gt; put testKB (pure "brb") (pure "BE RIGHT BACK")
---   Right (Keyword {keyword = "BE RIGHT BACK", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "BE RIGHT BACK", plural = False})])
+--   Right (KeywordBody {keyword = "BE RIGHT BACK", plural = False},fromList [(KeywordBody {keyword = "brb", plural = False},KeywordBody {keyword = "BE RIGHT BACK", plural = False})])
 --   </pre>
 --   
 --   <pre>
 --   &gt;&gt;&gt; put testKB (pure "btw") (pure "by the way!")
---   Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+--   Left (StandardError "no record found for this keyword : KeywordBody {keyword = \"btw\", plural = False}")
 --   </pre>
 put :: KnowledgeBaseStructure -> Keyword -> Keyword -> Either Error (Keyword, KnowledgeBaseStructure)
 
@@ -192,7 +192,7 @@ put :: KnowledgeBaseStructure -> Keyword -> Keyword -> Either Error (Keyword, Kn
 --   
 --   <pre>
 --   &gt;&gt;&gt; remove testKB $ pure "btw"
---   Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+--   Left (StandardError "no record found for this keyword : KeywordBody {keyword = \"btw\", plural = False}")
 --   </pre>
 remove :: KnowledgeBaseStructure -> Keyword -> Either Error KnowledgeBaseStructure
 
@@ -210,7 +210,7 @@ KbEntry :: String -> String -> KbEntry
 --   
 --   <pre>
 --   &gt;&gt;&gt; mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
---   (Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+--   (KeywordBody {keyword = "abbr", plural = False},KeywordBody {keyword = "abbreviation", plural = False})
 --   </pre>
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
@@ -240,10 +240,10 @@ pluralSymbol :: String
 doParse :: String -> ParseStructure
 
 -- | Map a string to a list of Tokens. For example: &gt;&gt;&gt; parseInput
---   "@<tt>bob" Right [DoMap (Keyword {keyword = "bob", plural = False})]
---   &gt;&gt;&gt; parseInput "</tt>@fw's" Right [DoMap (Keyword {keyword =
---   "fw", plural = True})] &gt;&gt;&gt; parseInput "hello!" Right [NoToken
---   "hello!"]
+--   "@<tt>bob" Right [DoMap (KeywordBody {keyword = "bob", plural =
+--   False})] &gt;&gt;&gt; parseInput "</tt>@fw's" Right [DoMap
+--   (KeywordBody {keyword = "fw", plural = True})] &gt;&gt;&gt; parseInput
+--   "hello!" Right [NoToken "hello!"]
 parseInput :: String -> Either ParseError ParseStructure
 
 -- | The main parser tries to consume all input into a ParseStructure,

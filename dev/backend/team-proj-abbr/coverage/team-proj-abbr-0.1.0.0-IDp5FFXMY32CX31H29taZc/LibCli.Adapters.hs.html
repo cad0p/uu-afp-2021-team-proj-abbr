@@ -74,7 +74,7 @@ span.spaces    { background: white }
 <span class="lineno">   55 </span>{-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
 <span class="lineno">   56 </span>
 <span class="lineno">   57 </span>&gt;&gt;&gt; mapEntries (KbEntry { abbreviation = &quot;abbr&quot;, expansion = &quot;abbreviation&quot; })
-<span class="lineno">   58 </span>(Keyword {keyword = &quot;abbr&quot;, plural = False},Keyword {keyword = &quot;abbreviation&quot;, plural = False})
+<span class="lineno">   58 </span>(KeywordBody {keyword = &quot;abbr&quot;, plural = False},KeywordBody {keyword = &quot;abbreviation&quot;, plural = False})
 <span class="lineno">   59 </span>
 <span class="lineno">   60 </span>-}
 <span class="lineno">   61 </span>mapEntries :: KbEntry -&gt; (Keyword, Keyword)
@@ -82,7 +82,7 @@ span.spaces    { background: white }
 <span class="lineno">   63 </span>
 <span class="lineno">   64 </span>-- |`mapKeywords` maps keyword pairs to their entries
 <span class="lineno">   65 </span>mapKeywordPair :: (Keyword, Keyword) -&gt; KbEntry
-<span class="lineno">   66 </span><span class="decl"><span class="nottickedoff">mapKeywordPair (Keyword kk _, Keyword vk _) = KbEntry kk vk</span></span>
+<span class="lineno">   66 </span><span class="decl"><span class="nottickedoff">mapKeywordPair (KeywordBody kk _, KeywordBody vk _) = KbEntry kk vk</span></span>
 <span class="lineno">   67 </span>
 <span class="lineno">   68 </span>-- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
 <span class="lineno">   69 </span>getKnowledgeBase
