@@ -33,6 +33,7 @@ import           System.IO.Strict      as SIS (readFile)
 -- TODO: General improvements (tech debt):
 --  [ ] refactor duplication
 --  [ ] try to use nice template for handlers to make them shorter
+--  [ ] introduce a separate Utilities module for easier testing
 
 
 ---------------
@@ -96,6 +97,7 @@ returnOutput (Just fp) = writeFile fp
 -- Keyword {keyword = "hello", plural = False}
 makeDefaultKeyword :: String -> Keyword
 makeDefaultKeyword s = Keyword { keyword = s, plural = False }
+
 
 --------------------------
 -- Expansion Operations --
