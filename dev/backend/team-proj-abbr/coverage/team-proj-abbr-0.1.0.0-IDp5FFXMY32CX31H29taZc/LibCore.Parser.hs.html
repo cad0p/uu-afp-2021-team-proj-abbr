@@ -29,7 +29,7 @@ span.spaces    { background: white }
 <span class="lineno">   10 </span>
 <span class="lineno">   11 </span>import           Data.Char          (isAlphaNum, isPunctuation, isSpace)
 <span class="lineno">   12 </span>import           Data.Functor
-<span class="lineno">   13 </span>import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
+<span class="lineno">   13 </span>import           LibCore.Models     (AKeyword (Keyword), Token (DoMap, NoToken))
 <span class="lineno">   14 </span>import           Text.Parsec
 <span class="lineno">   15 </span>    ( ParseError
 <span class="lineno">   16 </span>    , alphaNum
@@ -56,8 +56,8 @@ span.spaces    { background: white }
 <span class="lineno">   37 </span>-- | Given a string, parse it. This function can throw an error if parsing fails
 <span class="lineno">   38 </span>doParse :: String -&gt; ParseStructure
 <span class="lineno">   39 </span><span class="decl"><span class="istickedoff">doParse s = case parseInput s of</span>
-<span class="lineno">   40 </span><span class="spaces">  </span><span class="istickedoff">Left err -&gt; <span class="nottickedoff">error $ show err</span></span>
-<span class="lineno">   41 </span><span class="spaces">  </span><span class="istickedoff">Right ps -&gt; ps</span></span>
+<span class="lineno">   40 </span><span class="spaces">  </span><span class="istickedoff">Left  err -&gt; <span class="nottickedoff">error $ show err</span></span>
+<span class="lineno">   41 </span><span class="spaces">  </span><span class="istickedoff">Right ps  -&gt; ps</span></span>
 <span class="lineno">   42 </span>
 <span class="lineno">   43 </span>-- | Map a string to a list of Tokens. For example:
 <span class="lineno">   44 </span>-- &gt;&gt;&gt; parseInput &quot;@@bob&quot;
@@ -72,45 +72,52 @@ span.spaces    { background: white }
 <span class="lineno">   53 </span>-- | The main parser tries to consume all input into a ParseStructure, given an
 <span class="lineno">   54 </span>-- | abbreviation symbol and a plural symbol
 <span class="lineno">   55 </span>mainParser :: String -&gt; String -&gt; Parser ParseStructure
-<span class="lineno">   56 </span><span class="decl"><span class="istickedoff">mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]</span></span>
-<span class="lineno">   57 </span>
-<span class="lineno">   58 </span>-- | Inverse of the 'isSpace' function from Data.Char
-<span class="lineno">   59 </span>notSpace :: Char -&gt; Bool
-<span class="lineno">   60 </span><span class="decl"><span class="istickedoff">notSpace c = not $ isSpace c</span></span>
-<span class="lineno">   61 </span>
-<span class="lineno">   62 </span>-- | Given an abbreviation string s and a plural end string p, parse the string between it
-<span class="lineno">   63 </span>pluralAbbrParser :: String -&gt; String -&gt; Parser Token
-<span class="lineno">   64 </span><span class="decl"><span class="istickedoff">pluralAbbrParser s p = do</span>
-<span class="lineno">   65 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
-<span class="lineno">   66 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 alphaNum</span>
-<span class="lineno">   67 </span><span class="spaces">  </span><span class="istickedoff">void $ string p</span>
-<span class="lineno">   68 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a True</span></span>
-<span class="lineno">   69 </span>
-<span class="lineno">   70 </span>-- | Given an abbreviation string s, parse the string after it
-<span class="lineno">   71 </span>abbrParser :: String -&gt; Parser Token
-<span class="lineno">   72 </span><span class="decl"><span class="istickedoff">abbrParser s = do</span>
-<span class="lineno">   73 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
-<span class="lineno">   74 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isAlphaNum</span>
-<span class="lineno">   75 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a False</span></span>
+<span class="lineno">   56 </span><span class="decl"><span class="istickedoff">mainParser s p = do</span>
+<span class="lineno">   57 </span><span class="spaces">  </span><span class="istickedoff">many $ choice</span>
+<span class="lineno">   58 </span><span class="spaces">    </span><span class="istickedoff">[ spaceParser</span>
+<span class="lineno">   59 </span><span class="spaces">    </span><span class="istickedoff">, try $ pluralAbbrParser s p</span>
+<span class="lineno">   60 </span><span class="spaces">    </span><span class="istickedoff">, try $ abbrParser s</span>
+<span class="lineno">   61 </span><span class="spaces">    </span><span class="istickedoff">, punctuationParser</span>
+<span class="lineno">   62 </span><span class="spaces">    </span><span class="istickedoff">, noAbbrParser</span>
+<span class="lineno">   63 </span><span class="spaces">    </span><span class="istickedoff">]</span></span>
+<span class="lineno">   64 </span>
+<span class="lineno">   65 </span>-- | Inverse of the 'isSpace' function from Data.Char
+<span class="lineno">   66 </span>notSpace :: Char -&gt; Bool
+<span class="lineno">   67 </span><span class="decl"><span class="istickedoff">notSpace c = not $ isSpace c</span></span>
+<span class="lineno">   68 </span>
+<span class="lineno">   69 </span>-- | Given an abbreviation string s and a plural end string p, parse the string between it
+<span class="lineno">   70 </span>pluralAbbrParser :: String -&gt; String -&gt; Parser Token
+<span class="lineno">   71 </span><span class="decl"><span class="istickedoff">pluralAbbrParser s p = do</span>
+<span class="lineno">   72 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
+<span class="lineno">   73 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 alphaNum</span>
+<span class="lineno">   74 </span><span class="spaces">  </span><span class="istickedoff">void $ string p</span>
+<span class="lineno">   75 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a True</span></span>
 <span class="lineno">   76 </span>
-<span class="lineno">   77 </span>-- | Parse any string into a token
-<span class="lineno">   78 </span>noAbbrParser :: Parser Token
-<span class="lineno">   79 </span><span class="decl"><span class="istickedoff">noAbbrParser = noTokenParser notSpace</span></span>
-<span class="lineno">   80 </span>
-<span class="lineno">   81 </span>-- | Parser to process punctuation. We added this because abbreviations followed by
-<span class="lineno">   82 </span>-- | punctuation without a space, such as 'hello!' were parsed as NoToken
-<span class="lineno">   83 </span>punctuationParser :: Parser Token
-<span class="lineno">   84 </span><span class="decl"><span class="istickedoff">punctuationParser = noTokenParser isPunctuation</span></span>
-<span class="lineno">   85 </span>
-<span class="lineno">   86 </span>-- | Parse spaces. We handle spaces separate because they are word delimiters
-<span class="lineno">   87 </span>spaceParser :: Parser Token
-<span class="lineno">   88 </span><span class="decl"><span class="istickedoff">spaceParser = noTokenParser isSpace</span></span>
-<span class="lineno">   89 </span>
-<span class="lineno">   90 </span>-- | Given a predicate, parse a character into a NoToken
-<span class="lineno">   91 </span>noTokenParser :: (Char -&gt; Bool) -&gt; Parser Token
-<span class="lineno">   92 </span><span class="decl"><span class="istickedoff">noTokenParser p = do</span>
-<span class="lineno">   93 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy p</span>
-<span class="lineno">   94 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
+<span class="lineno">   77 </span>-- | Given an abbreviation string s, parse the string after it
+<span class="lineno">   78 </span>abbrParser :: String -&gt; Parser Token
+<span class="lineno">   79 </span><span class="decl"><span class="istickedoff">abbrParser s = do</span>
+<span class="lineno">   80 </span><span class="spaces">  </span><span class="istickedoff">void $ string s</span>
+<span class="lineno">   81 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy isAlphaNum</span>
+<span class="lineno">   82 </span><span class="spaces">  </span><span class="istickedoff">return $ DoMap $ Keyword a False</span></span>
+<span class="lineno">   83 </span>
+<span class="lineno">   84 </span>-- | Parse any string into a token
+<span class="lineno">   85 </span>noAbbrParser :: Parser Token
+<span class="lineno">   86 </span><span class="decl"><span class="istickedoff">noAbbrParser = noTokenParser notSpace</span></span>
+<span class="lineno">   87 </span>
+<span class="lineno">   88 </span>-- | Parser to process punctuation. We added this because abbreviations followed by
+<span class="lineno">   89 </span>-- | punctuation without a space, such as 'hello!' were parsed as NoToken
+<span class="lineno">   90 </span>punctuationParser :: Parser Token
+<span class="lineno">   91 </span><span class="decl"><span class="istickedoff">punctuationParser = noTokenParser isPunctuation</span></span>
+<span class="lineno">   92 </span>
+<span class="lineno">   93 </span>-- | Parse spaces. We handle spaces separate because they are word delimiters
+<span class="lineno">   94 </span>spaceParser :: Parser Token
+<span class="lineno">   95 </span><span class="decl"><span class="istickedoff">spaceParser = noTokenParser isSpace</span></span>
+<span class="lineno">   96 </span>
+<span class="lineno">   97 </span>-- | Given a predicate, parse a character into a NoToken
+<span class="lineno">   98 </span>noTokenParser :: (Char -&gt; Bool) -&gt; Parser Token
+<span class="lineno">   99 </span><span class="decl"><span class="istickedoff">noTokenParser p = do</span>
+<span class="lineno">  100 </span><span class="spaces">  </span><span class="istickedoff">a &lt;- many1 $ satisfy p</span>
+<span class="lineno">  101 </span><span class="spaces">  </span><span class="istickedoff">return $ NoToken a</span></span>
 
 </pre>
 </body>
