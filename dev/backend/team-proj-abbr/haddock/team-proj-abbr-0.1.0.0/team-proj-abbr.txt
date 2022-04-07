@@ -10,12 +10,6 @@
 @version 0.1.0.0
 
 
-module LibCli.OutputInterface
-
--- | Given a FilePath and a string, write the string to the FilePath
-returnOutput :: Maybe FilePath -> String -> IO ()
-
-
 module LibCli.Spec
 cliModes :: [ShortHndr]
 
@@ -23,13 +17,10 @@ cliModes :: [ShortHndr]
 data ShortHndr
 
 -- | Defines the arguments for the replace command
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> ShortHndr
+Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
 [input] :: ShortHndr -> Maybe FilePath
 [out] :: ShortHndr -> Maybe FilePath
-
--- | this argument replaces input and output with what is provided here,
---   and has precedence over the others
-[inplace] :: ShortHndr -> Maybe FilePath
+[inplace] :: ShortHndr -> Maybe Bool
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
@@ -303,6 +294,11 @@ formatRecord :: (Keyword, Keyword) -> String
 -- | Dumps the Knowledge Base to the specified file path. Writes the KB out
 --   in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
+
+-- | Given a FilePath and a string, write the string to the FilePath.
+--   Throws an error if no valid path is specified. Write the given string
+--   to the file path otherwise.
+returnOutput :: Maybe FilePath -> String -> IO ()
 
 -- | Embeds the string in a keyword. By default assigns <a>False</a> to the
 --   plural attribute.
