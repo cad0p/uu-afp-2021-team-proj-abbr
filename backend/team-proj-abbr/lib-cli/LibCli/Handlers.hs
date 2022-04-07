@@ -85,7 +85,7 @@ What precedes is the following:
 
 * `o` is output file
 
-* `io` is input/output file (used in `inplace` mode)
+* TODO `io` is input/output file (used in `inplace` mode)
 
 -}
 
