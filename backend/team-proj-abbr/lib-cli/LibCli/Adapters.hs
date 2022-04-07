@@ -59,10 +59,7 @@ instance DefaultOrdered KbEntry where
 
 -}
 mapEntries :: KbEntry -> (Keyword, Keyword)
-mapEntries e =
-  ( (Keyword { keyword = abbreviation e, plural = False })
-  , (Keyword { keyword = expansion e, plural = False })
-  )
+mapEntries (KbEntry a e) = (pure a, pure e)
 
 -- |`mapKeywords` maps keyword pairs to their entries
 mapKeywordPair :: (Keyword, Keyword) -> KbEntry
