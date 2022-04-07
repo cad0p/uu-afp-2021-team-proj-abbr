@@ -79,14 +79,12 @@ dump kbp kb = do
   let entries = map mapKeywordPair $ listAll kb
   BL.writeFile kbp $ encodeDefaultOrderedByName entries
 
-
 -- | Given a FilePath and a string, write the string to the FilePath.
 -- Throws an error if no valid path is specified.
 -- Write the given string to the file path otherwise.
 returnOutput :: Maybe FilePath -> String -> IO ()
 returnOutput Nothing   = error "No output file found"
 returnOutput (Just fp) = writeFile fp
-
 
 -- | Embeds the string in a keyword.
 -- By default assigns `False` to the plural attribute.
