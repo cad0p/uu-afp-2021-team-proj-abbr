@@ -55,7 +55,7 @@ library
     , vector
   default-language: Haskell2010
 
-executable team-proj-abbr-cli
+executable shorthndr
   main-is: Main.hs
   other-modules:
       Paths_team_proj_abbr
