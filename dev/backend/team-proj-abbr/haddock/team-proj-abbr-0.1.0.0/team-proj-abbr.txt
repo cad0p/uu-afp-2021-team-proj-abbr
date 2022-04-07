@@ -71,45 +71,22 @@ data Token
 NoToken :: String -> Token
 DoMap :: Keyword -> Token
 
--- | Abstract and parameterised Keyword datatype. Implements Functor and
---   Applicative typeclasses.
---   
---   Examples:
---   
---   <pre>
---   &gt;&gt;&gt; pure "hello" :: AKeyword String
---   Keyword {keyword = "hello", plural = False}
---   </pre>
---   
---   <pre>
---   &gt;&gt;&gt; (map Data.Char.toUpper) &lt;$&gt; (pure "hello" :: AKeyword String)
---   Keyword {keyword = "HELLO", plural = False}
---   </pre>
---   
---   <pre>
---   &gt;&gt;&gt; (pure (map Data.Char.toLower)) &lt;*&gt; (pure "HELLO" :: AKeyword String)
---   Keyword {keyword = "hello", plural = False}
---   </pre>
-data AKeyword a
-Keyword :: a -> Bool -> AKeyword a
-[keyword] :: AKeyword a -> a
-[plural] :: AKeyword a -> Bool
-
 -- | A Keyword is a Token that can be mapped. A Keyword can be plural
-type Keyword = AKeyword String
+data Keyword
+Keyword :: String -> Bool -> Keyword
+[keyword] :: Keyword -> String
+[plural] :: Keyword -> Bool
 
 -- | Reserved domain-level error indications.
 newtype Error
 StandardError :: String -> Error
-instance GHC.Show.Show a => GHC.Show.Show (LibCore.Models.AKeyword a)
-instance GHC.Classes.Ord a => GHC.Classes.Ord (LibCore.Models.AKeyword a)
-instance GHC.Classes.Eq a => GHC.Classes.Eq (LibCore.Models.AKeyword a)
+instance GHC.Show.Show LibCore.Models.Keyword
+instance GHC.Classes.Ord LibCore.Models.Keyword
+instance GHC.Classes.Eq LibCore.Models.Keyword
 instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 instance GHC.Show.Show LibCore.Models.Error
-instance GHC.Base.Functor LibCore.Models.AKeyword
-instance GHC.Base.Applicative LibCore.Models.AKeyword
 
 
 module LibCore.KnowledgeBase
@@ -323,6 +300,17 @@ formatRecord :: (Keyword, Keyword) -> String
 -- | Dumps the Knowledge Base to the specified file path. Writes the KB out
 --   in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
+
+-- | Embeds the string in a keyword. By default assigns <a>False</a> to the
+--   plural attribute.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; makeDefaultKeyword "hello"
+--   Keyword {keyword = "hello", plural = False}
+--   </pre>
+makeDefaultKeyword :: String -> Keyword
 
 -- | Expand command handler. Deal with single input expansion without
 --   reading an input file.

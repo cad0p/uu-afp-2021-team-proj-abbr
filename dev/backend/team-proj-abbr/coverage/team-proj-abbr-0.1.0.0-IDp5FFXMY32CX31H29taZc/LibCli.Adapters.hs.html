@@ -40,7 +40,7 @@ span.spaces    { background: white }
 <span class="lineno">   21 </span>    )
 <span class="lineno">   22 </span>import qualified Data.Vector           as V
 <span class="lineno">   23 </span>import qualified LibCore.KnowledgeBase as KB (KnowledgeBaseStructure, build)
-<span class="lineno">   24 </span>import           LibCore.Models        (AKeyword (..), Keyword)
+<span class="lineno">   24 </span>import           LibCore.Models        (Keyword (..))
 <span class="lineno">   25 </span>
 <span class="lineno">   26 </span>
 <span class="lineno">   27 </span>--------------------------------
@@ -50,8 +50,8 @@ span.spaces    { background: white }
 <span class="lineno">   31 </span>-- |'KbEntry' is an entry on the file containing the Knowledge Base.
 <span class="lineno">   32 </span>data KbEntry
 <span class="lineno">   33 </span>  = KbEntry
-<span class="lineno">   34 </span>      { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">abbreviation</span></span></span> :: String
-<span class="lineno">   35 </span>      , <span class="nottickedoff"><span class="decl"><span class="nottickedoff">expansion</span></span></span>    :: String
+<span class="lineno">   34 </span>      { <span class="istickedoff"><span class="decl"><span class="istickedoff">abbreviation</span></span></span> :: String
+<span class="lineno">   35 </span>      , <span class="istickedoff"><span class="decl"><span class="istickedoff">expansion</span></span></span>    :: String
 <span class="lineno">   36 </span>      }
 <span class="lineno">   37 </span>
 <span class="lineno">   38 </span>-- TODO(tech debt): make use of the Generics as in this example:
@@ -78,18 +78,21 @@ span.spaces    { background: white }
 <span class="lineno">   59 </span>
 <span class="lineno">   60 </span>-}
 <span class="lineno">   61 </span>mapEntries :: KbEntry -&gt; (Keyword, Keyword)
-<span class="lineno">   62 </span><span class="decl"><span class="istickedoff">mapEntries (KbEntry a e) = (pure a, pure e)</span></span>
-<span class="lineno">   63 </span>
-<span class="lineno">   64 </span>-- |`mapKeywords` maps keyword pairs to their entries
-<span class="lineno">   65 </span>mapKeywordPair :: (Keyword, Keyword) -&gt; KbEntry
-<span class="lineno">   66 </span><span class="decl"><span class="nottickedoff">mapKeywordPair (Keyword kk _, Keyword vk _) = KbEntry kk vk</span></span>
-<span class="lineno">   67 </span>
-<span class="lineno">   68 </span>-- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
-<span class="lineno">   69 </span>getKnowledgeBase
-<span class="lineno">   70 </span>  :: V.Vector KbEntry -- ^ it is the result of the low level parsing of the file, represented as a vector of entries
-<span class="lineno">   71 </span>  -&gt; KB.KnowledgeBaseStructure
-<span class="lineno">   72 </span><span class="decl"><span class="istickedoff">getKnowledgeBase v = KB.build $ map mapEntries $ V.toList v</span></span>
-<span class="lineno">   73 </span>
+<span class="lineno">   62 </span><span class="decl"><span class="istickedoff">mapEntries e =</span>
+<span class="lineno">   63 </span><span class="spaces">  </span><span class="istickedoff">( (Keyword { keyword = abbreviation e, plural = False })</span>
+<span class="lineno">   64 </span><span class="spaces">  </span><span class="istickedoff">, (Keyword { keyword = expansion e, plural = False })</span>
+<span class="lineno">   65 </span><span class="spaces">  </span><span class="istickedoff">)</span></span>
+<span class="lineno">   66 </span>
+<span class="lineno">   67 </span>-- |`mapKeywords` maps keyword pairs to their entries
+<span class="lineno">   68 </span>mapKeywordPair :: (Keyword, Keyword) -&gt; KbEntry
+<span class="lineno">   69 </span><span class="decl"><span class="nottickedoff">mapKeywordPair (Keyword kk _, Keyword vk _) = KbEntry kk vk</span></span>
+<span class="lineno">   70 </span>
+<span class="lineno">   71 </span>-- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
+<span class="lineno">   72 </span>getKnowledgeBase
+<span class="lineno">   73 </span>  :: V.Vector KbEntry -- ^ it is the result of the low level parsing of the file, represented as a vector of entries
+<span class="lineno">   74 </span>  -&gt; KB.KnowledgeBaseStructure
+<span class="lineno">   75 </span><span class="decl"><span class="istickedoff">getKnowledgeBase v = KB.build $ map mapEntries $ V.toList v</span></span>
+<span class="lineno">   76 </span>
 
 </pre>
 </body>
