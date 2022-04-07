@@ -17,6 +17,18 @@ data Token
   deriving (Eq, Ord, Show)
 
 -- | Abstract and parameterised Keyword datatype.
+-- Implements Functor and Applicative typeclasses.
+--
+-- Examples:
+--
+-- >>> pure "hello" :: AKeyword String
+-- Keyword {keyword = "hello", plural = False}
+--
+-- >>> (map Data.Char.toUpper) <$> (pure "hello" :: AKeyword String)
+-- Keyword {keyword = "HELLO", plural = False}
+--
+-- >>> (pure (map Data.Char.toLower)) <*> (pure "HELLO" :: AKeyword String)
+-- Keyword {keyword = "hello", plural = False}
 data AKeyword a
   = Keyword
       { keyword :: a
