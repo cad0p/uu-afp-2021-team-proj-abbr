@@ -1,5 +1,5 @@
 {-|
-Description : Environment agnostic command handlers for the CLI.
+Description : CLI framework agnostic command handlers for the CLI.
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -7,15 +7,18 @@ Stability   : experimental
 -}
 
 module LibCli.Handlers where
-import qualified Data.ByteString.Lazy  as BL (readFile, writeFile)
-import           Data.Csv
-    ( decodeByName
-    , encodeDefaultOrderedByName
-    )
+
 import           Data.List             (intercalate)
 import           Data.Maybe            (fromMaybe)
-import           LibCli.Adapters       (getKnowledgeBase, mapKeywordPair)
-import           LibCore.Decoder       as D (decode)
+import           LibCli.HandlerUtils
+    ( doExpansion
+    , dump
+    , formatRecord
+    , loadInput
+    , loadKb
+    , makeDefaultKeyword
+    , returnOutput
+    )
 import           LibCore.KnowledgeBase
     ( KnowledgeBaseStructure
     , add
@@ -23,79 +26,13 @@ import           LibCore.KnowledgeBase
     , put
     , remove
     )
-import           LibCore.Mapper        as M (mapParseStructure)
-import           LibCore.Models        (Error (..), Keyword (..))
-import           LibCore.Parser        as P (doParse)
+import           LibCore.Models        (Error (..))
 import           System.Directory      (doesFileExist)
-import           System.IO.Strict      as SIS (readFile)
 
 
 -- TODO: General improvements (tech debt):
 --  [ ] refactor duplication
 --  [ ] try to use nice template for handlers to make them shorter
---  [ ] introduce a separate Utilities module for easier testing
-
-
----------------
--- Utilities --
----------------
-
--- | Function to load the Knowledge Base from the specified file.
--- Supports only CSV files.
-loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
-loadKb p = do
-  csvData <- BL.readFile p
-  case decodeByName csvData of
-    Left  s      -> return $ Left $ StandardError s
-    Right (_, v) -> return $ Right $ getKnowledgeBase v
-
--- | Function to load the abbreviation input file.
--- Can be any file with contents loadable as String.
-loadInput :: FilePath -> IO (Either Error String)
-loadInput p = do
-  s <- SIS.readFile p
-  return $ Right s
-
--- | Performs the expansion logic on the provided string.
-doExpansion :: KnowledgeBaseStructure -> String -> IO String
-doExpansion kb s = do
-  return $ D.decode $ M.mapParseStructure kb $ P.doParse s
-
--- | Pretty prints the Keyword pair (key, value) from the Knowledge Base
-formatRecord :: (Keyword, Keyword) -> String
-formatRecord (Keyword kk kpl, Keyword vk vpl) =
-  "Key: "
-    ++ kk
-    ++ (if kpl then "(plural)" else "")
-    ++ " --> "
-    ++ "Value: "
-    ++ vk
-    ++ if vpl then "(plural)" else ""
-
--- | Dumps the Knowledge Base to the specified file path.
--- Writes the KB out in CSV format.
-dump :: FilePath -> KnowledgeBaseStructure -> IO ()
-dump kbp kb = do
-  let entries = map mapKeywordPair $ listAll kb
-  BL.writeFile kbp $ encodeDefaultOrderedByName entries
-
--- | Given a FilePath and a string, write the string to the FilePath.
--- Throws an error if no valid path is specified.
--- Write the given string to the file path otherwise.
-returnOutput :: Maybe FilePath -> String -> IO ()
-returnOutput Nothing   = error "No output file found"
-returnOutput (Just fp) = writeFile fp
-
--- | Embeds the string in a keyword.
--- By default assigns `False` to the plural attribute.
---
--- Examples:
---
--- >>> makeDefaultKeyword "hello"
--- Keyword {keyword = "hello", plural = False}
-makeDefaultKeyword :: String -> Keyword
-makeDefaultKeyword s = Keyword { keyword = s, plural = False }
-
 
 --------------------------
 -- Expansion Operations --
