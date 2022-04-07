@@ -25,7 +25,7 @@ import           LibCore.KnowledgeBase
     , remove
     )
 import           LibCore.Mapper         as M (mapParseStructure)
-import           LibCore.Models         (Error (..), Keyword (..))
+import           LibCore.Models         (AKeyword (..), Error (..), Keyword)
 import           LibCore.Parser         as P (doParse)
 import           System.Directory       (doesFileExist)
 import           System.IO.Strict       as SIS (readFile)
@@ -88,7 +88,7 @@ dump kbp kb = do
 -- >>> makeDefaultKeyword "hello"
 -- Keyword {keyword = "hello", plural = False}
 makeDefaultKeyword :: String -> Keyword
-makeDefaultKeyword s = Keyword { keyword = s, plural = False }
+makeDefaultKeyword = pure
 
 --------------------------
 -- Expansion Operations --

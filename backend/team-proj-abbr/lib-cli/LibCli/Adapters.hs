@@ -21,7 +21,7 @@ import           Data.Csv
     )
 import qualified Data.Vector           as V
 import qualified LibCore.KnowledgeBase as KB (KnowledgeBaseStructure, build)
-import           LibCore.Models        (Keyword (..))
+import           LibCore.Models        (AKeyword (..), Keyword)
 
 
 --------------------------------

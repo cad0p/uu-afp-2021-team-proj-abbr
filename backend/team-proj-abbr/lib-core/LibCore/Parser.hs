@@ -10,7 +10,7 @@ module LibCore.Parser where
 
 import           Data.Char          (isAlphaNum, isPunctuation, isSpace)
 import           Data.Functor
-import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
+import           LibCore.Models     (AKeyword (Keyword), Token (DoMap, NoToken))
 import           Text.Parsec
     ( ParseError
     , alphaNum
@@ -37,8 +37,8 @@ pluralSymbol = "'s"
 -- | Given a string, parse it. This function can throw an error if parsing fails
 doParse :: String -> ParseStructure
 doParse s = case parseInput s of
-  Left err -> error $ show err
-  Right ps -> ps
+  Left  err -> error $ show err
+  Right ps  -> ps
 
 -- | Map a string to a list of Tokens. For example:
 -- >>> parseInput "@@bob"
@@ -53,7 +53,14 @@ parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 -- | The main parser tries to consume all input into a ParseStructure, given an
 -- | abbreviation symbol and a plural symbol
 mainParser :: String -> String -> Parser ParseStructure
-mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]
+mainParser s p = do
+  many $ choice
+    [ spaceParser
+    , try $ pluralAbbrParser s p
+    , try $ abbrParser s
+    , punctuationParser
+    , noAbbrParser
+    ]
 
 -- | Inverse of the 'isSpace' function from Data.Char
 notSpace :: Char -> Bool
