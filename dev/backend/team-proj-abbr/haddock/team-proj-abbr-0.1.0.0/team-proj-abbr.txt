@@ -10,6 +10,12 @@
 @version 0.1.0.0
 
 
+module LibCli.OutputInterface
+
+-- | Given a FilePath and a string, write the string to the FilePath
+returnOutput :: Maybe FilePath -> String -> IO ()
+
+
 module LibCli.Spec
 cliModes :: [ShortHndr]
 
@@ -294,11 +300,6 @@ formatRecord :: (Keyword, Keyword) -> String
 -- | Dumps the Knowledge Base to the specified file path. Writes the KB out
 --   in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
-
--- | Given a FilePath and a string, write the string to the FilePath.
---   Throws an error if no valid path is specified. Write the given string
---   to the file path otherwise.
-returnOutput :: Maybe FilePath -> String -> IO ()
 
 -- | Embeds the string in a keyword. By default assigns <a>False</a> to the
 --   plural attribute.
