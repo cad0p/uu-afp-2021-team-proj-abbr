@@ -8,8 +8,8 @@ Stability   : experimental
 
 module LibCli.OutputInterface where
 
--- | Given a FilePath and a string, write the string to the FilePath
-returnOutput :: Maybe FilePath -> String -> IO ()
-returnOutput f = case f of
-  Nothing -> error "No output file found"
-  Just s  -> writeFile s
+-- -- | Given a FilePath and a string, write the string to the FilePath
+-- returnOutput :: Maybe FilePath -> String -> IO ()
+-- returnOutput f = case f of
+--   Nothing -> error "No output file found"
+--   Just s  -> writeFile s

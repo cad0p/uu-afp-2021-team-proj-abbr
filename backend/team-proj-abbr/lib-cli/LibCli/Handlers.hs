@@ -7,16 +7,15 @@ Stability   : experimental
 -}
 
 module LibCli.Handlers where
-import qualified Data.ByteString.Lazy   as BL (readFile, writeFile)
+import qualified Data.ByteString.Lazy  as BL (readFile, writeFile)
 import           Data.Csv
     ( decodeByName
     , encodeDefaultOrderedByName
     )
-import           Data.List              (intercalate)
-import           Data.Maybe             (fromMaybe)
-import           LibCli.Adapters        (getKnowledgeBase, mapKeywordPair)
-import           LibCli.OutputInterface (returnOutput)
-import           LibCore.Decoder        as D (decode)
+import           Data.List             (intercalate)
+import           Data.Maybe            (fromMaybe)
+import           LibCli.Adapters       (getKnowledgeBase, mapKeywordPair)
+import           LibCore.Decoder       as D (decode)
 import           LibCore.KnowledgeBase
     ( KnowledgeBaseStructure
     , add
@@ -24,11 +23,11 @@ import           LibCore.KnowledgeBase
     , put
     , remove
     )
-import           LibCore.Mapper         as M (mapParseStructure)
-import           LibCore.Models         (Error (..), Keyword (..))
-import           LibCore.Parser         as P (doParse)
-import           System.Directory       (doesFileExist)
-import           System.IO.Strict       as SIS (readFile)
+import           LibCore.Mapper        as M (mapParseStructure)
+import           LibCore.Models        (Error (..), Keyword (..))
+import           LibCore.Parser        as P (doParse)
+import           System.Directory      (doesFileExist)
+import           System.IO.Strict      as SIS (readFile)
 
 
 -- TODO: General improvements (tech debt):
@@ -78,6 +77,14 @@ dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 dump kbp kb = do
   let entries = map mapKeywordPair $ listAll kb
   BL.writeFile kbp $ encodeDefaultOrderedByName entries
+
+
+-- | Given a FilePath and a string, write the string to the FilePath.
+-- Throws an error if no valid path is specified.
+-- Write the given string to the file path otherwise.
+returnOutput :: Maybe FilePath -> String -> IO ()
+returnOutput Nothing   = error "No output file found"
+returnOutput (Just fp) = writeFile fp
 
 
 -- | Embeds the string in a keyword.
