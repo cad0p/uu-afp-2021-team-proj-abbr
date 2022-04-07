@@ -44,7 +44,7 @@ library:
   - -fwarn-identities
 
 executables:
-  team-proj-abbr-cli:
+  shorthndr:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
