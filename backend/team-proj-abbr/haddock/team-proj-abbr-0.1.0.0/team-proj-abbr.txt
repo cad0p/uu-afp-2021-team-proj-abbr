@@ -10,12 +10,6 @@
 @version 0.1.0.0
 
 
-module LibCli.OutputInterface
-
--- | Given a FilePath and a string, write the string to the FilePath
-returnOutput :: Maybe FilePath -> String -> IO ()
-
-
 module LibCli.Spec
 cliModes :: [ShortHndr]
 
@@ -281,7 +275,7 @@ decode :: ParseStructure -> String
 tokenToString :: Token -> String
 
 
-module LibCli.Handlers
+module LibCli.HandlerUtils
 
 -- | Function to load the Knowledge Base from the specified file. Supports
 --   only CSV files.
@@ -301,6 +295,11 @@ formatRecord :: (Keyword, Keyword) -> String
 --   in CSV format.
 dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 
+-- | Given a FilePath and a string, write the string to the FilePath.
+--   Throws an error if no valid path is specified. Write the given string
+--   to the file path otherwise.
+returnOutput :: Maybe FilePath -> String -> IO ()
+
 -- | Embeds the string in a keyword. By default assigns <a>False</a> to the
 --   plural attribute.
 --   
@@ -311,6 +310,9 @@ dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 --   Keyword {keyword = "hello", plural = False}
 --   </pre>
 makeDefaultKeyword :: String -> Keyword
+
+
+module LibCli.Handlers
 
 -- | Expand command handler. Deal with single input expansion without
 --   reading an input file.
