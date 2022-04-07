@@ -17,7 +17,8 @@ import           Data.Map       as M
     , toList
     , update
     )
-import           LibCore.Models (Error (StandardError), Keyword (..))
+-- TODO(tech-debt): fix the "unused AKeyword" import (which is required for examples).
+import           LibCore.Models (AKeyword (..), Error (StandardError), Keyword)
 
 -- TODO(future ideas): support partial updates and state? RWS monad?
 type KnowledgeBaseStructure = M.Map Keyword Keyword
@@ -27,6 +28,7 @@ type KnowledgeBaseStructure = M.Map Keyword Keyword
 build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 build = M.fromList
 
+-- TODO(tech-debt): make real tests.
 
 -- |Get the list of all the stored records in the Knowledge Base.
 --

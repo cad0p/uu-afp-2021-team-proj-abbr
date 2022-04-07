@@ -14,7 +14,7 @@ import           LibCli.Adapters
     , getKnowledgeBase
     , mapEntries
     )
-import           LibCore.Models   (Keyword (Keyword, keyword, plural))
+import           LibCore.Models   (AKeyword (..), Keyword)
 
 
 
