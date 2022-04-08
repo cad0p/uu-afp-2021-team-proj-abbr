@@ -70,6 +70,39 @@ dump kbp kb = do
 -- | Given a FilePath and a string, write the string to the FilePath.
 -- Throws an error if no valid path is specified.
 -- Write the given string to the file path otherwise.
-returnOutput :: Maybe FilePath -> String -> IO ()
-returnOutput Nothing   = error "No output file found"
-returnOutput (Just fp) = writeFile fp
+returnOutput :: FilePath -> String -> IO ()
+returnOutput = writeFile
+
+----------------------------
+-- File path access rules --
+----------------------------
+
+-- |Gets the pair of paths to use depending on the flag.
+-- Returns an error if a pair of (Input, Output) file paths is not possible.
+-- Otherwise, returns the pair of file paths in the following order: (Input, Output).
+getInOutFilePaths
+  :: Maybe FilePath -- ^ Input file path
+  -> Maybe FilePath -- ^ Output file path
+  -> Bool           -- ^ Whether working in in-place mode.
+  -> Either Error (FilePath, FilePath) -- ^ Either error or the correct (Input, Output) pair.
+getInOutFilePaths Nothing _ _ =
+  Left $ StandardError "No input file path is specified"
+getInOutFilePaths (Just _) (Just _) True = Left $ StandardError
+  "With `inplace`, only input or output file path must be specified, not both"
+getInOutFilePaths (Just _) Nothing False =
+  Left $ StandardError "No output file path is specified"
+getInOutFilePaths (Just in_fp) (Just o_fp) False = Right (in_fp, o_fp)
+getInOutFilePaths (Just in_fp) Nothing     True  = Right (in_fp, in_fp)
+
+-- | Handles the retrieval of Knowledge Base file paths.
+-- If nothing is provided, raises an error.
+-- Otherwise, returns the given file path.
+getKnowledgeBaseFilePath :: Maybe FilePath -> Either Error FilePath
+getKnowledgeBaseFilePath Nothing =
+  Left $ StandardError "Knowledge base path must be specified"
+getKnowledgeBaseFilePath (Just fp) = Right fp
+
+-- | Handles possible errors from retrieving file paths.
+getFilePaths :: Either Error a -> IO a
+getFilePaths (Left  err) = error $ show err
+getFilePaths (Right fps) = return fps
