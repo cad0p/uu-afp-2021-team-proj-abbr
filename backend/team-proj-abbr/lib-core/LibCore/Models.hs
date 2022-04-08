@@ -16,13 +16,36 @@ data Token
   | DoMap Keyword
   deriving (Eq, Ord, Show)
 
--- | A Keyword is a Token that can be mapped. A Keyword can be plural
-data Keyword
-  = Keyword
-      { keyword :: String
+-- | Abstract and parameterised Keyword datatype.
+-- Implements Functor and Applicative typeclasses.
+--
+-- Examples:
+--
+-- >>> pure "hello" :: AKeyword String
+-- Key {keyword = "hello", plural = False}
+--
+-- >>> (map Data.Char.toUpper) <$> (pure "hello" :: AKeyword String)
+-- Key {keyword = "HELLO", plural = False}
+--
+-- >>> (pure (map Data.Char.toLower)) <*> (pure "HELLO" :: AKeyword String)
+-- Key {keyword = "hello", plural = False}
+--
+data AKeyword a
+  = Key
+      { keyword :: a
       , plural  :: Bool
       }
   deriving (Eq, Ord, Show)
+
+instance Functor AKeyword where
+  fmap f (Key k p) = Key (f k) p
+
+instance Applicative AKeyword where
+  pure a = Key a False
+  (Key f p) <*> (Key a p') = Key (f a) (p && p') -- joining both plurals.
+
+-- | A Keyword is a Token that can be mapped. A Keyword can be plural
+type Keyword = AKeyword String
 
 -- | Reserved domain-level error indications.
 newtype Error

@@ -10,7 +10,7 @@ module LibCore.Parser where
 
 import           Data.Char          (isAlphaNum, isPunctuation, isSpace)
 import           Data.Functor
-import           LibCore.Models     (Keyword (Keyword), Token (DoMap, NoToken))
+import           LibCore.Models     (AKeyword (Key), Token (DoMap, NoToken))
 import           Text.Parsec
     ( ParseError
     , alphaNum
@@ -37,14 +37,14 @@ pluralSymbol = "'s"
 -- | Given a string, parse it. This function can throw an error if parsing fails
 doParse :: String -> ParseStructure
 doParse s = case parseInput s of
-  Left err -> error $ show err
-  Right ps -> ps
+  Left  err -> error $ show err
+  Right ps  -> ps
 
 -- | Map a string to a list of Tokens. For example:
 -- >>> parseInput "@@bob"
--- Right [DoMap (Keyword {keyword = "bob", plural = False})]
+-- Right [DoMap (Key {keyword = "bob", plural = False})]
 -- >>> parseInput "@@fw's"
--- Right [DoMap (Keyword {keyword = "fw", plural = True})]
+-- Right [DoMap (Key {keyword = "fw", plural = True})]
 -- >>> parseInput "hello!"
 -- Right [NoToken "hello!"]
 parseInput :: String -> Either ParseError ParseStructure
@@ -53,7 +53,14 @@ parseInput = parse (mainParser abbSymbol pluralSymbol) ""
 -- | The main parser tries to consume all input into a ParseStructure, given an
 -- | abbreviation symbol and a plural symbol
 mainParser :: String -> String -> Parser ParseStructure
-mainParser s p = do many $ choice [spaceParser, try $ pluralAbbrParser s p, try $ abbrParser s, punctuationParser, noAbbrParser]
+mainParser s p = do
+  many $ choice
+    [ spaceParser
+    , try $ pluralAbbrParser s p
+    , try $ abbrParser s
+    , punctuationParser
+    , noAbbrParser
+    ]
 
 -- | Inverse of the 'isSpace' function from Data.Char
 notSpace :: Char -> Bool
@@ -65,14 +72,14 @@ pluralAbbrParser s p = do
   void $ string s
   a <- many1 alphaNum
   void $ string p
-  return $ DoMap $ Keyword a True
+  return $ DoMap $ Key a True
 
 -- | Given an abbreviation string s, parse the string after it
 abbrParser :: String -> Parser Token
 abbrParser s = do
   void $ string s
   a <- many1 $ satisfy isAlphaNum
-  return $ DoMap $ Keyword a False
+  return $ DoMap $ Key a False
 
 -- | Parse any string into a token
 noAbbrParser :: Parser Token
