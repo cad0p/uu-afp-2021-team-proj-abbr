@@ -97,6 +97,10 @@ type Keyword = AKeyword String
 -- | Reserved domain-level error indications.
 newtype Error
 StandardError :: String -> Error
+
+-- | Error Exception.
+newtype ErrorException
+ErrorException :: Error -> ErrorException
 instance GHC.Show.Show a => GHC.Show.Show (LibCore.Models.AKeyword a)
 instance GHC.Classes.Ord a => GHC.Classes.Ord (LibCore.Models.AKeyword a)
 instance GHC.Classes.Eq a => GHC.Classes.Eq (LibCore.Models.AKeyword a)
@@ -104,6 +108,8 @@ instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 instance GHC.Show.Show LibCore.Models.Error
+instance GHC.Show.Show LibCore.Models.ErrorException
+instance GHC.Exception.Type.Exception LibCore.Models.ErrorException
 instance GHC.Base.Functor LibCore.Models.AKeyword
 instance GHC.Base.Applicative LibCore.Models.AKeyword
 
@@ -335,8 +341,27 @@ getInOutFilePaths :: Maybe FilePath -> Maybe FilePath -> Bool -> Either Error (F
 --   provided, raises an error. Otherwise, returns the given file path.
 getKnowledgeBaseFilePath :: Maybe FilePath -> Either Error FilePath
 
--- | Handles possible errors from retrieving file paths.
-getFilePaths :: Either Error a -> IO a
+-- | Returns the value from a potentially failing computation.
+--   
+--   Abort with the error message if it was an error.
+--   
+--   The text message is added to the <a>Error</a> as additional context
+--   before aborting.
+--   
+--   <b>Panics:</b> if Error
+--   
+--   Example:
+--   
+--   <pre>
+--   &gt;&gt;&gt; unwrapIOError $ Left (StandardError "oh no!")
+--   *** Exception: StandardError "oh no!"
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; unwrapIOError $ Right 42
+--   42
+--   </pre>
+unwrapIOError :: Either Error a -> IO a
 
 
 module LibCli.Handlers
