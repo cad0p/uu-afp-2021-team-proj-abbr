@@ -14,7 +14,7 @@ import           LibCli.Adapters
     , getKnowledgeBase
     , mapEntries
     )
-import           LibCore.Models   (Keyword (Keyword, keyword, plural))
+import           LibCore.Models   (AKeyword (..), Keyword)
 
 
 
@@ -30,8 +30,8 @@ exampleEntryAbbr =
 
 examplePairAbbr :: (Keyword, Keyword)
 examplePairAbbr =
-  ( Keyword { keyword = "abbr", plural = False }
-  , Keyword { keyword = "abbreviation", plural = False }
+  ( Key { keyword = "abbr", plural = False }
+  , Key { keyword = "abbreviation", plural = False }
   )
 
 

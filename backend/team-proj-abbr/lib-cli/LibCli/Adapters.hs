@@ -21,7 +21,7 @@ import           Data.Csv
     )
 import qualified Data.Vector           as V
 import qualified LibCore.KnowledgeBase as KB (KnowledgeBaseStructure, build)
-import           LibCore.Models        (Keyword (..))
+import           LibCore.Models        (AKeyword (..), Keyword)
 
 
 --------------------------------
@@ -55,18 +55,15 @@ instance DefaultOrdered KbEntry where
 {-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
 
 >>> mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
-(Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+(Key {keyword = "abbr", plural = False},Key {keyword = "abbreviation", plural = False})
 
 -}
 mapEntries :: KbEntry -> (Keyword, Keyword)
-mapEntries e =
-  ( (Keyword { keyword = abbreviation e, plural = False })
-  , (Keyword { keyword = expansion e, plural = False })
-  )
+mapEntries (KbEntry a e) = (pure a, pure e)
 
 -- |`mapKeywords` maps keyword pairs to their entries
 mapKeywordPair :: (Keyword, Keyword) -> KbEntry
-mapKeywordPair (Keyword kk _, Keyword vk _) = KbEntry kk vk
+mapKeywordPair (Key kk _, Key vk _) = KbEntry kk vk
 
 -- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
 getKnowledgeBase

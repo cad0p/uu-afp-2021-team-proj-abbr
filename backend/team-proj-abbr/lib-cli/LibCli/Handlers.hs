@@ -33,7 +33,6 @@ import           LibCli.HandlerUtils
     , formatRecord
     , loadInput
     , loadKb
-    , makeDefaultKeyword
     , returnOutput
     )
 import           LibCore.KnowledgeBase
@@ -164,8 +163,8 @@ addHandler kb_mfp a e = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) = do
     lkb <- loadKb kb_fp
-    let k   = pure $ makeDefaultKeyword a
-    let v   = pure $ makeDefaultKeyword e
+    let k   = pure $ pure a
+    let v   = pure $ pure e
     let res = add <$> lkb <*> k <*> v
     case res of
       Left er ->
@@ -197,8 +196,8 @@ updateHandler kb_mfp a e = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) = do
     lkb <- loadKb kb_fp
-    let k = pure $ makeDefaultKeyword a
-    let v = pure $ makeDefaultKeyword e
+    let k = pure $ pure a
+    let v = pure $ pure e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
     case put <$> lkb <*> k <*> v of
       Left  er -> error $ show er
@@ -227,7 +226,7 @@ deleteHandler kb_mfp a = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) = do
     lkb <- loadKb kb_fp
-    let k = pure $ makeDefaultKeyword a
+    let k = pure $ pure a
     let s = (\k' -> "Removed: " ++ show k') <$> k
     case remove <$> lkb <*> k of
       Left  er -> error $ show er
