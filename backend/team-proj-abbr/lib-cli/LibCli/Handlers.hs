@@ -26,12 +26,13 @@ module LibCli.Handlers
   ) where
 
 import           Data.List             (intercalate)
-import           Data.Maybe            (fromMaybe)
 import           LibCli.HandlerUtils
     ( doExpansion
     , dump
     , formatRecord
+    , getFilePaths
     , getInOutFilePaths
+    , getKnowledgeBaseFilePath
     , loadInput
     , loadKb
     , returnOutput
@@ -88,7 +89,7 @@ expandHandler
   -> String -- ^ Abbreviation to expand
   -> IO () -- ^ Writes the expansion result to the STDOUT.
 expandHandler kb_mfp abbr = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- getFilePaths $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp) abbr
   case res of
@@ -115,15 +116,11 @@ replaceHandler
   -> Bool  -- ^ Whether inplace mode is used or not
   -> IO () -- ^ Writes the modified file out to the specified location
 replaceHandler kb_mfp in_mfp o_mfp in_mode = do
-  -- TODO(tech debt): make a monadic wrapper for these file path retrievals.
-  let kb_fp = fromMaybe "" kb_mfp
-  (in_fp, o_fp) <- do
-    case getInOutFilePaths in_mfp o_mfp in_mode of
-      Left  er  -> error $ show er
-      Right fps -> return fps
-  kb_exists <- doesFileExist kb_fp
-  in_exists <- doesFileExist in_fp
-  res       <- process (kb_exists, kb_fp) (in_exists, in_fp)
+  kb_fp         <- getFilePaths $ getKnowledgeBaseFilePath kb_mfp
+  (in_fp, o_fp) <- getFilePaths $ getInOutFilePaths in_mfp o_mfp in_mode
+  kb_exists     <- doesFileExist kb_fp
+  in_exists     <- doesFileExist in_fp
+  res           <- process (kb_exists, kb_fp) (in_exists, in_fp)
   case res of
     Left  err -> error $ show err
     Right s   -> returnOutput o_fp s
@@ -152,7 +149,7 @@ addHandler
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 addHandler kb_mfp a e = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- getFilePaths $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
@@ -185,7 +182,7 @@ updateHandler
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 updateHandler kb_mfp a e = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- getFilePaths $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
@@ -215,7 +212,7 @@ deleteHandler
   -> String -- ^ Abbreviation keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 deleteHandler kb_mfp a = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- getFilePaths $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
@@ -243,7 +240,7 @@ listHandler
   :: Maybe FilePath -- ^ KB file path
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 listHandler kb_mfp = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- getFilePaths $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
   case res of
