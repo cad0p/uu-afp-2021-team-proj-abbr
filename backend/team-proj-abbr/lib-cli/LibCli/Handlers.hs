@@ -1,5 +1,5 @@
 {-|
-Description : Environment agnostic command handlers for the CLI.
+Description : CLI framework agnostic command handlers for the CLI.
 Copyright   : Copyright (c) 2022 Pier Carlo Cadoppi, Dmitrii Orlov, Wilmer Zwietering
 License     : BSD3
 Maintainer  : p.c.cadoppi@students.uu.nl; d.orlov@student.tue.nl; w.j.zwietering@students.uu.nl
@@ -12,34 +12,29 @@ module LibCli.Handlers
   (
   -- $intro
 
-  -- * Utilities
-    loadKb
-  , loadInput
-  , doExpansion
-  , formatRecord
-  , dump
-  , makeDefaultKeyword
   -- * Expansion Operations
 
   -- $expansion
-  , expandHandler
+    expandHandler
   , replaceHandler
+
   -- * Knowledge Base CRUD
   , addHandler
   , updateHandler
   , deleteHandler
   , listHandler
   ) where
-import qualified Data.ByteString.Lazy   as BL (readFile, writeFile)
-import           Data.Csv
-    ( decodeByName
-    , encodeDefaultOrderedByName
+
+import           Data.List             (intercalate)
+import           Data.Maybe            (fromMaybe)
+import           LibCli.HandlerUtils
+    ( doExpansion
+    , dump
+    , formatRecord
+    , loadInput
+    , loadKb
+    , returnOutput
     )
-import           Data.List              (intercalate)
-import           Data.Maybe             (fromMaybe)
-import           LibCli.Adapters        (getKnowledgeBase, mapKeywordPair)
-import           LibCli.OutputInterface (returnOutput)
-import           LibCore.Decoder        as D (decode)
 import           LibCore.KnowledgeBase
     ( KnowledgeBaseStructure
     , add
@@ -47,16 +42,8 @@ import           LibCore.KnowledgeBase
     , put
     , remove
     )
-import           LibCore.Mapper         as M (mapParseStructure)
-import           LibCore.Models         (Error (..), Keyword (..))
-import           LibCore.Parser         as P (doParse)
-import           System.Directory       (doesFileExist)
-import           System.IO.Strict       as SIS (readFile)
-
-
--- TODO: General improvements (tech debt):
---  [ ] refactor duplication
---  [ ] try to use nice template for handlers to make them shorter
+import           LibCore.Models        (Error (..))
+import           System.Directory      (doesFileExist)
 
 {- $intro
 
@@ -85,68 +72,13 @@ What precedes is the following:
 
 * `o` is output file
 
-* `io` is input/output file (used in `inplace` mode)
+* TODO `io` is input/output file (used in `inplace` mode)
 
 -}
 
-
----------------
--- Utilities --
----------------
-
--- | Function to load the Knowledge Base from the specified file.
--- Supports only CSV files.
-loadKb :: FilePath -> IO (Either Error KnowledgeBaseStructure)
-loadKb fp = do
-  csvData <- BL.readFile fp
-  case decodeByName csvData of
-    Left  s      -> return $ Left $ StandardError s
-    Right (_, v) -> return $ Right $ getKnowledgeBase v
-
--- | Function to load the abbreviation input file.
--- Can be any file with contents loadable as String.
-loadInput :: FilePath -> IO (Either Error String)
-loadInput fp = do
-  s <- SIS.readFile fp
-  return $ Right s
-
--- | Performs the expansion logic on the provided string.
-doExpansion :: KnowledgeBaseStructure -> String -> IO String
-doExpansion kb s = do
-  return $ D.decode $ M.mapParseStructure kb $ P.doParse s
-
--- | Pretty prints the Keyword pair (key, value) from the Knowledge Base
-formatRecord :: (Keyword, Keyword) -> String
-formatRecord (Keyword kk kpl, Keyword vk vpl) =
-  "Key: "
-    ++ kk
-    ++ (if kpl then "(plural)" else "")
-    ++ " --> "
-    ++ "Value: "
-    ++ vk
-    ++ if vpl then "(plural)" else ""
-
--- | Dumps the Knowledge Base to the specified file path.
--- Writes the KB out in CSV format.
-dump :: FilePath -> KnowledgeBaseStructure -> IO ()
-dump kb_fp kb = do
-  let entries = map mapKeywordPair $ listAll kb
-  BL.writeFile kb_fp $ encodeDefaultOrderedByName entries
-
-
--- | Embeds the string in a keyword.
--- By default assigns `False` to the plural attribute.
---
--- Examples:
---
--- >>> makeDefaultKeyword "hello"
--- Keyword {keyword = "hello", plural = False}
-makeDefaultKeyword :: String -> Keyword
-makeDefaultKeyword s = Keyword { keyword = s, plural = False }
-
---------------------------
--- Expansion Operations --
---------------------------
+-- TODO: General improvements (tech debt):
+--  [ ] refactor duplication
+--  [ ] try to use nice template for handlers to make them shorter
 
 -- | Expand command handler.
 -- Deal with single input expansion without reading an input file.
@@ -231,8 +163,8 @@ addHandler kb_mfp a e = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) = do
     lkb <- loadKb kb_fp
-    let k   = pure $ makeDefaultKeyword a
-    let v   = pure $ makeDefaultKeyword e
+    let k   = pure $ pure a
+    let v   = pure $ pure e
     let res = add <$> lkb <*> k <*> v
     case res of
       Left er ->
@@ -264,8 +196,8 @@ updateHandler kb_mfp a e = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) = do
     lkb <- loadKb kb_fp
-    let k = pure $ makeDefaultKeyword a
-    let v = pure $ makeDefaultKeyword e
+    let k = pure $ pure a
+    let v = pure $ pure e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
     case put <$> lkb <*> k <*> v of
       Left  er -> error $ show er
@@ -294,7 +226,7 @@ deleteHandler kb_mfp a = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) = do
     lkb <- loadKb kb_fp
-    let k = pure $ makeDefaultKeyword a
+    let k = pure $ pure a
     let s = (\k' -> "Removed: " ++ show k') <$> k
     case remove <$> lkb <*> k of
       Left  er -> error $ show er
@@ -321,7 +253,3 @@ listHandler kb_mfp = do
     lkb <- loadKb kb_fp
     let rs = map formatRecord . listAll <$> lkb
     return $ intercalate "\n" <$> rs
-
-
--- TODO(tech debt): add get command to Spec
--- get

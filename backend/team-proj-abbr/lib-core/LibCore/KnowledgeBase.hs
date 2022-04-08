@@ -17,7 +17,7 @@ import           Data.Map       as M
     , toList
     , update
     )
-import           LibCore.Models (Error (StandardError), Keyword (..))
+import           LibCore.Models (Error (StandardError), Keyword)
 
 -- TODO(future ideas): support partial updates and state? RWS monad?
 type KnowledgeBaseStructure = M.Map Keyword Keyword
@@ -27,14 +27,16 @@ type KnowledgeBaseStructure = M.Map Keyword Keyword
 build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 build = M.fromList
 
+-- TODO(tech-debt): make real tests.
 
 -- |Get the list of all the stored records in the Knowledge Base.
 --
 -- Examples:
 --
--- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+-- >>> testKB = build [(pure "brb", pure "be right back")]
 -- >>> listAll testKB
--- [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
+-- [(Key {keyword = "brb", plural = False},Key {keyword = "be right back", plural = False})]
+--
 listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 listAll = M.toList
 
@@ -43,12 +45,13 @@ listAll = M.toList
 --
 -- Examples
 --
--- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
--- >>> get testKB (Keyword {keyword = "brb", plural = False})
--- Right (Keyword {keyword = "be right back", plural = False})
+-- >>> testKB = build [(pure "brb", pure "be right back")]
+-- >>> get testKB $ pure "brb"
+-- Right (Key {keyword = "be right back", plural = False})
 --
--- >>> get testKB (Keyword {keyword = "beb", plural = False})
--- Left (StandardError "no record found for this keyword : Keyword {keyword = \"beb\", plural = False}")
+-- >>> get testKB $ pure "beb"
+-- Left (StandardError "no record found for this keyword : Key {keyword = \"beb\", plural = False}")
+--
 get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 get kb k = case M.lookup k kb of
   Nothing ->
@@ -62,12 +65,13 @@ get kb k = case M.lookup k kb of
 --
 -- Examples
 --
--- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
--- >>> add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way", plural = False})
--- (Keyword {keyword = "by the way", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way", plural = False})])
+-- >>> testKB = build [(pure "brb", pure "be right back")]
+-- >>> add testKB (pure "btw") (pure "by the way")
+-- (Key {keyword = "by the way", plural = False},fromList [(Key {keyword = "brb", plural = False},Key {keyword = "be right back", plural = False}),(Key {keyword = "btw", plural = False},Key {keyword = "by the way", plural = False})])
 --
--- >>> add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
--- (Keyword {keyword = "by the way!", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way!", plural = False})])
+-- >>> add testKB (pure "btw") (pure "by the way!")
+-- (Key {keyword = "by the way!", plural = False},fromList [(Key {keyword = "brb", plural = False},Key {keyword = "be right back", plural = False}),(Key {keyword = "btw", plural = False},Key {keyword = "by the way!", plural = False})])
+--
 add
   :: KnowledgeBaseStructure
   -> Keyword
@@ -82,12 +86,13 @@ add kb k r = (r, M.insert k r kb)
 --
 -- Examples:
 --
--- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
--- >>> put testKB (Keyword {keyword = "brb", plural = False}) (Keyword {keyword = "BE RIGHT BACK", plural = False})
--- Right (Keyword {keyword = "BE RIGHT BACK", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "BE RIGHT BACK", plural = False})])
+-- >>> testKB = build [(pure "brb", pure "be right back")]
+-- >>> put testKB (pure "brb") (pure "BE RIGHT BACK")
+-- Right (Key {keyword = "BE RIGHT BACK", plural = False},fromList [(Key {keyword = "brb", plural = False},Key {keyword = "BE RIGHT BACK", plural = False})])
 --
--- >>> put testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
--- Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+-- >>> put testKB (pure "btw") (pure "by the way!")
+-- Left (StandardError "no record found for this keyword : Key {keyword = \"btw\", plural = False}")
+--
 put
   :: KnowledgeBaseStructure
   -> Keyword
@@ -103,12 +108,13 @@ put kb k r = case get kb k of
 --
 -- Examples:
 --
--- >>> testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
--- >>> remove testKB (Keyword {keyword = "brb", plural = False})
+-- >>> testKB = build [(pure "brb", pure "be right back")]
+-- >>> remove testKB $ pure "brb"
 -- Right (fromList [])
 --
--- >>> remove testKB (Keyword {keyword = "btw", plural = False})
--- Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+-- >>> remove testKB $ pure "btw"
+-- Left (StandardError "no record found for this keyword : Key {keyword = \"btw\", plural = False}")
+--
 remove
   :: KnowledgeBaseStructure -> Keyword -> Either Error KnowledgeBaseStructure
 remove kb k = case get kb k of

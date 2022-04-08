@@ -1,10 +1,6 @@
 import           Test.Tasty
 
 import           Test.LibCli.Adapters        (huAdapters, qcAdapters)
-import           Test.LibCli.OutputInterface
-    ( huOutputInterface
-    , qcOutputInterface
-    )
 import           Test.LibCore.Decoder        (huDecoder, qcDecoder)
 import           Test.LibCore.InputInterface
     ( huInputInterface
@@ -37,7 +33,6 @@ qcProps = testGroup
   , qcKnowledgeBase
   , qcMapper
   , qcModels
-  , qcOutputInterface
   , qcAdapters
   , qcParser
   ]
@@ -57,7 +52,6 @@ hUnit = testGroup
   , huKnowledgeBase
   , huMapper
   , huModels
-  , huOutputInterface
   , huAdapters
   , huParser
   ]
