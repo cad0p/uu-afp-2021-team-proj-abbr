@@ -14,13 +14,20 @@ import           Data.Csv
     , encodeDefaultOrderedByName
     )
 
+import qualified Control.Exception     as Exc
 import           LibCli.Adapters       (getKnowledgeBase, mapKeywordPair)
 import           LibCore.Decoder       as D (decode)
 import           LibCore.KnowledgeBase (KnowledgeBaseStructure, listAll)
 import           LibCore.Mapper        as M (mapParseStructure)
-import           LibCore.Models        (AKeyword (..), Error (..), Keyword)
+import           LibCore.Models
+    ( AKeyword (..)
+    , Error (StandardError)
+    , ErrorException (ErrorException)
+    , Keyword
+    )
 import           LibCore.Parser        as P (doParse)
 import           System.IO.Strict      as SIS (readFile)
+
 
 
 -- | Function to load the Knowledge Base from the specified file.
@@ -102,7 +109,22 @@ getKnowledgeBaseFilePath Nothing =
   Left $ StandardError "Knowledge base path must be specified"
 getKnowledgeBaseFilePath (Just fp) = Right fp
 
--- | Handles possible errors from retrieving file paths.
-getFilePaths :: Either Error a -> IO a
-getFilePaths (Left  err) = error $ show err
-getFilePaths (Right fps) = return fps
+-- | Returns the value from a potentially failing computation.
+--
+-- Abort with the error message if it was an error.
+--
+-- The text message is added to the 'Error' as additional context before aborting.
+--
+-- __Panics:__ if Error
+--
+-- Example:
+--
+-- >>> unwrapIOError $ Left (StandardError "oh no!")
+-- StandardError "oh no!"
+--
+-- >>> unwrapIOError $ Right 42
+-- 42
+--
+unwrapIOError :: Either Error a -> IO a
+unwrapIOError (Left  err) = Exc.throwIO (ErrorException err)
+unwrapIOError (Right a  ) = pure a
