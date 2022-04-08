@@ -31,6 +31,7 @@ import           LibCli.HandlerUtils
     ( doExpansion
     , dump
     , formatRecord
+    , getInOutFilePaths
     , loadInput
     , loadKb
     , returnOutput
@@ -111,19 +112,22 @@ replaceHandler
   :: Maybe FilePath -- ^ KB file path
   -> Maybe FilePath -- ^ Input file path
   -> Maybe FilePath -- ^ Output file path
+  -> Bool  -- ^ Whether inplace mode is used or not
   -> IO () -- ^ Writes the modified file out to the specified location
-replaceHandler kb_mfp in_mfp o_mfp = do
-  -- here m stands for maybe, fp stands for FilePath
+replaceHandler kb_mfp in_mfp o_mfp in_mode = do
+  -- TODO(tech debt): make a monadic wrapper for these file path retrievals.
   let kb_fp = fromMaybe "" kb_mfp
-  let in_fp = fromMaybe "" in_mfp
+  (in_fp, o_fp) <- do
+    case getInOutFilePaths in_mfp o_mfp in_mode of
+      Left  er  -> error $ show er
+      Right fps -> return fps
   kb_exists <- doesFileExist kb_fp
   in_exists <- doesFileExist in_fp
   res       <- process (kb_exists, kb_fp) (in_exists, in_fp)
   case res of
     Left  err -> error $ show err
-    Right s   -> returnOutput o_mfp s
+    Right s   -> returnOutput o_fp s
  where
-  -- | Connecting handling the file access and logic.
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
   process (False, fp) _ = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
