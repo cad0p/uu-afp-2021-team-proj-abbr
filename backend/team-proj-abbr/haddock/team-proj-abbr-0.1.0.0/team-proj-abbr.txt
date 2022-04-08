@@ -65,22 +65,45 @@ data Token
 NoToken :: String -> Token
 DoMap :: Keyword -> Token
 
+-- | Abstract and parameterised Keyword datatype. Implements Functor and
+--   Applicative typeclasses.
+--   
+--   Examples:
+--   
+--   <pre>
+--   &gt;&gt;&gt; pure "hello" :: AKeyword String
+--   Key {keyword = "hello", plural = False}
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; (map Data.Char.toUpper) &lt;$&gt; (pure "hello" :: AKeyword String)
+--   Key {keyword = "HELLO", plural = False}
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; (pure (map Data.Char.toLower)) &lt;*&gt; (pure "HELLO" :: AKeyword String)
+--   Key {keyword = "hello", plural = False}
+--   </pre>
+data AKeyword a
+Key :: a -> Bool -> AKeyword a
+[keyword] :: AKeyword a -> a
+[plural] :: AKeyword a -> Bool
+
 -- | A Keyword is a Token that can be mapped. A Keyword can be plural
-data Keyword
-Keyword :: String -> Bool -> Keyword
-[keyword] :: Keyword -> String
-[plural] :: Keyword -> Bool
+type Keyword = AKeyword String
 
 -- | Reserved domain-level error indications.
 newtype Error
 StandardError :: String -> Error
-instance GHC.Show.Show LibCore.Models.Keyword
-instance GHC.Classes.Ord LibCore.Models.Keyword
-instance GHC.Classes.Eq LibCore.Models.Keyword
+instance GHC.Show.Show a => GHC.Show.Show (LibCore.Models.AKeyword a)
+instance GHC.Classes.Ord a => GHC.Classes.Ord (LibCore.Models.AKeyword a)
+instance GHC.Classes.Eq a => GHC.Classes.Eq (LibCore.Models.AKeyword a)
 instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 instance GHC.Show.Show LibCore.Models.Error
+instance GHC.Base.Functor LibCore.Models.AKeyword
+instance GHC.Base.Applicative LibCore.Models.AKeyword
 
 
 module LibCore.KnowledgeBase
@@ -94,10 +117,10 @@ build :: [(Keyword, Keyword)] -> KnowledgeBaseStructure
 --   Examples:
 --   
 --   <pre>
---   &gt;&gt;&gt; testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
 --   &gt;&gt;&gt; listAll testKB
---   [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False})]
+--   [(Key {keyword = "brb", plural = False},Key {keyword = "be right back", plural = False})]
 --   </pre>
 listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 
@@ -106,15 +129,15 @@ listAll :: KnowledgeBaseStructure -> [(Keyword, Keyword)]
 --   Examples
 --   
 --   <pre>
---   &gt;&gt;&gt; testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
---   &gt;&gt;&gt; get testKB (Keyword {keyword = "brb", plural = False})
---   Right (Keyword {keyword = "be right back", plural = False})
+--   &gt;&gt;&gt; get testKB $ pure "brb"
+--   Right (Key {keyword = "be right back", plural = False})
 --   </pre>
 --   
 --   <pre>
---   &gt;&gt;&gt; get testKB (Keyword {keyword = "beb", plural = False})
---   Left (StandardError "no record found for this keyword : Keyword {keyword = \"beb\", plural = False}")
+--   &gt;&gt;&gt; get testKB $ pure "beb"
+--   Left (StandardError "no record found for this keyword : Key {keyword = \"beb\", plural = False}")
 --   </pre>
 get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 
@@ -125,15 +148,15 @@ get :: KnowledgeBaseStructure -> Keyword -> Either Error Keyword
 --   Examples
 --   
 --   <pre>
---   &gt;&gt;&gt; testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
---   &gt;&gt;&gt; add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way", plural = False})
---   (Keyword {keyword = "by the way", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way", plural = False})])
+--   &gt;&gt;&gt; add testKB (pure "btw") (pure "by the way")
+--   (Key {keyword = "by the way", plural = False},fromList [(Key {keyword = "brb", plural = False},Key {keyword = "be right back", plural = False}),(Key {keyword = "btw", plural = False},Key {keyword = "by the way", plural = False})])
 --   </pre>
 --   
 --   <pre>
---   &gt;&gt;&gt; add testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
---   (Keyword {keyword = "by the way!", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "be right back", plural = False}),(Keyword {keyword = "btw", plural = False},Keyword {keyword = "by the way!", plural = False})])
+--   &gt;&gt;&gt; add testKB (pure "btw") (pure "by the way!")
+--   (Key {keyword = "by the way!", plural = False},fromList [(Key {keyword = "brb", plural = False},Key {keyword = "be right back", plural = False}),(Key {keyword = "btw", plural = False},Key {keyword = "by the way!", plural = False})])
 --   </pre>
 add :: KnowledgeBaseStructure -> Keyword -> Keyword -> (Keyword, KnowledgeBaseStructure)
 
@@ -143,15 +166,15 @@ add :: KnowledgeBaseStructure -> Keyword -> Keyword -> (Keyword, KnowledgeBaseSt
 --   Examples:
 --   
 --   <pre>
---   &gt;&gt;&gt; testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
---   &gt;&gt;&gt; put testKB (Keyword {keyword = "brb", plural = False}) (Keyword {keyword = "BE RIGHT BACK", plural = False})
---   Right (Keyword {keyword = "BE RIGHT BACK", plural = False},fromList [(Keyword {keyword = "brb", plural = False},Keyword {keyword = "BE RIGHT BACK", plural = False})])
+--   &gt;&gt;&gt; put testKB (pure "brb") (pure "BE RIGHT BACK")
+--   Right (Key {keyword = "BE RIGHT BACK", plural = False},fromList [(Key {keyword = "brb", plural = False},Key {keyword = "BE RIGHT BACK", plural = False})])
 --   </pre>
 --   
 --   <pre>
---   &gt;&gt;&gt; put testKB (Keyword {keyword = "btw", plural = False}) (Keyword {keyword = "by the way!", plural = False})
---   Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+--   &gt;&gt;&gt; put testKB (pure "btw") (pure "by the way!")
+--   Left (StandardError "no record found for this keyword : Key {keyword = \"btw\", plural = False}")
 --   </pre>
 put :: KnowledgeBaseStructure -> Keyword -> Keyword -> Either Error (Keyword, KnowledgeBaseStructure)
 
@@ -161,15 +184,15 @@ put :: KnowledgeBaseStructure -> Keyword -> Keyword -> Either Error (Keyword, Kn
 --   Examples:
 --   
 --   <pre>
---   &gt;&gt;&gt; testKB = build [(Keyword {keyword = "brb", plural = False}, Keyword {keyword = "be right back", plural = False})]
+--   &gt;&gt;&gt; testKB = build [(pure "brb", pure "be right back")]
 --   
---   &gt;&gt;&gt; remove testKB (Keyword {keyword = "brb", plural = False})
+--   &gt;&gt;&gt; remove testKB $ pure "brb"
 --   Right (fromList [])
 --   </pre>
 --   
 --   <pre>
---   &gt;&gt;&gt; remove testKB (Keyword {keyword = "btw", plural = False})
---   Left (StandardError "no record found for this keyword : Keyword {keyword = \"btw\", plural = False}")
+--   &gt;&gt;&gt; remove testKB $ pure "btw"
+--   Left (StandardError "no record found for this keyword : Key {keyword = \"btw\", plural = False}")
 --   </pre>
 remove :: KnowledgeBaseStructure -> Keyword -> Either Error KnowledgeBaseStructure
 
@@ -187,7 +210,7 @@ KbEntry :: String -> String -> KbEntry
 --   
 --   <pre>
 --   &gt;&gt;&gt; mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
---   (Keyword {keyword = "abbr", plural = False},Keyword {keyword = "abbreviation", plural = False})
+--   (Key {keyword = "abbr", plural = False},Key {keyword = "abbreviation", plural = False})
 --   </pre>
 mapEntries :: KbEntry -> (Keyword, Keyword)
 
@@ -217,8 +240,8 @@ pluralSymbol :: String
 doParse :: String -> ParseStructure
 
 -- | Map a string to a list of Tokens. For example: &gt;&gt;&gt; parseInput
---   "@<tt>bob" Right [DoMap (Keyword {keyword = "bob", plural = False})]
---   &gt;&gt;&gt; parseInput "</tt>@fw's" Right [DoMap (Keyword {keyword =
+--   "@<tt>bob" Right [DoMap (Key {keyword = "bob", plural = False})]
+--   &gt;&gt;&gt; parseInput "</tt>@fw's" Right [DoMap (Key {keyword =
 --   "fw", plural = True})] &gt;&gt;&gt; parseInput "hello!" Right [NoToken
 --   "hello!"]
 parseInput :: String -> Either ParseError ParseStructure
@@ -299,17 +322,6 @@ dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 --   Throws an error if no valid path is specified. Write the given string
 --   to the file path otherwise.
 returnOutput :: Maybe FilePath -> String -> IO ()
-
--- | Embeds the string in a keyword. By default assigns <a>False</a> to the
---   plural attribute.
---   
---   Examples:
---   
---   <pre>
---   &gt;&gt;&gt; makeDefaultKeyword "hello"
---   Keyword {keyword = "hello", plural = False}
---   </pre>
-makeDefaultKeyword :: String -> Keyword
 
 
 module LibCli.Handlers
