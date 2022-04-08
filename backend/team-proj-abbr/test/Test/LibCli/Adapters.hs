@@ -30,8 +30,8 @@ exampleEntryAbbr =
 
 examplePairAbbr :: (Keyword, Keyword)
 examplePairAbbr =
-  ( KeywordBody { keyword = "abbr", plural = False }
-  , KeywordBody { keyword = "abbreviation", plural = False }
+  ( Key { keyword = "abbr", plural = False }
+  , Key { keyword = "abbreviation", plural = False }
   )
 
 

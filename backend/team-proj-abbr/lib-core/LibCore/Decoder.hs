@@ -8,7 +8,7 @@ Stability   : experimental
 
 module LibCore.Decoder where
 
-import           LibCore.Models (AKeyword (KeywordBody), Token (DoMap, NoToken))
+import           LibCore.Models (AKeyword (Key), Token (DoMap, NoToken))
 import           LibCore.Parser (ParseStructure)
 
 -- | The main entry point to convert a ParseStructure into a String
@@ -17,5 +17,5 @@ decode = concatMap tokenToString
 
 -- | tokenToString maps each token class to a string representation
 tokenToString :: Token -> String
-tokenToString (NoToken s                ) = s
-tokenToString (DoMap   (KeywordBody k _)) = k
+tokenToString (NoToken s        ) = s
+tokenToString (DoMap   (Key k _)) = k

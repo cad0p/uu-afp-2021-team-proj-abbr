@@ -55,7 +55,7 @@ instance DefaultOrdered KbEntry where
 {-| 'mapEntries' maps entries to a pair of ('abbreviation', 'expansion')
 
 >>> mapEntries (KbEntry { abbreviation = "abbr", expansion = "abbreviation" })
-(KeywordBody {keyword = "abbr", plural = False},KeywordBody {keyword = "abbreviation", plural = False})
+(Key {keyword = "abbr", plural = False},Key {keyword = "abbreviation", plural = False})
 
 -}
 mapEntries :: KbEntry -> (Keyword, Keyword)
@@ -63,7 +63,7 @@ mapEntries (KbEntry a e) = (pure a, pure e)
 
 -- |`mapKeywords` maps keyword pairs to their entries
 mapKeywordPair :: (Keyword, Keyword) -> KbEntry
-mapKeywordPair (KeywordBody kk _, KeywordBody vk _) = KbEntry kk vk
+mapKeywordPair (Key kk _, Key vk _) = KbEntry kk vk
 
 -- |'getKnowledgeBase' parses from a CSV file to a 'KnowledgeBaseStructure'.
 getKnowledgeBase

@@ -38,11 +38,11 @@ parseNoToken = testCase "Test the parsing of a NoToken"
 
 parseKeyword :: TestTree
 parseKeyword = testCase "Test the parsing of a Keyword"
-  $ assertEqual "" [DoMap $ KeywordBody "hello" False] (doParse "@@hello")
+  $ assertEqual "" [DoMap $ Key "hello" False] (doParse "@@hello")
 
 parsePlural :: TestTree
 parsePlural = testCase "Test the parsing of a Plural"
-  $ assertEqual "" [DoMap $ KeywordBody "hello" True] (doParse "@@hello's")
+  $ assertEqual "" [DoMap $ Key "hello" True] (doParse "@@hello's")
 
 parsePluralWord :: TestTree
 parsePluralWord =
@@ -53,7 +53,7 @@ parsePunctuation :: TestTree
 parsePunctuation =
   testCase "Test that an abbreviation with punctuation is parsed correctly"
     $ assertEqual ""
-                  [DoMap $ KeywordBody "hello" False, NoToken "!"]
+                  [DoMap $ Key "hello" False, NoToken "!"]
                   (doParse "@@hello!")
 
 parseSpacing :: TestTree

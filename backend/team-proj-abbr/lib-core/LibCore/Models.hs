@@ -22,27 +22,27 @@ data Token
 -- Examples:
 --
 -- >>> pure "hello" :: AKeyword String
--- KeywordBody {keyword = "hello", plural = False}
+-- Key {keyword = "hello", plural = False}
 --
 -- >>> (map Data.Char.toUpper) <$> (pure "hello" :: AKeyword String)
--- KeywordBody {keyword = "HELLO", plural = False}
+-- Key {keyword = "HELLO", plural = False}
 --
 -- >>> (pure (map Data.Char.toLower)) <*> (pure "HELLO" :: AKeyword String)
--- KeywordBody {keyword = "hello", plural = False}
+-- Key {keyword = "hello", plural = False}
 --
 data AKeyword a
-  = KeywordBody
+  = Key
       { keyword :: a
       , plural  :: Bool
       }
   deriving (Eq, Ord, Show)
 
 instance Functor AKeyword where
-  fmap f (KeywordBody k p) = KeywordBody (f k) p
+  fmap f (Key k p) = Key (f k) p
 
 instance Applicative AKeyword where
-  pure a = KeywordBody a False
-  (KeywordBody f p) <*> (KeywordBody a p') = KeywordBody (f a) (p && p') -- joining both plurals.
+  pure a = Key a False
+  (Key f p) <*> (Key a p') = Key (f a) (p && p') -- joining both plurals.
 
 -- | A Keyword is a Token that can be mapped. A Keyword can be plural
 type Keyword = AKeyword String
