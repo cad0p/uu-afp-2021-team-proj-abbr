@@ -102,7 +102,7 @@ expandHandler kb_mfp abbr = do
   process (_, kb_fp) s = do
     lkb <- loadKb kb_fp
     case (`doExpansion` s) <$> lkb of
-      Left  er  -> return $ Left $ StandardError $ show er
+      Left  err -> return $ Left $ StandardError $ show err
       Right ios -> Right <$> ios
 
 
@@ -134,7 +134,7 @@ replaceHandler kb_mfp in_mfp o_mfp in_mode = do
     lkb <- loadKb kb_fp
     lin <- loadInput in_fp
     case doExpansion <$> lkb <*> lin of
-      Left  er  -> return $ Left $ StandardError $ show er
+      Left  err -> return $ Left $ StandardError $ show err
       Right ios -> Right <$> ios
 
 -------------------------
@@ -168,8 +168,12 @@ addHandler kb_mfp a e = do
     let v   = pure $ pure e
     let res = add <$> lkb <*> k <*> v
     case res of
-      Left er ->
-        return $ Left $ StandardError $ "Could not add new keyword: " ++ show er
+      Left err ->
+        return
+          $  Left
+          $  StandardError
+          $  "Could not add new keyword: "
+          ++ show err
       Right (nk, kb') -> do
         return $ pure ("Added: " ++ show nk, kb')
 
@@ -201,8 +205,8 @@ updateHandler kb_mfp a e = do
     let v = pure $ pure e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
     case put <$> lkb <*> k <*> v of
-      Left  er -> error $ show er
-      Right r  -> return $ (\x (_, y) -> (x, y)) <$> s <*> r
+      Left  err -> error $ show err
+      Right r   -> return $ (\x (_, y) -> (x, y)) <$> s <*> r
 
 
 -- | Delete command handler.
@@ -230,8 +234,8 @@ deleteHandler kb_mfp a = do
     let k = pure $ pure a
     let s = (\k' -> "Removed: " ++ show k') <$> k
     case remove <$> lkb <*> k of
-      Left  er -> error $ show er
-      Right e  -> return $ (,) <$> s <*> e
+      Left  err -> error $ show err
+      Right e   -> return $ (,) <$> s <*> e
 
 
 -- | List command handler.
