@@ -120,7 +120,7 @@ getKnowledgeBaseFilePath (Just fp) = Right fp
 -- Example:
 --
 -- >>> unwrapIOError $ Left (StandardError "oh no!")
--- StandardError "oh no!"
+-- *** Exception: StandardError "oh no!"
 --
 -- >>> unwrapIOError $ Right 42
 -- 42
