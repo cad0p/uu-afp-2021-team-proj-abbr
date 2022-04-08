@@ -54,7 +54,7 @@ span.spaces    { background: white }
 <span class="lineno">   35 </span>--
 <span class="lineno">   36 </span>-- &gt;&gt;&gt; testKB = build [(pure &quot;brb&quot;, pure &quot;be right back&quot;)]
 <span class="lineno">   37 </span>-- &gt;&gt;&gt; listAll testKB
-<span class="lineno">   38 </span>-- [(KeywordBody {keyword = &quot;brb&quot;, plural = False},KeywordBody {keyword = &quot;be right back&quot;, plural = False})]
+<span class="lineno">   38 </span>-- [(Key {keyword = &quot;brb&quot;, plural = False},Key {keyword = &quot;be right back&quot;, plural = False})]
 <span class="lineno">   39 </span>--
 <span class="lineno">   40 </span>listAll :: KnowledgeBaseStructure -&gt; [(Keyword, Keyword)]
 <span class="lineno">   41 </span><span class="decl"><span class="nottickedoff">listAll = M.toList</span></span>
@@ -66,10 +66,10 @@ span.spaces    { background: white }
 <span class="lineno">   47 </span>--
 <span class="lineno">   48 </span>-- &gt;&gt;&gt; testKB = build [(pure &quot;brb&quot;, pure &quot;be right back&quot;)]
 <span class="lineno">   49 </span>-- &gt;&gt;&gt; get testKB $ pure &quot;brb&quot;
-<span class="lineno">   50 </span>-- Right (KeywordBody {keyword = &quot;be right back&quot;, plural = False})
+<span class="lineno">   50 </span>-- Right (Key {keyword = &quot;be right back&quot;, plural = False})
 <span class="lineno">   51 </span>--
 <span class="lineno">   52 </span>-- &gt;&gt;&gt; get testKB $ pure &quot;beb&quot;
-<span class="lineno">   53 </span>-- Left (StandardError &quot;no record found for this keyword : KeywordBody {keyword = \&quot;beb\&quot;, plural = False}&quot;)
+<span class="lineno">   53 </span>-- Left (StandardError &quot;no record found for this keyword : Key {keyword = \&quot;beb\&quot;, plural = False}&quot;)
 <span class="lineno">   54 </span>--
 <span class="lineno">   55 </span>get :: KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error Keyword
 <span class="lineno">   56 </span><span class="decl"><span class="nottickedoff">get kb k = case M.lookup k kb of</span>
@@ -86,10 +86,10 @@ span.spaces    { background: white }
 <span class="lineno">   67 </span>--
 <span class="lineno">   68 </span>-- &gt;&gt;&gt; testKB = build [(pure &quot;brb&quot;, pure &quot;be right back&quot;)]
 <span class="lineno">   69 </span>-- &gt;&gt;&gt; add testKB (pure &quot;btw&quot;) (pure &quot;by the way&quot;)
-<span class="lineno">   70 </span>-- (KeywordBody {keyword = &quot;by the way&quot;, plural = False},fromList [(KeywordBody {keyword = &quot;brb&quot;, plural = False},KeywordBody {keyword = &quot;be right back&quot;, plural = False}),(KeywordBody {keyword = &quot;btw&quot;, plural = False},KeywordBody {keyword = &quot;by the way&quot;, plural = False})])
+<span class="lineno">   70 </span>-- (Key {keyword = &quot;by the way&quot;, plural = False},fromList [(Key {keyword = &quot;brb&quot;, plural = False},Key {keyword = &quot;be right back&quot;, plural = False}),(Key {keyword = &quot;btw&quot;, plural = False},Key {keyword = &quot;by the way&quot;, plural = False})])
 <span class="lineno">   71 </span>--
 <span class="lineno">   72 </span>-- &gt;&gt;&gt; add testKB (pure &quot;btw&quot;) (pure &quot;by the way!&quot;)
-<span class="lineno">   73 </span>-- (KeywordBody {keyword = &quot;by the way!&quot;, plural = False},fromList [(KeywordBody {keyword = &quot;brb&quot;, plural = False},KeywordBody {keyword = &quot;be right back&quot;, plural = False}),(KeywordBody {keyword = &quot;btw&quot;, plural = False},KeywordBody {keyword = &quot;by the way!&quot;, plural = False})])
+<span class="lineno">   73 </span>-- (Key {keyword = &quot;by the way!&quot;, plural = False},fromList [(Key {keyword = &quot;brb&quot;, plural = False},Key {keyword = &quot;be right back&quot;, plural = False}),(Key {keyword = &quot;btw&quot;, plural = False},Key {keyword = &quot;by the way!&quot;, plural = False})])
 <span class="lineno">   74 </span>--
 <span class="lineno">   75 </span>add
 <span class="lineno">   76 </span>  :: KnowledgeBaseStructure
@@ -107,10 +107,10 @@ span.spaces    { background: white }
 <span class="lineno">   88 </span>--
 <span class="lineno">   89 </span>-- &gt;&gt;&gt; testKB = build [(pure &quot;brb&quot;, pure &quot;be right back&quot;)]
 <span class="lineno">   90 </span>-- &gt;&gt;&gt; put testKB (pure &quot;brb&quot;) (pure &quot;BE RIGHT BACK&quot;)
-<span class="lineno">   91 </span>-- Right (KeywordBody {keyword = &quot;BE RIGHT BACK&quot;, plural = False},fromList [(KeywordBody {keyword = &quot;brb&quot;, plural = False},KeywordBody {keyword = &quot;BE RIGHT BACK&quot;, plural = False})])
+<span class="lineno">   91 </span>-- Right (Key {keyword = &quot;BE RIGHT BACK&quot;, plural = False},fromList [(Key {keyword = &quot;brb&quot;, plural = False},Key {keyword = &quot;BE RIGHT BACK&quot;, plural = False})])
 <span class="lineno">   92 </span>--
 <span class="lineno">   93 </span>-- &gt;&gt;&gt; put testKB (pure &quot;btw&quot;) (pure &quot;by the way!&quot;)
-<span class="lineno">   94 </span>-- Left (StandardError &quot;no record found for this keyword : KeywordBody {keyword = \&quot;btw\&quot;, plural = False}&quot;)
+<span class="lineno">   94 </span>-- Left (StandardError &quot;no record found for this keyword : Key {keyword = \&quot;btw\&quot;, plural = False}&quot;)
 <span class="lineno">   95 </span>--
 <span class="lineno">   96 </span>put
 <span class="lineno">   97 </span>  :: KnowledgeBaseStructure
@@ -132,7 +132,7 @@ span.spaces    { background: white }
 <span class="lineno">  113 </span>-- Right (fromList [])
 <span class="lineno">  114 </span>--
 <span class="lineno">  115 </span>-- &gt;&gt;&gt; remove testKB $ pure &quot;btw&quot;
-<span class="lineno">  116 </span>-- Left (StandardError &quot;no record found for this keyword : KeywordBody {keyword = \&quot;btw\&quot;, plural = False}&quot;)
+<span class="lineno">  116 </span>-- Left (StandardError &quot;no record found for this keyword : Key {keyword = \&quot;btw\&quot;, plural = False}&quot;)
 <span class="lineno">  117 </span>--
 <span class="lineno">  118 </span>remove
 <span class="lineno">  119 </span>  :: KnowledgeBaseStructure -&gt; Keyword -&gt; Either Error KnowledgeBaseStructure

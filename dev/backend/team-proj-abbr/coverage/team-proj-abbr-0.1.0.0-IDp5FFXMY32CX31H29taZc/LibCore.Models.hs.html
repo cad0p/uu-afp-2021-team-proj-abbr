@@ -41,27 +41,27 @@ span.spaces    { background: white }
 <span class="lineno">   22 </span>-- Examples:
 <span class="lineno">   23 </span>--
 <span class="lineno">   24 </span>-- &gt;&gt;&gt; pure &quot;hello&quot; :: AKeyword String
-<span class="lineno">   25 </span>-- KeywordBody {keyword = &quot;hello&quot;, plural = False}
+<span class="lineno">   25 </span>-- Key {keyword = &quot;hello&quot;, plural = False}
 <span class="lineno">   26 </span>--
 <span class="lineno">   27 </span>-- &gt;&gt;&gt; (map Data.Char.toUpper) &lt;$&gt; (pure &quot;hello&quot; :: AKeyword String)
-<span class="lineno">   28 </span>-- KeywordBody {keyword = &quot;HELLO&quot;, plural = False}
+<span class="lineno">   28 </span>-- Key {keyword = &quot;HELLO&quot;, plural = False}
 <span class="lineno">   29 </span>--
 <span class="lineno">   30 </span>-- &gt;&gt;&gt; (pure (map Data.Char.toLower)) &lt;*&gt; (pure &quot;HELLO&quot; :: AKeyword String)
-<span class="lineno">   31 </span>-- KeywordBody {keyword = &quot;hello&quot;, plural = False}
+<span class="lineno">   31 </span>-- Key {keyword = &quot;hello&quot;, plural = False}
 <span class="lineno">   32 </span>--
 <span class="lineno">   33 </span>data AKeyword a
-<span class="lineno">   34 </span>  = KeywordBody
+<span class="lineno">   34 </span>  = Key
 <span class="lineno">   35 </span>      { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">keyword</span></span></span> :: a
 <span class="lineno">   36 </span>      , <span class="nottickedoff"><span class="decl"><span class="nottickedoff">plural</span></span></span>  :: Bool
 <span class="lineno">   37 </span>      }
 <span class="lineno">   38 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
 <span class="lineno">   39 </span>
 <span class="lineno">   40 </span>instance Functor AKeyword where
-<span class="lineno">   41 </span>  <span class="decl"><span class="nottickedoff">fmap f (KeywordBody k p) = KeywordBody (f k) p</span></span>
+<span class="lineno">   41 </span>  <span class="decl"><span class="nottickedoff">fmap f (Key k p) = Key (f k) p</span></span>
 <span class="lineno">   42 </span>
 <span class="lineno">   43 </span>instance Applicative AKeyword where
-<span class="lineno">   44 </span>  <span class="decl"><span class="istickedoff">pure a = KeywordBody a False</span></span>
-<span class="lineno">   45 </span>  <span class="decl"><span class="nottickedoff">(KeywordBody f p) &lt;*&gt; (KeywordBody a p') = KeywordBody (f a) (p &amp;&amp; p')</span></span> -- joining both plurals.
+<span class="lineno">   44 </span>  <span class="decl"><span class="istickedoff">pure a = Key a False</span></span>
+<span class="lineno">   45 </span>  <span class="decl"><span class="nottickedoff">(Key f p) &lt;*&gt; (Key a p') = Key (f a) (p &amp;&amp; p')</span></span> -- joining both plurals.
 <span class="lineno">   46 </span>
 <span class="lineno">   47 </span>-- | A Keyword is a Token that can be mapped. A Keyword can be plural
 <span class="lineno">   48 </span>type Keyword = AKeyword String
