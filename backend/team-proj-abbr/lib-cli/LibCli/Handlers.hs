@@ -92,18 +92,14 @@ expandHandler kb_mfp abbr = do
   kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp) abbr
-  case res of
-    Left  err -> error $ show err
-    Right s   -> putStrLn s
+  unwrapIOError res >>= putStrLn
  where
   process :: (Bool, FilePath) -> String -> IO (Either Error String)
   process (False, fp) _ = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) s = do
     lkb <- loadKb kb_fp
-    case (`doExpansion` s) <$> lkb of
-      Left  err -> return $ Left $ StandardError $ show err
-      Right ios -> Right <$> ios
+    unwrapIOError ((`doExpansion` s) <$> lkb) >>= fmap Right
 
 
 -- | Replace command handler.
@@ -121,9 +117,7 @@ replaceHandler kb_mfp in_mfp o_mfp in_mode = do
   kb_exists     <- doesFileExist kb_fp
   in_exists     <- doesFileExist in_fp
   res           <- process (kb_exists, kb_fp) (in_exists, in_fp)
-  case res of
-    Left  err -> error $ show err
-    Right s   -> returnOutput o_fp s
+  unwrapIOError res >>= returnOutput o_fp
  where
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
   process (False, fp) _ = do
@@ -133,9 +127,7 @@ replaceHandler kb_mfp in_mfp o_mfp in_mode = do
   process (_, kb_fp) (_, in_fp) = do
     lkb <- loadKb kb_fp
     lin <- loadInput in_fp
-    case doExpansion <$> lkb <*> lin of
-      Left  err -> return $ Left $ StandardError $ show err
-      Right ios -> Right <$> ios
+    unwrapIOError (doExpansion <$> lkb <*> lin) >>= fmap Right
 
 -------------------------
 -- Knowledge Base CRUD --
@@ -152,11 +144,9 @@ addHandler kb_mfp a e = do
   kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err     -> error $ show err
-    Right (s, kb) -> do
-      putStrLn s
-      dump kb_fp kb
+  (s, kb)   <- unwrapIOError res
+  putStrLn s
+  dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -168,6 +158,8 @@ addHandler kb_mfp a e = do
     let v   = pure $ pure e
     let res = add <$> lkb <*> k <*> v
     case res of
+      -- Pier note: here something like this could be implemented:
+      -- https://hackage.haskell.org/package/error-0.3.0.0/docs/Data-Error.html#v:errorContext
       Left err ->
         return
           $  Left
@@ -189,11 +181,9 @@ updateHandler kb_mfp a e = do
   kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err     -> error $ show err
-    Right (s, kb) -> do
-      putStrLn s
-      dump kb_fp kb
+  (s, kb)   <- unwrapIOError res
+  putStrLn s
+  dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -204,9 +194,8 @@ updateHandler kb_mfp a e = do
     let k = pure $ pure a
     let v = pure $ pure e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
-    case put <$> lkb <*> k <*> v of
-      Left  err -> error $ show err
-      Right r   -> return $ (\x (_, y) -> (x, y)) <$> s <*> r
+    r <- unwrapIOError (put <$> lkb <*> k <*> v)
+    return $ (\x (_, y) -> (x, y)) <$> s <*> r
 
 
 -- | Delete command handler.
@@ -219,11 +208,10 @@ deleteHandler kb_mfp a = do
   kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err     -> error $ show err
-    Right (s, kb) -> do
-      putStrLn s
-      dump kb_fp kb
+  (s, kb)   <- unwrapIOError res
+  putStrLn s
+  dump kb_fp kb
+
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -233,9 +221,8 @@ deleteHandler kb_mfp a = do
     lkb <- loadKb kb_fp
     let k = pure $ pure a
     let s = (\k' -> "Removed: " ++ show k') <$> k
-    case remove <$> lkb <*> k of
-      Left  err -> error $ show err
-      Right e   -> return $ (,) <$> s <*> e
+    e <- unwrapIOError (remove <$> lkb <*> k)
+    return $ (,) <$> s <*> e
 
 
 -- | List command handler.
@@ -247,9 +234,7 @@ listHandler kb_mfp = do
   kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err -> error $ show err
-    Right s   -> putStrLn s
+  unwrapIOError res >>= putStrLn
  where
   process :: (Bool, FilePath) -> IO (Either Error String)
   process (False, fp) = do
