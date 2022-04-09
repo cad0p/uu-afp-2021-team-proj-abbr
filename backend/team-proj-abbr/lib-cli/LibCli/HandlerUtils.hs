@@ -22,7 +22,6 @@ import           LibCore.Mapper        as M (mapParseStructure)
 import           LibCore.Models
     ( AKeyword (..)
     , Error (StandardError)
-    , ErrorException (ErrorException)
     , Keyword
     )
 import           LibCore.Parser        as P (doParse)
@@ -131,5 +130,5 @@ getKnowledgeBaseFilePath (Just fp) = Right fp
 -- 42
 --
 unwrapIOError :: Either Error a -> IO a
-unwrapIOError (Left  err) = Exc.throwIO (ErrorException err)
+unwrapIOError (Left  err) = Exc.throwIO err
 unwrapIOError (Right a  ) = pure a

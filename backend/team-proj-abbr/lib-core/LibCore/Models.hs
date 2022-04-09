@@ -53,11 +53,4 @@ newtype Error
   = StandardError String
   deriving (Show)
 
--- | Error Exception.
-newtype ErrorException
-  = ErrorException Error
-
-instance Show ErrorException where
-  show (ErrorException e) = show e
-
-instance Exception ErrorException
+instance Exception Error
