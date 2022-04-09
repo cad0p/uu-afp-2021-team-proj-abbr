@@ -25,7 +25,8 @@ data ShortHndr
   = Replace
       { input   :: Maybe FilePath
       , out     :: Maybe FilePath
-      , inplace :: Maybe Bool
+      , inplace :: Bool
+        -- ^ specifies if changes should be written directly to input file.
       , kb      :: Maybe FilePath
       }
   -- |Defines the arguments for the expand command
@@ -71,11 +72,14 @@ defaultKB = "data/shorthndr-kb.csv"
 
 replace :: ShortHndr
 replace =
-  Replace { input   = fileFlags "Source file" (pure "shorthndr-input.txt")  -- TODO: rename to avoid -i clash with --inplace
-          , out     = fileFlags "Output file" (pure "shorthndr--out.txt")
-          , kb      = fileFlags "Knowledge Base source file" (pure defaultKB)
-          , inplace = CMD.def
-          }
+  Replace
+      { input   = fileFlags "Source file" Nothing   -- TODO: rename to avoid -i clash with --inplace
+      , out     = fileFlags "Output file" Nothing
+      , kb      = fileFlags "Knowledge Base source file" (pure defaultKB)
+      , inplace =
+        False CMD.&= CMD.help
+          "Whether changes should be written directly to input file"
+      }
     CMD.&= CMD.help
              "Replace all abreviations in the provided file with their expansions"
 

@@ -7,6 +7,7 @@ Stability   : experimental
 -}
 
 module LibCore.Models where
+import           Control.Exception (Exception)
 
 -- | We parse a string into a NoToken if it does not match the syntax for
 -- | parsing. The DoMap is a string that has to be mapped. In our proposals,
@@ -51,3 +52,5 @@ type Keyword = AKeyword String
 newtype Error
   = StandardError String
   deriving (Show)
+
+instance Exception Error

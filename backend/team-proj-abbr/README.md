@@ -58,12 +58,21 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
     ```bash
     # create demo file:
     $ echo "@@hl @@hl people" >> data/demo_file.txt
+    # demo with input and output:
     $ stack exec shorthndr --  \
         replace                         \
         --input="data/demo_file.txt"    \
         -o="./demo_file_o.txt"          \
         -k="data/kb_example.csv"
     $ cat ./demo_file_o.txt
+    hello hello people
+    # demo with inplace:
+    $ stack exec shorthndr --  \
+        replace                         \
+        --inplace                       \
+        --input="data/demo_file.txt"    \
+        -k="data/kb_example.csv"
+    $ cat data/demo_file.txt
     hello hello people
     # remove the demo files:
     $ rm data/demo_file.txt ./demo_file_o.txt

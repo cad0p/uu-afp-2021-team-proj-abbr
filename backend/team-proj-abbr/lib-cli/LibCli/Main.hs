@@ -18,7 +18,7 @@ import           LibCli.Handlers
     , updateHandler
     )
 import           LibCli.Spec
-    ( ShortHndr (abbreviation, expansion, input, kb, out)
+    ( ShortHndr (abbreviation, expansion, inplace, input, kb, out)
     )
 import qualified LibCli.Spec            as CS (ShortHndr (..), cliModes)
 import qualified System.Console.CmdArgs as CMD
@@ -29,19 +29,23 @@ import qualified System.Console.CmdArgs as CMD
 -----------------------
 
 -- TODO(tech-debt): define a typeclass for the modes instead of the pattern matching
+
+-- | The main controller of the ShortHndr CLI interface.
+-- Connects the provided CLI commands with their respective handlers.
 cliController :: CS.ShortHndr -> IO ()
 -- Expansion commands
-cliController CS.Replace { input = ifp, kb = kbfp, out = ofp } =
-  replaceHandler kbfp ifp ofp
-cliController CS.Expand { abbreviation = abbr, kb = kbfp } =
-  expandHandler kbfp abbr
+cliController CS.Replace { input = in_mfp, kb = kb_mfp, out = o_mfp, inplace = in_mode }
+  = replaceHandler kb_mfp in_mfp o_mfp in_mode
+cliController CS.Expand { abbreviation = abbr, kb = kb_mfp } =
+  expandHandler kb_mfp abbr
 -- CRUD commands
-cliController CS.List { kb = kbfp } = listHandler kbfp
-cliController CS.Add { kb = kbfp, abbreviation = a, expansion = e } =
-  addHandler kbfp a e
-cliController CS.Update { kb = kbfp, abbreviation = a, expansion = e } =
-  updateHandler kbfp a e
-cliController CS.Delete { kb = kbfp, abbreviation = a } = deleteHandler kbfp a
+cliController CS.List { kb = kb_mfp } = listHandler kb_mfp
+cliController CS.Add { kb = kb_mfp, abbreviation = a, expansion = e } =
+  addHandler kb_mfp a e
+cliController CS.Update { kb = kb_mfp, abbreviation = a, expansion = e } =
+  updateHandler kb_mfp a e
+cliController CS.Delete { kb = kb_mfp, abbreviation = a } =
+  deleteHandler kb_mfp a
 
 ----------------------------
 -- Executable entrypoint: --

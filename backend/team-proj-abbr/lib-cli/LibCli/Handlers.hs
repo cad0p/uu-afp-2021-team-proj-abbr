@@ -26,14 +26,16 @@ module LibCli.Handlers
   ) where
 
 import           Data.List             (intercalate)
-import           Data.Maybe            (fromMaybe)
 import           LibCli.HandlerUtils
     ( doExpansion
     , dump
     , formatRecord
+    , getInOutFilePaths
+    , getKnowledgeBaseFilePath
     , loadInput
     , loadKb
     , returnOutput
+    , unwrapIOError
     )
 import           LibCore.KnowledgeBase
     ( KnowledgeBaseStructure
@@ -87,21 +89,17 @@ expandHandler
   -> String -- ^ Abbreviation to expand
   -> IO () -- ^ Writes the expansion result to the STDOUT.
 expandHandler kb_mfp abbr = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp) abbr
-  case res of
-    Left  err -> error $ show err
-    Right s   -> putStrLn s
+  unwrapIOError res >>= putStrLn
  where
   process :: (Bool, FilePath) -> String -> IO (Either Error String)
   process (False, fp) _ = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
   process (_, kb_fp) s = do
     lkb <- loadKb kb_fp
-    case (`doExpansion` s) <$> lkb of
-      Left  er  -> return $ Left $ StandardError $ show er
-      Right ios -> Right <$> ios
+    unwrapIOError ((`doExpansion` s) <$> lkb) >>= fmap Right
 
 
 -- | Replace command handler.
@@ -111,19 +109,16 @@ replaceHandler
   :: Maybe FilePath -- ^ KB file path
   -> Maybe FilePath -- ^ Input file path
   -> Maybe FilePath -- ^ Output file path
+  -> Bool  -- ^ Whether inplace mode is used or not
   -> IO () -- ^ Writes the modified file out to the specified location
-replaceHandler kb_mfp in_mfp o_mfp = do
-  -- here m stands for maybe, fp stands for FilePath
-  let kb_fp = fromMaybe "" kb_mfp
-  let in_fp = fromMaybe "" in_mfp
-  kb_exists <- doesFileExist kb_fp
-  in_exists <- doesFileExist in_fp
-  res       <- process (kb_exists, kb_fp) (in_exists, in_fp)
-  case res of
-    Left  err -> error $ show err
-    Right s   -> returnOutput o_mfp s
+replaceHandler kb_mfp in_mfp o_mfp in_mode = do
+  kb_fp         <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
+  (in_fp, o_fp) <- unwrapIOError $ getInOutFilePaths in_mfp o_mfp in_mode
+  kb_exists     <- doesFileExist kb_fp
+  in_exists     <- doesFileExist in_fp
+  res           <- process (kb_exists, kb_fp) (in_exists, in_fp)
+  unwrapIOError res >>= returnOutput o_fp
  where
-  -- | Connecting handling the file access and logic.
   process :: (Bool, FilePath) -> (Bool, FilePath) -> IO (Either Error String)
   process (False, fp) _ = do
     return $ Left $ StandardError $ "KB file not found at " ++ fp
@@ -132,9 +127,7 @@ replaceHandler kb_mfp in_mfp o_mfp = do
   process (_, kb_fp) (_, in_fp) = do
     lkb <- loadKb kb_fp
     lin <- loadInput in_fp
-    case doExpansion <$> lkb <*> lin of
-      Left  er  -> return $ Left $ StandardError $ show er
-      Right ios -> Right <$> ios
+    unwrapIOError (doExpansion <$> lkb <*> lin) >>= fmap Right
 
 -------------------------
 -- Knowledge Base CRUD --
@@ -148,14 +141,12 @@ addHandler
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 addHandler kb_mfp a e = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err     -> error $ show err
-    Right (s, kb) -> do
-      putStrLn s
-      dump kb_fp kb
+  (s, kb)   <- unwrapIOError res
+  putStrLn s
+  dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -167,8 +158,14 @@ addHandler kb_mfp a e = do
     let v   = pure $ pure e
     let res = add <$> lkb <*> k <*> v
     case res of
-      Left er ->
-        return $ Left $ StandardError $ "Could not add new keyword: " ++ show er
+      -- Pier note: here something like this could be implemented:
+      -- https://hackage.haskell.org/package/error-0.3.0.0/docs/Data-Error.html#v:errorContext
+      Left err ->
+        return
+          $  Left
+          $  StandardError
+          $  "Could not add new keyword: "
+          ++ show err
       Right (nk, kb') -> do
         return $ pure ("Added: " ++ show nk, kb')
 
@@ -181,14 +178,12 @@ updateHandler
   -> String -- ^ Expansion keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 updateHandler kb_mfp a e = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err     -> error $ show err
-    Right (s, kb) -> do
-      putStrLn s
-      dump kb_fp kb
+  (s, kb)   <- unwrapIOError res
+  putStrLn s
+  dump kb_fp kb
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -199,9 +194,8 @@ updateHandler kb_mfp a e = do
     let k = pure $ pure a
     let v = pure $ pure e
     let s = (\k' v' -> "Updated: " ++ show k' ++ " to " ++ show v') <$> k <*> v
-    case put <$> lkb <*> k <*> v of
-      Left  er -> error $ show er
-      Right r  -> return $ (\x (_, y) -> (x, y)) <$> s <*> r
+    r <- unwrapIOError (put <$> lkb <*> k <*> v)
+    return $ (\x (_, y) -> (x, y)) <$> s <*> r
 
 
 -- | Delete command handler.
@@ -211,14 +205,13 @@ deleteHandler
   -> String -- ^ Abbreviation keyword
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 deleteHandler kb_mfp a = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err     -> error $ show err
-    Right (s, kb) -> do
-      putStrLn s
-      dump kb_fp kb
+  (s, kb)   <- unwrapIOError res
+  putStrLn s
+  dump kb_fp kb
+
  where
   process
     :: (Bool, FilePath) -> IO (Either Error (String, KnowledgeBaseStructure))
@@ -228,9 +221,8 @@ deleteHandler kb_mfp a = do
     lkb <- loadKb kb_fp
     let k = pure $ pure a
     let s = (\k' -> "Removed: " ++ show k') <$> k
-    case remove <$> lkb <*> k of
-      Left  er -> error $ show er
-      Right e  -> return $ (,) <$> s <*> e
+    e <- unwrapIOError (remove <$> lkb <*> k)
+    return $ (,) <$> s <*> e
 
 
 -- | List command handler.
@@ -239,12 +231,10 @@ listHandler
   :: Maybe FilePath -- ^ KB file path
   -> IO () -- ^ Writes the full contents of the KB to the STDOUT.
 listHandler kb_mfp = do
-  let kb_fp = fromMaybe "" kb_mfp
+  kb_fp     <- unwrapIOError $ getKnowledgeBaseFilePath kb_mfp
   kb_exists <- doesFileExist kb_fp
   res       <- process (kb_exists, kb_fp)
-  case res of
-    Left  err -> error $ show err
-    Right s   -> putStrLn s
+  unwrapIOError res >>= putStrLn
  where
   process :: (Bool, FilePath) -> IO (Either Error String)
   process (False, fp) = do
