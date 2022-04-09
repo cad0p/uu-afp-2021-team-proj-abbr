@@ -26,50 +26,53 @@ span.spaces    { background: white }
 <span class="lineno">    7 </span>-}
 <span class="lineno">    8 </span>
 <span class="lineno">    9 </span>module LibCore.Models where
-<span class="lineno">   10 </span>
-<span class="lineno">   11 </span>-- | We parse a string into a NoToken if it does not match the syntax for
-<span class="lineno">   12 </span>-- | parsing. The DoMap is a string that has to be mapped. In our proposals,
-<span class="lineno">   13 </span>-- | the DoMap strings start with @@
-<span class="lineno">   14 </span>data Token
-<span class="lineno">   15 </span>  = NoToken String
-<span class="lineno">   16 </span>  | DoMap Keyword
-<span class="lineno">   17 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
-<span class="lineno">   18 </span>
-<span class="lineno">   19 </span>-- | Abstract and parameterised Keyword datatype.
-<span class="lineno">   20 </span>-- Implements Functor and Applicative typeclasses.
-<span class="lineno">   21 </span>--
-<span class="lineno">   22 </span>-- Examples:
-<span class="lineno">   23 </span>--
-<span class="lineno">   24 </span>-- &gt;&gt;&gt; pure &quot;hello&quot; :: AKeyword String
-<span class="lineno">   25 </span>-- Key {keyword = &quot;hello&quot;, plural = False}
-<span class="lineno">   26 </span>--
-<span class="lineno">   27 </span>-- &gt;&gt;&gt; (map Data.Char.toUpper) &lt;$&gt; (pure &quot;hello&quot; :: AKeyword String)
-<span class="lineno">   28 </span>-- Key {keyword = &quot;HELLO&quot;, plural = False}
-<span class="lineno">   29 </span>--
-<span class="lineno">   30 </span>-- &gt;&gt;&gt; (pure (map Data.Char.toLower)) &lt;*&gt; (pure &quot;HELLO&quot; :: AKeyword String)
-<span class="lineno">   31 </span>-- Key {keyword = &quot;hello&quot;, plural = False}
-<span class="lineno">   32 </span>--
-<span class="lineno">   33 </span>data AKeyword a
-<span class="lineno">   34 </span>  = Key
-<span class="lineno">   35 </span>      { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">keyword</span></span></span> :: a
-<span class="lineno">   36 </span>      , <span class="nottickedoff"><span class="decl"><span class="nottickedoff">plural</span></span></span>  :: Bool
-<span class="lineno">   37 </span>      }
-<span class="lineno">   38 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
-<span class="lineno">   39 </span>
-<span class="lineno">   40 </span>instance Functor AKeyword where
-<span class="lineno">   41 </span>  <span class="decl"><span class="nottickedoff">fmap f (Key k p) = Key (f k) p</span></span>
-<span class="lineno">   42 </span>
-<span class="lineno">   43 </span>instance Applicative AKeyword where
-<span class="lineno">   44 </span>  <span class="decl"><span class="istickedoff">pure a = Key a False</span></span>
-<span class="lineno">   45 </span>  <span class="decl"><span class="nottickedoff">(Key f p) &lt;*&gt; (Key a p') = Key (f a) (p &amp;&amp; p')</span></span> -- joining both plurals.
-<span class="lineno">   46 </span>
-<span class="lineno">   47 </span>-- | A Keyword is a Token that can be mapped. A Keyword can be plural
-<span class="lineno">   48 </span>type Keyword = AKeyword String
-<span class="lineno">   49 </span>
-<span class="lineno">   50 </span>-- | Reserved domain-level error indications.
-<span class="lineno">   51 </span>newtype Error
-<span class="lineno">   52 </span>  = StandardError String
-<span class="lineno">   53 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   10 </span>import           Control.Exception (Exception)
+<span class="lineno">   11 </span>
+<span class="lineno">   12 </span>-- | We parse a string into a NoToken if it does not match the syntax for
+<span class="lineno">   13 </span>-- | parsing. The DoMap is a string that has to be mapped. In our proposals,
+<span class="lineno">   14 </span>-- | the DoMap strings start with @@
+<span class="lineno">   15 </span>data Token
+<span class="lineno">   16 </span>  = NoToken String
+<span class="lineno">   17 </span>  | DoMap Keyword
+<span class="lineno">   18 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   19 </span>
+<span class="lineno">   20 </span>-- | Abstract and parameterised Keyword datatype.
+<span class="lineno">   21 </span>-- Implements Functor and Applicative typeclasses.
+<span class="lineno">   22 </span>--
+<span class="lineno">   23 </span>-- Examples:
+<span class="lineno">   24 </span>--
+<span class="lineno">   25 </span>-- &gt;&gt;&gt; pure &quot;hello&quot; :: AKeyword String
+<span class="lineno">   26 </span>-- Key {keyword = &quot;hello&quot;, plural = False}
+<span class="lineno">   27 </span>--
+<span class="lineno">   28 </span>-- &gt;&gt;&gt; (map Data.Char.toUpper) &lt;$&gt; (pure &quot;hello&quot; :: AKeyword String)
+<span class="lineno">   29 </span>-- Key {keyword = &quot;HELLO&quot;, plural = False}
+<span class="lineno">   30 </span>--
+<span class="lineno">   31 </span>-- &gt;&gt;&gt; (pure (map Data.Char.toLower)) &lt;*&gt; (pure &quot;HELLO&quot; :: AKeyword String)
+<span class="lineno">   32 </span>-- Key {keyword = &quot;hello&quot;, plural = False}
+<span class="lineno">   33 </span>--
+<span class="lineno">   34 </span>data AKeyword a
+<span class="lineno">   35 </span>  = Key
+<span class="lineno">   36 </span>      { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">keyword</span></span></span> :: a
+<span class="lineno">   37 </span>      , <span class="nottickedoff"><span class="decl"><span class="nottickedoff">plural</span></span></span>  :: Bool
+<span class="lineno">   38 </span>      }
+<span class="lineno">   39 </span>  deriving (<span class="decl"><span class="istickedoff">Eq</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Ord</span></span></span></span></span></span></span></span></span></span>, <span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   40 </span>
+<span class="lineno">   41 </span>instance Functor AKeyword where
+<span class="lineno">   42 </span>  <span class="decl"><span class="nottickedoff">fmap f (Key k p) = Key (f k) p</span></span>
+<span class="lineno">   43 </span>
+<span class="lineno">   44 </span>instance Applicative AKeyword where
+<span class="lineno">   45 </span>  <span class="decl"><span class="istickedoff">pure a = Key a False</span></span>
+<span class="lineno">   46 </span>  <span class="decl"><span class="nottickedoff">(Key f p) &lt;*&gt; (Key a p') = Key (f a) (p &amp;&amp; p')</span></span> -- joining both plurals.
+<span class="lineno">   47 </span>
+<span class="lineno">   48 </span>-- | A Keyword is a Token that can be mapped. A Keyword can be plural
+<span class="lineno">   49 </span>type Keyword = AKeyword String
+<span class="lineno">   50 </span>
+<span class="lineno">   51 </span>-- | Reserved domain-level error indications.
+<span class="lineno">   52 </span>newtype Error
+<span class="lineno">   53 </span>  = StandardError String
+<span class="lineno">   54 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   55 </span>
+<span class="lineno">   56 </span>instance Exception Error
 
 </pre>
 </body>
