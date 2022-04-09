@@ -72,7 +72,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
         --inplace                       \
         --input="data/demo_file.txt"    \
         -k="data/kb_example.csv"
-    $ cat ./demo_file.txt
+    $ cat data/demo_file.txt
     hello hello people
     # remove the demo files:
     $ rm data/demo_file.txt ./demo_file_o.txt
