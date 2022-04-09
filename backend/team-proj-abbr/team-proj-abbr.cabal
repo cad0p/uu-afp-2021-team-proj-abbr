@@ -27,7 +27,6 @@ source-repository head
 library
   exposed-modules:
       LibCore.Decoder
-      LibCore.InputInterface
       LibCore.KnowledgeBase
       LibCore.Mapper
       LibCore.Models
@@ -102,7 +101,6 @@ test-suite team-proj-abbr-test
   other-modules:
       Test.LibCli.Adapters
       Test.LibCore.Decoder
-      Test.LibCore.InputInterface
       Test.LibCore.KnowledgeBase
       Test.LibCore.Mapper
       Test.LibCore.Models

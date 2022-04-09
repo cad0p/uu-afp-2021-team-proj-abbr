@@ -1,15 +1,11 @@
 import           Test.Tasty
 
-import           Test.LibCli.Adapters        (huAdapters, qcAdapters)
-import           Test.LibCore.Decoder        (huDecoder, qcDecoder)
-import           Test.LibCore.InputInterface
-    ( huInputInterface
-    , qcInputInterface
-    )
-import           Test.LibCore.KnowledgeBase  (huKnowledgeBase, qcKnowledgeBase)
-import           Test.LibCore.Mapper         (huMapper, qcMapper)
-import           Test.LibCore.Models         (huModels, qcModels)
-import           Test.LibCore.Parser         (huParser, qcParser)
+import           Test.LibCli.Adapters       (huAdapters, qcAdapters)
+import           Test.LibCore.Decoder       (huDecoder, qcDecoder)
+import           Test.LibCore.KnowledgeBase (huKnowledgeBase, qcKnowledgeBase)
+import           Test.LibCore.Mapper        (huMapper, qcMapper)
+import           Test.LibCore.Models        (huModels, qcModels)
+import           Test.LibCore.Parser        (huParser, qcParser)
 
 
 main :: IO ()
@@ -28,14 +24,7 @@ properties = testGroup "Properties" [qcProps]
 qcProps :: TestTree
 qcProps = testGroup
   "QuickCheck"
-  [ qcDecoder
-  , qcInputInterface
-  , qcKnowledgeBase
-  , qcMapper
-  , qcModels
-  , qcAdapters
-  , qcParser
-  ]
+  [qcDecoder, qcKnowledgeBase, qcMapper, qcModels, qcAdapters, qcParser]
 
 
 -- | Configuration of the HUnit tests
@@ -47,11 +36,4 @@ unitTests = testGroup "Unit tests" [hUnit]
 hUnit :: TestTree
 hUnit = testGroup
   "HUnit"
-  [ huDecoder
-  , huInputInterface
-  , huKnowledgeBase
-  , huMapper
-  , huModels
-  , huAdapters
-  , huParser
-  ]
+  [huDecoder, huKnowledgeBase, huMapper, huModels, huAdapters, huParser]
