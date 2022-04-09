@@ -73,7 +73,7 @@ defaultKB = "data/shorthndr-kb.csv"
 replace :: ShortHndr
 replace =
   Replace
-      { input   = fileFlags "Source file" Nothing
+      { input   = fileFlags "Source file" Nothing   -- TODO: rename to avoid -i clash with --inplace
       , out     = fileFlags "Output file" Nothing
       , kb      = fileFlags "Knowledge Base source file" (pure defaultKB)
       , inplace =
