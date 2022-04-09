@@ -109,6 +109,11 @@ getKnowledgeBaseFilePath Nothing =
   Left $ StandardError "Knowledge base path must be specified"
 getKnowledgeBaseFilePath (Just fp) = Right fp
 
+
+--------------------
+-- Error handling --
+--------------------
+
 -- | Returns the value from a potentially failing computation.
 --
 -- Abort with the error message if it was an error.
