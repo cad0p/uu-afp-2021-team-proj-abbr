@@ -17,10 +17,12 @@ cliModes :: [ShortHndr]
 data ShortHndr
 
 -- | Defines the arguments for the replace command
-Replace :: Maybe FilePath -> Maybe FilePath -> Maybe Bool -> Maybe FilePath -> ShortHndr
+Replace :: Maybe FilePath -> Maybe FilePath -> Bool -> Maybe FilePath -> ShortHndr
 [input] :: ShortHndr -> Maybe FilePath
 [out] :: ShortHndr -> Maybe FilePath
-[inplace] :: ShortHndr -> Maybe Bool
+
+-- | specifies if changes should be written directly to input file.
+[inplace] :: ShortHndr -> Bool
 [kb] :: ShortHndr -> Maybe FilePath
 
 -- | Defines the arguments for the expand command
@@ -102,6 +104,7 @@ instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 instance GHC.Show.Show LibCore.Models.Error
+instance GHC.Exception.Type.Exception LibCore.Models.Error
 instance GHC.Base.Functor LibCore.Models.AKeyword
 instance GHC.Base.Applicative LibCore.Models.AKeyword
 
@@ -321,7 +324,39 @@ dump :: FilePath -> KnowledgeBaseStructure -> IO ()
 -- | Given a FilePath and a string, write the string to the FilePath.
 --   Throws an error if no valid path is specified. Write the given string
 --   to the file path otherwise.
-returnOutput :: Maybe FilePath -> String -> IO ()
+returnOutput :: FilePath -> String -> IO ()
+
+-- | Gets the pair of paths to use depending on the flag. Returns an error
+--   if a pair of (Input, Output) file paths is not possible. Otherwise,
+--   returns the pair of file paths in the following order: (Input,
+--   Output).
+getInOutFilePaths :: Maybe FilePath -> Maybe FilePath -> Bool -> Either Error (FilePath, FilePath)
+
+-- | Handles the retrieval of Knowledge Base file paths. If nothing is
+--   provided, raises an error. Otherwise, returns the given file path.
+getKnowledgeBaseFilePath :: Maybe FilePath -> Either Error FilePath
+
+-- | Returns the value from a potentially failing computation.
+--   
+--   Abort with the error message if it was an error.
+--   
+--   The text message is added to the <a>Error</a> as additional context
+--   before aborting.
+--   
+--   <b>Panics:</b> if Error
+--   
+--   Example:
+--   
+--   <pre>
+--   &gt;&gt;&gt; unwrapIOError $ Left (StandardError "oh no!")
+--   *** Exception: StandardError "oh no!"
+--   </pre>
+--   
+--   <pre>
+--   &gt;&gt;&gt; unwrapIOError $ Right 42
+--   42
+--   </pre>
+unwrapIOError :: Either Error a -> IO a
 
 
 module LibCli.Handlers
@@ -333,7 +368,7 @@ expandHandler :: Maybe FilePath -> String -> IO ()
 -- | Replace command handler. Does all the replacing heavy-lifting. Loads
 --   the required files, produces the expansions and writes the output
 --   file.
-replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> IO ()
+replaceHandler :: Maybe FilePath -> Maybe FilePath -> Maybe FilePath -> Bool -> IO ()
 
 -- | Add command handler. Adds new abbreviation with the associated
 --   expansion to the KB.
@@ -351,6 +386,9 @@ listHandler :: Maybe FilePath -> IO ()
 
 
 module LibCli.Main
+
+-- | The main controller of the ShortHndr CLI interface. Connects the
+--   provided CLI commands with their respective handlers.
 cliController :: ShortHndr -> IO ()
 
 -- | Main entrypoint of the CLI application.
