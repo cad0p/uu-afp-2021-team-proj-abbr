@@ -97,10 +97,6 @@ type Keyword = AKeyword String
 -- | Reserved domain-level error indications.
 newtype Error
 StandardError :: String -> Error
-
--- | Error Exception.
-newtype ErrorException
-ErrorException :: Error -> ErrorException
 instance GHC.Show.Show a => GHC.Show.Show (LibCore.Models.AKeyword a)
 instance GHC.Classes.Ord a => GHC.Classes.Ord (LibCore.Models.AKeyword a)
 instance GHC.Classes.Eq a => GHC.Classes.Eq (LibCore.Models.AKeyword a)
@@ -108,8 +104,7 @@ instance GHC.Show.Show LibCore.Models.Token
 instance GHC.Classes.Ord LibCore.Models.Token
 instance GHC.Classes.Eq LibCore.Models.Token
 instance GHC.Show.Show LibCore.Models.Error
-instance GHC.Show.Show LibCore.Models.ErrorException
-instance GHC.Exception.Type.Exception LibCore.Models.ErrorException
+instance GHC.Exception.Type.Exception LibCore.Models.Error
 instance GHC.Base.Functor LibCore.Models.AKeyword
 instance GHC.Base.Applicative LibCore.Models.AKeyword
 

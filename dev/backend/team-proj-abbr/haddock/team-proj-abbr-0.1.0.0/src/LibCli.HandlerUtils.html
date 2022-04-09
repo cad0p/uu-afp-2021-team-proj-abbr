@@ -22,32 +22,31 @@ Stability   : experimental
 </span><span id="line-22"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Models.html"><span class="hs-identifier">LibCore.Models</span></a></span><span>
 </span><span id="line-23"></span><span>    </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="LibCore.Models.html#AKeyword"><span class="hs-identifier">AKeyword</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
 </span><span id="line-24"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier">Error</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#StandardError"><span class="hs-identifier">StandardError</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-25"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#ErrorException"><span class="hs-identifier">ErrorException</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#ErrorException"><span class="hs-identifier">ErrorException</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-26"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span>
-</span><span id="line-27"></span><span>    </span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Parser.html"><span class="hs-identifier">LibCore.Parser</span></a></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">P</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Parser.html#doParse"><span class="hs-identifier">doParse</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-29"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.IO.Strict</span></span><span>      </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">SIS</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">readFile</span></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier">Keyword</span></a></span><span>
+</span><span id="line-26"></span><span>    </span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="LibCore.Parser.html"><span class="hs-identifier">LibCore.Parser</span></a></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">P</span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Parser.html#doParse"><span class="hs-identifier">doParse</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.IO.Strict</span></span><span>      </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">SIS</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">readFile</span></span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span>
 </span><span id="line-30"></span><span>
 </span><span id="line-31"></span><span>
-</span><span id="line-32"></span><span>
-</span><span id="line-33"></span><span class="hs-comment">-- | Function to load the Knowledge Base from the specified file.</span><span>
-</span><span id="line-34"></span><span class="hs-comment">-- Supports only CSV files.</span><span>
-</span><span id="line-35"></span><span class="annot"><a href="LibCli.HandlerUtils.html#loadKb"><span class="hs-identifier hs-type">loadKb</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-36"></span><span id="loadKb"><span class="annot"><span class="annottext">loadKb :: FilePath -&gt; IO (Either Error KnowledgeBaseStructure)
-</span><a href="LibCli.HandlerUtils.html#loadKb"><span class="hs-identifier hs-var hs-var">loadKb</span></a></span></span><span> </span><span id="local-6989586621679054016"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054016"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-37"></span><span>  </span><span id="local-6989586621679054015"><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679054015"><span class="hs-identifier hs-var">csvData</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; IO ByteString
+</span><span id="line-32"></span><span class="hs-comment">-- | Function to load the Knowledge Base from the specified file.</span><span>
+</span><span id="line-33"></span><span class="hs-comment">-- Supports only CSV files.</span><span>
+</span><span id="line-34"></span><span class="annot"><a href="LibCli.HandlerUtils.html#loadKb"><span class="hs-identifier hs-type">loadKb</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-35"></span><span id="loadKb"><span class="annot"><span class="annottext">loadKb :: FilePath -&gt; IO (Either Error KnowledgeBaseStructure)
+</span><a href="LibCli.HandlerUtils.html#loadKb"><span class="hs-identifier hs-var hs-var">loadKb</span></a></span></span><span> </span><span id="local-6989586621679053961"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053961"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-36"></span><span>  </span><span id="local-6989586621679053960"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679053960"><span class="hs-identifier hs-var">csvData</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; IO ByteString
 </span><span class="hs-identifier hs-var">BL.readFile</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054016"><span class="hs-identifier hs-var">p</span></a></span><span>
-</span><span id="line-38"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Either FilePath (Header, Vector KbEntry)
+</span><a href="#local-6989586621679053961"><span class="hs-identifier hs-var">p</span></a></span><span>
+</span><span id="line-37"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Either FilePath (Header, Vector KbEntry)
 forall a.
 FromNamedRecord a =&gt;
 ByteString -&gt; Either FilePath (Header, Vector a)
 </span><span class="hs-identifier hs-var">decodeByName</span></span><span> </span><span class="annot"><span class="annottext">ByteString
-</span><a href="#local-6989586621679054015"><span class="hs-identifier hs-var">csvData</span></a></span><span> </span><span class="hs-keyword">of</span><span>
-</span><span id="line-39"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679054014"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054014"><span class="hs-identifier hs-var">s</span></a></span></span><span>      </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Either Error KnowledgeBaseStructure
+</span><a href="#local-6989586621679053960"><span class="hs-identifier hs-var">csvData</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-38"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679053959"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053959"><span class="hs-identifier hs-var">s</span></a></span></span><span>      </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Either Error KnowledgeBaseStructure
 -&gt; IO (Either Error KnowledgeBaseStructure)
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(Either Error KnowledgeBaseStructure
@@ -62,10 +61,10 @@ forall a b. a -&gt; Either a b
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Error
 </span><a href="LibCore.Models.html#StandardError"><span class="hs-identifier hs-var">StandardError</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054014"><span class="hs-identifier hs-var">s</span></a></span><span>
-</span><span id="line-40"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Header
-</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679054013"><span class="annot"><span class="annottext">Vector KbEntry
-</span><a href="#local-6989586621679054013"><span class="hs-identifier hs-var">v</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Either Error KnowledgeBaseStructure
+</span><a href="#local-6989586621679053959"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><span id="line-39"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Header
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679053958"><span class="annot"><span class="annottext">Vector KbEntry
+</span><a href="#local-6989586621679053958"><span class="hs-identifier hs-var">v</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Either Error KnowledgeBaseStructure
 -&gt; IO (Either Error KnowledgeBaseStructure)
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(Either Error KnowledgeBaseStructure
@@ -80,20 +79,20 @@ forall a b. b -&gt; Either a b
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Vector KbEntry -&gt; KnowledgeBaseStructure
 </span><a href="LibCli.Adapters.html#getKnowledgeBase"><span class="hs-identifier hs-var">getKnowledgeBase</span></a></span><span> </span><span class="annot"><span class="annottext">Vector KbEntry
-</span><a href="#local-6989586621679054013"><span class="hs-identifier hs-var">v</span></a></span><span>
+</span><a href="#local-6989586621679053958"><span class="hs-identifier hs-var">v</span></a></span><span>
+</span><span id="line-40"></span><span>
 </span><span id="line-41"></span><span>
-</span><span id="line-42"></span><span>
-</span><span id="line-43"></span><span class="hs-comment">-- | Function to load the abbreviation input file.</span><span>
-</span><span id="line-44"></span><span class="hs-comment">-- Can be any file with contents loadable as String.</span><span>
-</span><span id="line-45"></span><span class="annot"><a href="LibCli.HandlerUtils.html#loadInput"><span class="hs-identifier hs-type">loadInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
-</span><span id="line-46"></span><span id="loadInput"><span class="annot"><span class="annottext">loadInput :: FilePath -&gt; IO (Either Error FilePath)
-</span><a href="LibCli.HandlerUtils.html#loadInput"><span class="hs-identifier hs-var hs-var">loadInput</span></a></span></span><span> </span><span id="local-6989586621679054010"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054010"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-47"></span><span>  </span><span id="local-6989586621679054009"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054009"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; IO FilePath
+</span><span id="line-42"></span><span class="hs-comment">-- | Function to load the abbreviation input file.</span><span>
+</span><span id="line-43"></span><span class="hs-comment">-- Can be any file with contents loadable as String.</span><span>
+</span><span id="line-44"></span><span class="annot"><a href="LibCli.HandlerUtils.html#loadInput"><span class="hs-identifier hs-type">loadInput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
+</span><span id="line-45"></span><span id="loadInput"><span class="annot"><span class="annottext">loadInput :: FilePath -&gt; IO (Either Error FilePath)
+</span><a href="LibCli.HandlerUtils.html#loadInput"><span class="hs-identifier hs-var hs-var">loadInput</span></a></span></span><span> </span><span id="local-6989586621679053955"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053955"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-46"></span><span>  </span><span id="local-6989586621679053954"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053954"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; IO FilePath
 </span><span class="hs-identifier hs-var">SIS.readFile</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054010"><span class="hs-identifier hs-var">p</span></a></span><span>
-</span><span id="line-48"></span><span>  </span><span class="annot"><span class="annottext">Either Error FilePath -&gt; IO (Either Error FilePath)
+</span><a href="#local-6989586621679053955"><span class="hs-identifier hs-var">p</span></a></span><span>
+</span><span id="line-47"></span><span>  </span><span class="annot"><span class="annottext">Either Error FilePath -&gt; IO (Either Error FilePath)
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(Either Error FilePath -&gt; IO (Either Error FilePath))
 -&gt; Either Error FilePath -&gt; IO (Either Error FilePath)
@@ -101,16 +100,16 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Either Error FilePath
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054009"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><a href="#local-6989586621679053954"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><span id="line-48"></span><span>
 </span><span id="line-49"></span><span>
-</span><span id="line-50"></span><span>
-</span><span id="line-51"></span><span class="hs-comment">-- | Performs the expansion logic on the provided string.</span><span>
-</span><span id="line-52"></span><span class="annot"><a href="LibCli.HandlerUtils.html#doExpansion"><span class="hs-identifier hs-type">doExpansion</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-53"></span><span id="doExpansion"><span class="annot"><span class="annottext">doExpansion :: KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath
-</span><a href="LibCli.HandlerUtils.html#doExpansion"><span class="hs-identifier hs-var hs-var">doExpansion</span></a></span></span><span> </span><span id="local-6989586621679054007"><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679054007"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679054006"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054006"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-54"></span><span>  </span><span class="annot"><span class="annottext">FilePath -&gt; IO FilePath
+</span><span id="line-50"></span><span class="hs-comment">-- | Performs the expansion logic on the provided string.</span><span>
+</span><span id="line-51"></span><span class="annot"><a href="LibCli.HandlerUtils.html#doExpansion"><span class="hs-identifier hs-type">doExpansion</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-52"></span><span id="doExpansion"><span class="annot"><span class="annottext">doExpansion :: KnowledgeBaseStructure -&gt; FilePath -&gt; IO FilePath
+</span><a href="LibCli.HandlerUtils.html#doExpansion"><span class="hs-identifier hs-var hs-var">doExpansion</span></a></span></span><span> </span><span id="local-6989586621679053952"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679053952"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span id="local-6989586621679053951"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053951"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-53"></span><span>  </span><span class="annot"><span class="annottext">FilePath -&gt; IO FilePath
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(FilePath -&gt; IO FilePath) -&gt; FilePath -&gt; IO FilePath
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -119,63 +118,63 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; ParseStructure -&gt; ParseStructure
 </span><a href="LibCore.Mapper.html#mapParseStructure"><span class="hs-identifier hs-var">M.mapParseStructure</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679054007"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">(ParseStructure -&gt; ParseStructure)
+</span><a href="#local-6989586621679053952"><span class="hs-identifier hs-var">kb</span></a></span><span> </span><span class="annot"><span class="annottext">(ParseStructure -&gt; ParseStructure)
 -&gt; ParseStructure -&gt; ParseStructure
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; ParseStructure
 </span><a href="LibCore.Parser.html#doParse"><span class="hs-identifier hs-var">P.doParse</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054006"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><a href="#local-6989586621679053951"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><span id="line-54"></span><span>
 </span><span id="line-55"></span><span>
-</span><span id="line-56"></span><span>
-</span><span id="line-57"></span><span class="hs-comment">-- | Pretty prints the Keyword pair (key, value) from the Knowledge Base</span><span>
-</span><span id="line-58"></span><span class="annot"><a href="LibCli.HandlerUtils.html#formatRecord"><span class="hs-identifier hs-type">formatRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-59"></span><span id="formatRecord"><span class="annot"><span class="annottext">formatRecord :: (Keyword, Keyword) -&gt; FilePath
-</span><a href="LibCli.HandlerUtils.html#formatRecord"><span class="hs-identifier hs-var hs-var">formatRecord</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Key"><span class="hs-identifier hs-type">Key</span></a></span><span> </span><span id="local-6989586621679054003"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054003"><span class="hs-identifier hs-var">kk</span></a></span></span><span> </span><span id="local-6989586621679054002"><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679054002"><span class="hs-identifier hs-var">kpl</span></a></span></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Key"><span class="hs-identifier hs-type">Key</span></a></span><span> </span><span id="local-6989586621679054001"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054001"><span class="hs-identifier hs-var">vk</span></a></span></span><span> </span><span id="local-6989586621679054000"><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679054000"><span class="hs-identifier hs-var">vpl</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-60"></span><span>  </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-56"></span><span class="hs-comment">-- | Pretty prints the Keyword pair (key, value) from the Knowledge Base</span><span>
+</span><span id="line-57"></span><span class="annot"><a href="LibCli.HandlerUtils.html#formatRecord"><span class="hs-identifier hs-type">formatRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Keyword"><span class="hs-identifier hs-type">Keyword</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-58"></span><span id="formatRecord"><span class="annot"><span class="annottext">formatRecord :: (Keyword, Keyword) -&gt; FilePath
+</span><a href="LibCli.HandlerUtils.html#formatRecord"><span class="hs-identifier hs-var hs-var">formatRecord</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="LibCore.Models.html#Key"><span class="hs-identifier hs-type">Key</span></a></span><span> </span><span id="local-6989586621679053948"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053948"><span class="hs-identifier hs-var">kk</span></a></span></span><span> </span><span id="local-6989586621679053947"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679053947"><span class="hs-identifier hs-var">kpl</span></a></span></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="LibCore.Models.html#Key"><span class="hs-identifier hs-type">Key</span></a></span><span> </span><span id="local-6989586621679053946"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053946"><span class="hs-identifier hs-var">vk</span></a></span></span><span> </span><span id="local-6989586621679053945"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679053945"><span class="hs-identifier hs-var">vpl</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-59"></span><span>  </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Key: &quot;</span></span><span>
-</span><span id="line-61"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><span id="line-60"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054003"><span class="hs-identifier hs-var">kk</span></a></span><span>
-</span><span id="line-62"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><a href="#local-6989586621679053948"><span class="hs-identifier hs-var">kk</span></a></span><span>
+</span><span id="line-61"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="hs-special">(</span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679054002"><span class="hs-identifier hs-var">kpl</span></a></span><span> </span><span class="hs-keyword">then</span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053947"><span class="hs-identifier hs-var">kpl</span></a></span><span> </span><span class="hs-keyword">then</span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;(plural)&quot;</span></span><span> </span><span class="hs-keyword">else</span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-63"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><span id="line-62"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot; --&gt; &quot;</span></span><span>
-</span><span id="line-64"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><span id="line-63"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Value: &quot;</span></span><span>
-</span><span id="line-65"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><span id="line-64"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679054001"><span class="hs-identifier hs-var">vk</span></a></span><span>
-</span><span id="line-66"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><a href="#local-6989586621679053946"><span class="hs-identifier hs-var">vk</span></a></span><span>
+</span><span id="line-65"></span><span>    </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679054000"><span class="hs-identifier hs-var">vpl</span></a></span><span> </span><span class="hs-keyword">then</span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053945"><span class="hs-identifier hs-var">vpl</span></a></span><span> </span><span class="hs-keyword">then</span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;(plural)&quot;</span></span><span> </span><span class="hs-keyword">else</span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;&quot;</span></span><span>
+</span><span id="line-66"></span><span>
 </span><span id="line-67"></span><span>
-</span><span id="line-68"></span><span>
-</span><span id="line-69"></span><span class="hs-comment">-- | Dumps the Knowledge Base to the specified file path.</span><span>
-</span><span id="line-70"></span><span class="hs-comment">-- Writes the KB out in CSV format.</span><span>
-</span><span id="line-71"></span><span class="annot"><a href="LibCli.HandlerUtils.html#dump"><span class="hs-identifier hs-type">dump</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-72"></span><span id="dump"><span class="annot"><span class="annottext">dump :: FilePath -&gt; KnowledgeBaseStructure -&gt; IO ()
-</span><a href="LibCli.HandlerUtils.html#dump"><span class="hs-identifier hs-var hs-var">dump</span></a></span></span><span> </span><span id="local-6989586621679053998"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053998"><span class="hs-identifier hs-var">kbp</span></a></span></span><span> </span><span id="local-6989586621679053997"><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679053997"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-73"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679053996"><span class="annot"><span class="annottext">entries :: [KbEntry]
-</span><a href="#local-6989586621679053996"><span class="hs-identifier hs-var hs-var">entries</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((Keyword, Keyword) -&gt; KbEntry)
+</span><span id="line-68"></span><span class="hs-comment">-- | Dumps the Knowledge Base to the specified file path.</span><span>
+</span><span id="line-69"></span><span class="hs-comment">-- Writes the KB out in CSV format.</span><span>
+</span><span id="line-70"></span><span class="annot"><a href="LibCli.HandlerUtils.html#dump"><span class="hs-identifier hs-type">dump</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="LibCore.KnowledgeBase.html#KnowledgeBaseStructure"><span class="hs-identifier hs-type">KnowledgeBaseStructure</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-71"></span><span id="dump"><span class="annot"><span class="annottext">dump :: FilePath -&gt; KnowledgeBaseStructure -&gt; IO ()
+</span><a href="LibCli.HandlerUtils.html#dump"><span class="hs-identifier hs-var hs-var">dump</span></a></span></span><span> </span><span id="local-6989586621679053943"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053943"><span class="hs-identifier hs-var">kbp</span></a></span></span><span> </span><span id="local-6989586621679053942"><span class="annot"><span class="annottext">KnowledgeBaseStructure
+</span><a href="#local-6989586621679053942"><span class="hs-identifier hs-var">kb</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-72"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679053941"><span class="annot"><span class="annottext">entries :: [KbEntry]
+</span><a href="#local-6989586621679053941"><span class="hs-identifier hs-var hs-var">entries</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((Keyword, Keyword) -&gt; KbEntry)
 -&gt; [(Keyword, Keyword)] -&gt; [KbEntry]
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">(Keyword, Keyword) -&gt; KbEntry
@@ -184,44 +183,44 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure -&gt; [(Keyword, Keyword)]
 </span><a href="LibCore.KnowledgeBase.html#listAll"><span class="hs-identifier hs-var">listAll</span></a></span><span> </span><span class="annot"><span class="annottext">KnowledgeBaseStructure
-</span><a href="#local-6989586621679053997"><span class="hs-identifier hs-var">kb</span></a></span><span>
-</span><span id="line-74"></span><span>  </span><span class="annot"><span class="annottext">FilePath -&gt; ByteString -&gt; IO ()
+</span><a href="#local-6989586621679053942"><span class="hs-identifier hs-var">kb</span></a></span><span>
+</span><span id="line-73"></span><span>  </span><span class="annot"><span class="annottext">FilePath -&gt; ByteString -&gt; IO ()
 </span><span class="hs-identifier hs-var">BL.writeFile</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053998"><span class="hs-identifier hs-var">kbp</span></a></span><span> </span><span class="annot"><span class="annottext">(ByteString -&gt; IO ()) -&gt; ByteString -&gt; IO ()
+</span><a href="#local-6989586621679053943"><span class="hs-identifier hs-var">kbp</span></a></span><span> </span><span class="annot"><span class="annottext">(ByteString -&gt; IO ()) -&gt; ByteString -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[KbEntry] -&gt; ByteString
 forall a. (DefaultOrdered a, ToNamedRecord a) =&gt; [a] -&gt; ByteString
 </span><span class="hs-identifier hs-var">encodeDefaultOrderedByName</span></span><span> </span><span class="annot"><span class="annottext">[KbEntry]
-</span><a href="#local-6989586621679053996"><span class="hs-identifier hs-var">entries</span></a></span><span>
+</span><a href="#local-6989586621679053941"><span class="hs-identifier hs-var">entries</span></a></span><span>
+</span><span id="line-74"></span><span>
 </span><span id="line-75"></span><span>
-</span><span id="line-76"></span><span>
-</span><span id="line-77"></span><span class="hs-comment">-- | Given a FilePath and a string, write the string to the FilePath.</span><span>
-</span><span id="line-78"></span><span class="hs-comment">-- Throws an error if no valid path is specified.</span><span>
-</span><span id="line-79"></span><span class="hs-comment">-- Write the given string to the file path otherwise.</span><span>
-</span><span id="line-80"></span><span class="annot"><a href="LibCli.HandlerUtils.html#returnOutput"><span class="hs-identifier hs-type">returnOutput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-81"></span><span id="returnOutput"><span class="annot"><span class="annottext">returnOutput :: FilePath -&gt; FilePath -&gt; IO ()
+</span><span id="line-76"></span><span class="hs-comment">-- | Given a FilePath and a string, write the string to the FilePath.</span><span>
+</span><span id="line-77"></span><span class="hs-comment">-- Throws an error if no valid path is specified.</span><span>
+</span><span id="line-78"></span><span class="hs-comment">-- Write the given string to the file path otherwise.</span><span>
+</span><span id="line-79"></span><span class="annot"><a href="LibCli.HandlerUtils.html#returnOutput"><span class="hs-identifier hs-type">returnOutput</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-80"></span><span id="returnOutput"><span class="annot"><span class="annottext">returnOutput :: FilePath -&gt; FilePath -&gt; IO ()
 </span><a href="LibCli.HandlerUtils.html#returnOutput"><span class="hs-identifier hs-var hs-var">returnOutput</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; IO ()
 </span><span class="hs-identifier hs-var">writeFile</span></span><span>
-</span><span id="line-82"></span><span>
-</span><span id="line-83"></span><span class="hs-comment">----------------------------</span><span>
-</span><span id="line-84"></span><span class="hs-comment">-- File path access rules --</span><span>
-</span><span id="line-85"></span><span class="hs-comment">----------------------------</span><span>
-</span><span id="line-86"></span><span>
-</span><span id="line-87"></span><span class="hs-comment">-- |Gets the pair of paths to use depending on the flag.</span><span>
-</span><span id="line-88"></span><span class="hs-comment">-- Returns an error if a pair of (Input, Output) file paths is not possible.</span><span>
-</span><span id="line-89"></span><span class="hs-comment">-- Otherwise, returns the pair of file paths in the following order: (Input, Output).</span><span>
-</span><span id="line-90"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-type">getInOutFilePaths</span></a></span><span>
-</span><span id="line-91"></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-comment">-- ^ Input file path</span><span>
-</span><span id="line-92"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-comment">-- ^ Output file path</span><span>
-</span><span id="line-93"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>           </span><span class="hs-comment">-- ^ Whether working in in-place mode.</span><span>
-</span><span id="line-94"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">)</span><span> </span><span class="hs-comment">-- ^ Either error or the correct (Input, Output) pair.</span><span>
-</span><span id="line-95"></span><span id="getInOutFilePaths"><span class="annot"><span class="annottext">getInOutFilePaths :: Maybe FilePath
+</span><span id="line-81"></span><span>
+</span><span id="line-82"></span><span class="hs-comment">----------------------------</span><span>
+</span><span id="line-83"></span><span class="hs-comment">-- File path access rules --</span><span>
+</span><span id="line-84"></span><span class="hs-comment">----------------------------</span><span>
+</span><span id="line-85"></span><span>
+</span><span id="line-86"></span><span class="hs-comment">-- |Gets the pair of paths to use depending on the flag.</span><span>
+</span><span id="line-87"></span><span class="hs-comment">-- Returns an error if a pair of (Input, Output) file paths is not possible.</span><span>
+</span><span id="line-88"></span><span class="hs-comment">-- Otherwise, returns the pair of file paths in the following order: (Input, Output).</span><span>
+</span><span id="line-89"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-type">getInOutFilePaths</span></a></span><span>
+</span><span id="line-90"></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-comment">-- ^ Input file path</span><span>
+</span><span id="line-91"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-comment">-- ^ Output file path</span><span>
+</span><span id="line-92"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>           </span><span class="hs-comment">-- ^ Whether working in in-place mode.</span><span>
+</span><span id="line-93"></span><span>  </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">)</span><span> </span><span class="hs-comment">-- ^ Either error or the correct (Input, Output) pair.</span><span>
+</span><span id="line-94"></span><span id="getInOutFilePaths"><span class="annot"><span class="annottext">getInOutFilePaths :: Maybe FilePath
 -&gt; Maybe FilePath -&gt; Bool -&gt; Either Error (FilePath, FilePath)
 </span><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var hs-var">getInOutFilePaths</span></a></span></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
 </span><span class="hs-identifier">_</span></span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-96"></span><span>  </span><span class="annot"><span class="annottext">Error -&gt; Either Error (FilePath, FilePath)
+</span><span id="line-95"></span><span>  </span><span class="annot"><span class="annottext">Error -&gt; Either Error (FilePath, FilePath)
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(Error -&gt; Either Error (FilePath, FilePath))
 -&gt; Error -&gt; Either Error (FilePath, FilePath)
@@ -229,7 +228,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Error
 </span><a href="LibCore.Models.html#StandardError"><span class="hs-identifier hs-var">StandardError</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;No input file path is specified&quot;</span></span><span>
-</span><span id="line-97"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-96"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Error -&gt; Either Error (FilePath, FilePath)
@@ -239,13 +238,13 @@ forall a b. a -&gt; Either a b
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Error
 </span><a href="LibCore.Models.html#StandardError"><span class="hs-identifier hs-var">StandardError</span></a></span><span>
-</span><span id="line-98"></span><span>  </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-97"></span><span>  </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;With `inplace`, only input or output file path must be specified, not both&quot;</span></span><span>
-</span><span id="line-99"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span id="line-98"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-100"></span><span>  </span><span class="annot"><span class="annottext">Error -&gt; Either Error (FilePath, FilePath)
+</span><span id="line-99"></span><span>  </span><span class="annot"><span class="annottext">Error -&gt; Either Error (FilePath, FilePath)
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(Error -&gt; Either Error (FilePath, FilePath))
 -&gt; Error -&gt; Either Error (FilePath, FilePath)
@@ -253,75 +252,74 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Error
 </span><a href="LibCore.Models.html#StandardError"><span class="hs-identifier hs-var">StandardError</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;No output file path is specified&quot;</span></span><span>
-</span><span id="line-101"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053992"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053992"><span class="hs-identifier hs-var">in_fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053991"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053991"><span class="hs-identifier hs-var">o_fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span id="line-100"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053937"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053937"><span class="hs-identifier hs-var">in_fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053936"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053936"><span class="hs-identifier hs-var">o_fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(FilePath, FilePath) -&gt; Either Error (FilePath, FilePath)
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053992"><span class="hs-identifier hs-var">in_fp</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053991"><span class="hs-identifier hs-var">o_fp</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-102"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053990"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053990"><span class="hs-identifier hs-var">in_fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
+</span><a href="#local-6989586621679053937"><span class="hs-identifier hs-var">in_fp</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053936"><span class="hs-identifier hs-var">o_fp</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-101"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getInOutFilePaths"><span class="hs-identifier hs-var">getInOutFilePaths</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053935"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053935"><span class="hs-identifier hs-var">in_fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
 </span><span class="hs-identifier hs-var">Nothing</span></span><span>     </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span><span>  </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(FilePath, FilePath) -&gt; Either Error (FilePath, FilePath)
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053990"><span class="hs-identifier hs-var">in_fp</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053990"><span class="hs-identifier hs-var">in_fp</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-103"></span><span>
-</span><span id="line-104"></span><span class="hs-comment">-- | Handles the retrieval of Knowledge Base file paths.</span><span>
-</span><span id="line-105"></span><span class="hs-comment">-- If nothing is provided, raises an error.</span><span>
-</span><span id="line-106"></span><span class="hs-comment">-- Otherwise, returns the given file path.</span><span>
-</span><span id="line-107"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getKnowledgeBaseFilePath"><span class="hs-identifier hs-type">getKnowledgeBaseFilePath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
-</span><span id="line-108"></span><span id="getKnowledgeBaseFilePath"><span class="annot"><span class="annottext">getKnowledgeBaseFilePath :: Maybe FilePath -&gt; Either Error FilePath
+</span><a href="#local-6989586621679053935"><span class="hs-identifier hs-var">in_fp</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053935"><span class="hs-identifier hs-var">in_fp</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-102"></span><span>
+</span><span id="line-103"></span><span class="hs-comment">-- | Handles the retrieval of Knowledge Base file paths.</span><span>
+</span><span id="line-104"></span><span class="hs-comment">-- If nothing is provided, raises an error.</span><span>
+</span><span id="line-105"></span><span class="hs-comment">-- Otherwise, returns the given file path.</span><span>
+</span><span id="line-106"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getKnowledgeBaseFilePath"><span class="hs-identifier hs-type">getKnowledgeBaseFilePath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-107"></span><span id="getKnowledgeBaseFilePath"><span class="annot"><span class="annottext">getKnowledgeBaseFilePath :: Maybe FilePath -&gt; Either Error FilePath
 </span><a href="LibCli.HandlerUtils.html#getKnowledgeBaseFilePath"><span class="hs-identifier hs-var hs-var">getKnowledgeBaseFilePath</span></a></span></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-109"></span><span>  </span><span class="annot"><span class="annottext">Error -&gt; Either Error FilePath
+</span><span id="line-108"></span><span>  </span><span class="annot"><span class="annottext">Error -&gt; Either Error FilePath
 forall a b. a -&gt; Either a b
 </span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(Error -&gt; Either Error FilePath) -&gt; Error -&gt; Either Error FilePath
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Error
 </span><a href="LibCore.Models.html#StandardError"><span class="hs-identifier hs-var">StandardError</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Knowledge base path must be specified&quot;</span></span><span>
-</span><span id="line-110"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getKnowledgeBaseFilePath"><span class="hs-identifier hs-var">getKnowledgeBaseFilePath</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053988"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053988"><span class="hs-identifier hs-var">fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Either Error FilePath
+</span><span id="line-109"></span><span class="annot"><a href="LibCli.HandlerUtils.html#getKnowledgeBaseFilePath"><span class="hs-identifier hs-var">getKnowledgeBaseFilePath</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679053933"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679053933"><span class="hs-identifier hs-var">fp</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Either Error FilePath
 forall a b. b -&gt; Either a b
 </span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679053988"><span class="hs-identifier hs-var">fp</span></a></span><span>
+</span><a href="#local-6989586621679053933"><span class="hs-identifier hs-var">fp</span></a></span><span>
+</span><span id="line-110"></span><span>
 </span><span id="line-111"></span><span>
-</span><span id="line-112"></span><span>
-</span><span id="line-113"></span><span class="hs-comment">--------------------</span><span>
-</span><span id="line-114"></span><span class="hs-comment">-- Error handling --</span><span>
-</span><span id="line-115"></span><span class="hs-comment">--------------------</span><span>
-</span><span id="line-116"></span><span>
-</span><span id="line-117"></span><span class="hs-comment">-- | Returns the value from a potentially failing computation.</span><span>
-</span><span id="line-118"></span><span class="hs-comment">--</span><span>
-</span><span id="line-119"></span><span class="hs-comment">-- Abort with the error message if it was an error.</span><span>
-</span><span id="line-120"></span><span class="hs-comment">--</span><span>
-</span><span id="line-121"></span><span class="hs-comment">-- The text message is added to the 'Error' as additional context before aborting.</span><span>
-</span><span id="line-122"></span><span class="hs-comment">--</span><span>
-</span><span id="line-123"></span><span class="hs-comment">-- __Panics:__ if Error</span><span>
-</span><span id="line-124"></span><span class="hs-comment">--</span><span>
-</span><span id="line-125"></span><span class="hs-comment">-- Example:</span><span>
-</span><span id="line-126"></span><span class="hs-comment">--</span><span>
-</span><span id="line-127"></span><span class="hs-comment">-- &gt;&gt;&gt; unwrapIOError $ Left (StandardError &quot;oh no!&quot;)</span><span>
-</span><span id="line-128"></span><span class="hs-comment">-- *** Exception: StandardError &quot;oh no!&quot;</span><span>
-</span><span id="line-129"></span><span class="hs-comment">--</span><span>
-</span><span id="line-130"></span><span class="hs-comment">-- &gt;&gt;&gt; unwrapIOError $ Right 42</span><span>
-</span><span id="line-131"></span><span class="hs-comment">-- 42</span><span>
-</span><span id="line-132"></span><span class="hs-comment">--</span><span>
-</span><span id="line-133"></span><span id="local-6989586621679053987"><span class="annot"><a href="LibCli.HandlerUtils.html#unwrapIOError"><span class="hs-identifier hs-type">unwrapIOError</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679053987"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679053987"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-134"></span><span id="unwrapIOError"><span class="annot"><span class="annottext">unwrapIOError :: Either Error a -&gt; IO a
-</span><a href="LibCli.HandlerUtils.html#unwrapIOError"><span class="hs-identifier hs-var hs-var">unwrapIOError</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679053985"><span class="annot"><span class="annottext">Error
-</span><a href="#local-6989586621679053985"><span class="hs-identifier hs-var">err</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ErrorException -&gt; IO a
+</span><span id="line-112"></span><span class="hs-comment">--------------------</span><span>
+</span><span id="line-113"></span><span class="hs-comment">-- Error handling --</span><span>
+</span><span id="line-114"></span><span class="hs-comment">--------------------</span><span>
+</span><span id="line-115"></span><span>
+</span><span id="line-116"></span><span class="hs-comment">-- | Returns the value from a potentially failing computation.</span><span>
+</span><span id="line-117"></span><span class="hs-comment">--</span><span>
+</span><span id="line-118"></span><span class="hs-comment">-- Abort with the error message if it was an error.</span><span>
+</span><span id="line-119"></span><span class="hs-comment">--</span><span>
+</span><span id="line-120"></span><span class="hs-comment">-- The text message is added to the 'Error' as additional context before aborting.</span><span>
+</span><span id="line-121"></span><span class="hs-comment">--</span><span>
+</span><span id="line-122"></span><span class="hs-comment">-- __Panics:__ if Error</span><span>
+</span><span id="line-123"></span><span class="hs-comment">--</span><span>
+</span><span id="line-124"></span><span class="hs-comment">-- Example:</span><span>
+</span><span id="line-125"></span><span class="hs-comment">--</span><span>
+</span><span id="line-126"></span><span class="hs-comment">-- &gt;&gt;&gt; unwrapIOError $ Left (StandardError &quot;oh no!&quot;)</span><span>
+</span><span id="line-127"></span><span class="hs-comment">-- *** Exception: StandardError &quot;oh no!&quot;</span><span>
+</span><span id="line-128"></span><span class="hs-comment">--</span><span>
+</span><span id="line-129"></span><span class="hs-comment">-- &gt;&gt;&gt; unwrapIOError $ Right 42</span><span>
+</span><span id="line-130"></span><span class="hs-comment">-- 42</span><span>
+</span><span id="line-131"></span><span class="hs-comment">--</span><span>
+</span><span id="line-132"></span><span id="local-6989586621679053932"><span class="annot"><a href="LibCli.HandlerUtils.html#unwrapIOError"><span class="hs-identifier hs-type">unwrapIOError</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="LibCore.Models.html#Error"><span class="hs-identifier hs-type">Error</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679053932"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="#local-6989586621679053932"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-133"></span><span id="unwrapIOError"><span class="annot"><span class="annottext">unwrapIOError :: Either Error a -&gt; IO a
+</span><a href="LibCli.HandlerUtils.html#unwrapIOError"><span class="hs-identifier hs-var hs-var">unwrapIOError</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Left</span></span><span>  </span><span id="local-6989586621679053930"><span class="annot"><span class="annottext">Error
+</span><a href="#local-6989586621679053930"><span class="hs-identifier hs-var">err</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Error -&gt; IO a
 forall e a. Exception e =&gt; e -&gt; IO a
-</span><span class="hs-identifier hs-var">Exc.throwIO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Error -&gt; ErrorException
-</span><a href="LibCore.Models.html#ErrorException"><span class="hs-identifier hs-var">ErrorException</span></a></span><span> </span><span class="annot"><span class="annottext">Error
-</span><a href="#local-6989586621679053985"><span class="hs-identifier hs-var">err</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-135"></span><span class="annot"><a href="LibCli.HandlerUtils.html#unwrapIOError"><span class="hs-identifier hs-var">unwrapIOError</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621679053983"><span class="annot"><span class="annottext">a
-</span><a href="#local-6989586621679053983"><span class="hs-identifier hs-var">a</span></a></span></span><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a -&gt; IO a
+</span><span class="hs-identifier hs-var">Exc.throwIO</span></span><span> </span><span class="annot"><span class="annottext">Error
+</span><a href="#local-6989586621679053930"><span class="hs-identifier hs-var">err</span></a></span><span>
+</span><span id="line-134"></span><span class="annot"><a href="LibCli.HandlerUtils.html#unwrapIOError"><span class="hs-identifier hs-var">unwrapIOError</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Right</span></span><span> </span><span id="local-6989586621679053928"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679053928"><span class="hs-identifier hs-var">a</span></a></span></span><span>  </span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a -&gt; IO a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">a
-</span><a href="#local-6989586621679053983"><span class="hs-identifier hs-var">a</span></a></span><span>
-</span><span id="line-136"></span></pre></body></html>
+</span><a href="#local-6989586621679053928"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><span id="line-135"></span></pre></body></html>

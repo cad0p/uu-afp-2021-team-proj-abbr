@@ -72,14 +72,7 @@ span.spaces    { background: white }
 <span class="lineno">   53 </span>  = StandardError String
 <span class="lineno">   54 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
 <span class="lineno">   55 </span>
-<span class="lineno">   56 </span>-- | Error Exception.
-<span class="lineno">   57 </span>newtype ErrorException
-<span class="lineno">   58 </span>  = ErrorException Error
-<span class="lineno">   59 </span>
-<span class="lineno">   60 </span>instance Show ErrorException where
-<span class="lineno">   61 </span>  <span class="decl"><span class="nottickedoff">show (ErrorException e) = show e</span></span>
-<span class="lineno">   62 </span>
-<span class="lineno">   63 </span>instance Exception ErrorException
+<span class="lineno">   56 </span>instance Exception Error
 
 </pre>
 </body>
