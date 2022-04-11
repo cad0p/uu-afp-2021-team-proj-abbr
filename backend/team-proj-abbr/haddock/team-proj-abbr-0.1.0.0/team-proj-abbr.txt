@@ -54,10 +54,6 @@ instance GHC.Show.Show LibCli.Spec.ShortHndr
 instance Data.Data.Data LibCli.Spec.ShortHndr
 
 
-module LibCore.InputInterface
-getInput :: String
-
-
 module LibCore.Models
 
 -- | We parse a string into a NoToken if it does not match the syntax for |
