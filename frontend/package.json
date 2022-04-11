@@ -1,0 +1,21 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "This is the frontend of the tool.   Implemented as a VS Code extension in [`Elm`](https://elm-lang.org/).",
+  "main": "extension.js",
+	"engines": {
+		"vscode": "^1.32.0"
+	},
+  "scripts": {
+    "make:elm": "elm make ./src/VsCodeWorker.elm --output ./dist/VsCodeWorker.js --debug",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "generator-code": "^1.6.9",
+    "yo": "^4.3.0",
+		"@types/vscode": "^1.32.0"
+  }
+}
