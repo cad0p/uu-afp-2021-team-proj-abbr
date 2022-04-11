@@ -6,6 +6,7 @@ const worker = require("./dist/VsCodeWorker.js")
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+  const app = worker.Elm.VsCodeWorker.init({});
 
   console.log(
     'Congratulations, your extension "helloworld-minimal-sample" is now active!'

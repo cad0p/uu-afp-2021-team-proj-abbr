@@ -40,18 +40,18 @@ type alias Flags =
 
 
 type Msg
-    = SendData
+    = SendData String
     | Received String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        SendData ->
-            ( model, toExtension "HELLO!" )
+        SendData output ->
+            ( model, toExtension output )
 
         Received input ->
-            ( { model | lookup = input }, Cmd.none )
+            ( { model | lookup = input }, toExtension "back!" )
 
 
 
