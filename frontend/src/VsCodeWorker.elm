@@ -1,11 +1,46 @@
 port module VsCodeWorker exposing (..)
 
-import Html.Events exposing (..)
+import Html exposing (a, input)
 import Platform
 
 
 
+-- MODEL
+
+
+type alias Flags =
+    {}
+
+
+type alias Model =
+    { input : String }
+
+
+
+-- INIT
+
+
+init : Flags -> ( Model, Cmd Msg )
+init _ =
+    ( { input = "" }, Cmd.none )
+
+
+
+-- PROGRAM
+
+
+main : Program Flags Model Msg
+main =
+    Platform.worker
+        { init = init -- receives flags and sets up the program
+        , update = update -- handling model update
+        , subscriptions = subscriptions -- handling subscriptions
+        }
+
+
+
 -- PORTS
+-- TODO: figure out how to make it more type safe.
 
 
 {-| Default extension output port.
@@ -24,12 +59,12 @@ port toExtension : String -> Cmd msg
 port fromExtension : (String -> msg) -> Sub msg
 
 
-{-| Extension Extend command requiest.
+{-| Extension Expand command requiest.
 
     - Extension - [String] -> Worker
 
 -}
-port fromExtensionExtend : (String -> msg) -> Sub msg
+port fromExtensionExpand : (String -> msg) -> Sub msg
 
 
 {-| Default ShortHandr CLI trigger port.
@@ -40,59 +75,76 @@ port fromExtensionExtend : (String -> msg) -> Sub msg
 port toShortHndr : String -> Cmd msg
 
 
-{-| Default ShortHandr CLI result port.
+{-| OK ShortHandr CLI result port.
 
     - Worker - [String] -> CLI
 
 -}
-port fromShortHndr : (String -> msg) -> Sub msg
+port fromShortHndrSuccess : (String -> msg) -> Sub msg
+
+
+{-| Error ShortHandr CLI result port.
+
+    - Worker - [String] -> CLI
+
+-}
+port fromShortHndrError : (String -> msg) -> Sub msg
 
 
 
--- MODEL
+-- PROTOCOLS
+-- TODO: idea for the future - make it automated?
 
 
-type alias Model =
-    { lookup : String }
+type ShortHandrProtocol i
+    = Expand i
+    | Replace i
+    | Help i
 
 
+{-| Format the command input according to procol
+-}
+format : ShortHandrProtocol String -> String
+format p =
+    case p of
+        Expand input ->
+            "expand --abbreviation=\"" ++ input ++ "\""
 
--- INIT
+        Replace _ ->
+            "replace --help"
 
-
-init : Flags -> ( Model, Cmd Msg )
-init _ =
-    ( { lookup = "" }, Cmd.none )
+        Help _ ->
+            "--help"
 
 
 
 -- UPDATE
 
 
-type alias Flags =
-    {}
-
-
 type Msg
     = ExtDataInput String
     | ExtReplaceInput String
-    | ExtExtendInput String
-    | SHResult String
+    | ExtExpandInput String
+    | ShOkResult String
+    | ShErrorResult String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ExtDataInput input ->
-            ( { model | lookup = input }, toExtension "Pong!" )
+            ( { model | input = input }, toExtension "Pong!" )
 
-        ExtReplaceInput input ->
-            ( model, toShortHndr "--help" )
+        ExtReplaceInput _ ->
+            ( model, toShortHndr <| format (Replace "") )
 
-        ExtExtendInput input ->
-            ( model, toShortHndr <| "extend --help --input=" ++ input )
+        ExtExpandInput input ->
+            ( model, toShortHndr <| format (Expand input) )
 
-        SHResult output ->
+        ShOkResult output ->
+            ( model, toExtension output )
+
+        ShErrorResult output ->
             ( model, toExtension output )
 
 
@@ -104,19 +156,7 @@ subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.batch
         [ fromExtension ExtDataInput
-        , fromExtensionExtend ExtExtendInput
-        , fromShortHndr SHResult
+        , fromExtensionExpand ExtExpandInput -- TODO: add more type safety
+        , fromShortHndrSuccess ShOkResult -- TODO: add more type safety
+        , fromShortHndrError ShErrorResult -- TODO: add more type safety
         ]
-
-
-
--- PROGRAM
-
-
-main : Program Flags Model Msg
-main =
-    Platform.worker
-        { init = init -- receives flags and sets up the program
-        , update = update -- handling model update
-        , subscriptions = subscriptions -- handling subscriptions
-        }

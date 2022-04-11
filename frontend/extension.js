@@ -1,16 +1,15 @@
 const vscode = require("vscode");
-const worker = require("./dist/VsCodeWorker.js")
-
+// The `app` instantiated with the Elm brain.
+const { app } = require("./wiring/App");
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-  const app = worker.Elm.VsCodeWorker.init({});
-
   console.log(
     'Congratulations, your extension "helloworld-minimal-sample" is now active!'
   );
+  console.debug(app);
 
   let disposable = vscode.commands.registerCommand(
     "extension.helloWorld",
@@ -18,7 +17,7 @@ function activate(context) {
       // The code you place here will be executed every time your command is executed
 
       // Display a message box to the user
-      vscode.window.showInformationMessage("Hello World!");
+      vscode.window.showInformationMessage("Hello world!");
     }
   );
 
