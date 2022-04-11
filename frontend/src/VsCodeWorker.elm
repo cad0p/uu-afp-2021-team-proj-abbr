@@ -8,10 +8,44 @@ import Platform
 -- PORTS
 
 
+{-| Default extension output port.
+
+    - Worker - [String] -> Extension
+
+-}
 port toExtension : String -> Cmd msg
 
 
+{-| Default extension input port.
+
+    - Extension - [String] -> Worker
+
+-}
 port fromExtension : (String -> msg) -> Sub msg
+
+
+{-| Extension Extend command requiest.
+
+    - Extension - [String] -> Worker
+
+-}
+port fromExtensionExtend : (String -> msg) -> Sub msg
+
+
+{-| Default ShortHandr CLI trigger port.
+
+    - Worker - [String] -> CLI
+
+-}
+port toShortHndr : String -> Cmd msg
+
+
+{-| Default ShortHandr CLI result port.
+
+    - Worker - [String] -> CLI
+
+-}
+port fromShortHndr : (String -> msg) -> Sub msg
 
 
 
@@ -40,18 +74,26 @@ type alias Flags =
 
 
 type Msg
-    = SendData String
-    | Received String
+    = ExtDataInput String
+    | ExtReplaceInput String
+    | ExtExtendInput String
+    | SHResult String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        SendData output ->
-            ( model, toExtension output )
+        ExtDataInput input ->
+            ( { model | lookup = input }, toExtension "Pong!" )
 
-        Received input ->
-            ( { model | lookup = input }, toExtension "back!" )
+        ExtReplaceInput input ->
+            ( model, toShortHndr "--help" )
+
+        ExtExtendInput input ->
+            ( model, toShortHndr <| "extend --help --input=" ++ input )
+
+        SHResult output ->
+            ( model, toExtension output )
 
 
 
@@ -60,7 +102,11 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    fromExtension Received
+    Sub.batch
+        [ fromExtension ExtDataInput
+        , fromExtensionExtend ExtExtendInput
+        , fromShortHndr SHResult
+        ]
 
 
 
