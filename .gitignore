@@ -23,4 +23,6 @@ cabal.project.local~
 .ghc.environment.*
 
 # IDE
-.vscode
+.vscode/*
+**/.vscode/*
+!**/.vscode/launch.json
