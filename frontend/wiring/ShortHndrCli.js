@@ -12,7 +12,7 @@ module.exports.ShortHndrCli = {
     exec(
       `${executable} ${command} ${args.join(" ")}`,
       (error, stdout, stderr) => {
-        return !!error ? onError(error) : onSuccess({ stdout, stderr });
+        return !!error ? onError({error, stderr}) : onSuccess({ stdout, stderr });
       }
     );
   },

@@ -31,7 +31,6 @@ function activate(context) {
     vscode.window.showInformationMessage(msg);
   });
 
-  // TODO: make the setup somehow easier...
   // Extension command subscriptions
   const ping = vscode.commands.registerCommand("shorthndr.ping", () => {
     expandApp.ports.fromExtension.send("Ping!");

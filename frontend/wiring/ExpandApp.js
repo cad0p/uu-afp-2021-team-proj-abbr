@@ -11,7 +11,7 @@ const setupApp = function ({ kbPath }) {
       msg,
       [],
       // error handler
-      app.ports.fromShortHndrError.send,
+      ({ error, stderr }) => app.ports.fromShortHndrError.send(stderr),
       // stdout flow
       ({ stdout, stderr }) =>
         !!stdout
