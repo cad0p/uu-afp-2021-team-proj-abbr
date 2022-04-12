@@ -37,9 +37,7 @@ function activate(context) {
   });
   const expand = vscode.commands.registerCommand("shorthndr.expand", () => {
     if (!!editor) {
-      const document = editor.document;
-      const selection = editor.selection;
-      const text = document.getText(selection);
+      const text = editor.document.getText(editor.selection);
       expandApp.ports.fromExtensionExpand.send(text);
     } else {
       throw new Error("no editor");
