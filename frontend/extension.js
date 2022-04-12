@@ -4,6 +4,11 @@ const vscode = require("vscode");
 const { setupApp } = require("./wiring/ExpandApp");
 
 /**
+ * Editor interface.
+ */
+const editor = vscode.window.activeTextEditor;
+
+/**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
@@ -13,18 +18,36 @@ function activate(context) {
   console.log('Congratulations, your extension "ShortHndr" is now active!');
 
   // expandApp subscriptions
-  expandApp.ports.toExtension.subscribe(function (msg) {
+  expandApp.ports.toExtensionInfo.subscribe(function (msg) {
+    console.debug("got from port", msg);
+    vscode.window.showWarningMessage(msg);
+  });
+  expandApp.ports.toExtensionError.subscribe(function (msg) {
+    console.debug("got from port", msg);
+    vscode.window.showErrorMessage(msg);
+  });
+  expandApp.ports.toExtensionSuccess.subscribe(function (msg) {
     console.debug("got from port", msg);
     vscode.window.showInformationMessage(msg);
   });
 
   // TODO: make the setup somehow easier...
   // Extension command subscriptions
-  let disposable = vscode.commands.registerCommand("shorthndr.ping", () => {
+  const ping = vscode.commands.registerCommand("shorthndr.ping", () => {
     expandApp.ports.fromExtension.send("Ping!");
   });
+  const expand = vscode.commands.registerCommand("shorthndr.expand", () => {
+    if (!!editor) {
+      const document = editor.document;
+      const selection = editor.selection;
+      const text = document.getText(selection);
+      expandApp.ports.fromExtensionExpand.send(text);
+    } else {
+      throw new Error("no editor");
+    }
+  });
 
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(ping, expand);
 }
 
 function deactivate() {}

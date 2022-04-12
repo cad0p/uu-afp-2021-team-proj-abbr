@@ -7,7 +7,8 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
-      "preLaunchTask": "npm: make:elm"
+      "preLaunchTask": "npm: make:elm",
+      "autoAttachChildProcesses": true
     }
   ]
 }

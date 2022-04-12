@@ -1,31 +1,18 @@
-// const worker = require("./dist/ExpandWorker.js");
-// const { ShortHndrCli } = require("./wiring/ShortHndrCli");
-
 const { setupApp } = require("./wiring/ExpandApp");
 
 const app = setupApp({ kbPath: "data/kb_example.csv" });
-console.log(app);
 
-// console.log(worker);
-// console.log(ShortHndrCli);
+// Setup subscriptions.
+app.ports.toExtensionInfo.subscribe(function (msg) {
+  console.debug("INFO: got from port", msg);
+});
+app.ports.toExtensionError.subscribe(function (msg) {
+  console.error("ERR: got from port", msg);
+});
+app.ports.toExtensionSuccess.subscribe(function (msg) {
+  console.info("OK: got from port", msg);
+});
 
-// const app = worker.Elm.ExpandWorker.init({
-//   flags: { kbPath: "data/lb_example.csv" },
-// });
-// console.log(app);
-
-// app.ports.toExtension.subscribe(function (msg) {
-//   console.log("got from port", msg);
-// });
-// app.ports.toShortHndr.subscribe(function (msg) {
-//   ShortHndrCli.call(
-//     msg,
-//     [],
-//     (error) => console.error(`Error: ${error}`),
-//     (ok) => console.log(ok)
-//   );
-// });
-
-// console.log(app);
-
+// Send message.
+console.log("Sending to Elm...");
 app.ports.fromExtensionExpand.send("@@hl");

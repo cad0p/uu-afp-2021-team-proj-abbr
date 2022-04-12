@@ -46,7 +46,7 @@ main =
 
 
 
--- PORTS
+-- PORTS: communication to external services.
 
 
 {-| Default extension output port.
@@ -54,7 +54,23 @@ main =
     - Worker - [String] -> Extension
 
 -}
-port toExtension : String -> Cmd msg
+port toExtensionInfo : String -> Cmd msg
+
+
+{-| Success extension output port.
+
+    - Worker - [String] -> Extension
+
+-}
+port toExtensionSuccess : String -> Cmd msg
+
+
+{-| Error extension output port.
+
+    - Worker - [String] -> Extension
+
+-}
+port toExtensionError : String -> Cmd msg
 
 
 {-| Default extension input port.
@@ -63,14 +79,6 @@ port toExtension : String -> Cmd msg
 
 -}
 port fromExtension : (String -> msg) -> Sub msg
-
-
-
--- {-| Default extension config port.
---     - Extension - [Config] -> Worker
---     -- TODO: support JSON input?
--- -}
--- port fromExtensionConfig : (String -> msg) -> Sub msg
 
 
 {-| Extension Expand command requiest.
@@ -157,7 +165,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ExtDataInput data ->
-            ( { model | data = data }, toExtension "Pong!" )
+            ( { model | data = data }, toExtensionInfo "Pong!" )
 
         -- Extension request to replace content.
         ExtReplaceInput _ ->
@@ -168,10 +176,10 @@ update msg model =
             ( model, toShortHndr <| format (Expand { abbreviation = request, kbPath = model.kbPath }) )
 
         ShOkResult output ->
-            ( model, toExtension output )
+            ( model, toExtensionSuccess output )
 
         ShErrorResult output ->
-            ( model, toExtension output )
+            ( model, toExtensionError output )
 
 
 

@@ -18,6 +18,10 @@
       {
         "command": "shorthndr.ping",
         "title": "ShortHndr: Ping"
+      },
+      {
+        "command": "shorthndr.expand",
+        "title": "ShortHndr: Expand"
       }
     ]
   },

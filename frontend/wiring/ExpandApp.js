@@ -5,17 +5,18 @@ const { ShortHndrCli } = require("./ShortHndrCli");
 const setupApp = function ({ kbPath }) {
   const app = worker.Elm.ExpandWorker.init({ flags: { kbPath } });
 
-  app.ports.toExtension.subscribe(function (msg) {
-    console.log("got from port", msg);
-  });
-
   // Make wiring to ShortHndr side-car service.
   app.ports.toShortHndr.subscribe(function (msg) {
     ShortHndrCli.call(
       msg,
       [],
-      (error) => console.error(`Error: ${error}`),
-      (ok) => console.log(ok)
+      // error handler
+      app.ports.fromShortHndrError.send,
+      // stdout flow
+      ({ stdout, stderr }) =>
+        !!stdout
+          ? app.ports.fromShortHndrSuccess.send(stdout)
+          : app.ports.fromShortHndrError.send(stderr)
     );
   });
 
