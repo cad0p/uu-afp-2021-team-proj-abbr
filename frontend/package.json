@@ -39,6 +39,7 @@
   "devDependencies": {
     "@types/vscode": "^1.32.0",
     "elm": "^0.19.1-5",
-    "elm-format": "^0.8.5"
+    "elm-format": "^0.8.5",
+    "vsce": "^2.7.0"
   }
 }

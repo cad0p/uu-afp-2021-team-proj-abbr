@@ -6,7 +6,10 @@
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
-      "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
+      "args": [
+        "${workspaceFolder}/.demo",
+        "--extensionDevelopmentPath=${workspaceFolder}"
+      ],
       "preLaunchTask": "npm: make:elm",
       "autoAttachChildProcesses": true
     }
