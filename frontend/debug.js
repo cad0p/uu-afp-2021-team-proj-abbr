@@ -1,6 +1,6 @@
 const { setupApp } = require("./wiring/ExpandApp");
 
-const app = setupApp({ kbPath: "data/kb_example.csv" });
+const app = setupApp({ kbPath: "./demo/data/example_kb.csv" });
 
 // Setup subscriptions.
 app.ports.toExtensionInfo.subscribe(function (msg) {

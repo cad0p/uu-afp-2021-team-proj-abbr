@@ -13,21 +13,18 @@ const editor = vscode.window.activeTextEditor;
  */
 function activate(context) {
   // TODO: instantiate with the correct KB path from settings.
-  const expandApp = setupApp({ kbPath: "data/kb_example.csv" });
-  console.debug(expandApp);
-  console.log('Congratulations, your extension "ShortHndr" is now active!');
+  const kbPath = context.asAbsolutePath(".demo/data/example_kb.csv");
+  const expandApp = setupApp({ kbPath });
+  console.debug('Congratulations, your extension "ShortHndr" is now active!');
 
   // expandApp subscriptions
   expandApp.ports.toExtensionInfo.subscribe(function (msg) {
-    console.debug("got from port", msg);
     vscode.window.showWarningMessage(msg);
   });
   expandApp.ports.toExtensionError.subscribe(function (msg) {
-    console.debug("got from port", msg);
     vscode.window.showErrorMessage(msg);
   });
   expandApp.ports.toExtensionSuccess.subscribe(function (msg) {
-    console.debug("got from port", msg);
     vscode.window.showInformationMessage(msg);
   });
 
