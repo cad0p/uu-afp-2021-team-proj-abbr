@@ -1,8 +1,25 @@
 {
   "name": "shorthndr",
+  "displayName": "ShortHndr",
   "version": "1.0.0",
-  "description": "This is the frontend of the tool.   Implemented as a VS Code extension in [`Elm`](https://elm-lang.org/).",
+  "description": "This is the integration of the ShortHndr with VS Code. Implemented in [`Elm`](https://elm-lang.org/).",
+  "categories": [
+    "Formatters",
+    "Other",
+    "Education"
+  ],
   "main": "extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "shorthndr.ping",
+        "title": "ShortHndr: Ping"
+      }
+    ]
+  },
   "engines": {
     "vscode": "^1.32.0"
   },

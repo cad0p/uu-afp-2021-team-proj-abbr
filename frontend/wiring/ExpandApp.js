@@ -1,5 +1,5 @@
-const worker = require("./dist/VsCodeWorker.js.js");
-const { ShortHndr } = require("./lib/ShortHndr");
+const worker = require("../dist/ExpandWorker");
+const { ShortHndrCli } = require("./ShortHndrCli");
 
 // TODO: add argument types...
 const setupApp = function ({ kbPath }) {
@@ -11,13 +11,15 @@ const setupApp = function ({ kbPath }) {
 
   // Make wiring to ShortHndr side-car service.
   app.ports.toShortHndr.subscribe(function (msg) {
-    ShortHndr.call(
+    ShortHndrCli.call(
       msg,
       [],
       (error) => console.error(`Error: ${error}`),
       (ok) => console.log(ok)
     );
   });
+
+  return app;
 };
 
 module.exports.worker = worker;
