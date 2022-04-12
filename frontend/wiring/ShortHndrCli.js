@@ -1,9 +1,13 @@
 const { exec } = require("child_process");
 
 // FIXME: replace with installation path.
-const executable = "/Users/dmitriiorlov/.local/bin/shorthndr";
+const executable = "~/.local/bin/shorthndr";
 
-module.exports.ShortHndr = {
+/**
+ * ShortHndr CLI sidecar.
+ */
+module.exports.ShortHndrCli = {
+  // TODO: add argument types.
   call: (command, args, onError, onSuccess) => {
     exec(
       `${executable} ${command} ${args.join(" ")}`,

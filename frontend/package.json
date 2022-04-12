@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "shorthndr",
   "version": "1.0.0",
   "description": "This is the frontend of the tool.   Implemented as a VS Code extension in [`Elm`](https://elm-lang.org/).",
   "main": "extension.js",
@@ -7,7 +7,8 @@
     "vscode": "^1.32.0"
   },
   "scripts": {
-    "make:elm": "elm make ./src/VsCodeWorker.elm --output ./dist/VsCodeWorker.js --debug",
+    "preinstall": "npm run make:elm",
+    "make:elm": "elm make ./src/ExpandWorker.elm --output ./dist/ExpandWorker.js --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

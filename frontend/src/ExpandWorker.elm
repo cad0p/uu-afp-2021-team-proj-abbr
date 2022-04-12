@@ -1,7 +1,14 @@
-port module VsCodeWorker exposing (..)
+port module ExpandWorker exposing (..)
 
-import Html exposing (a, input)
 import Platform
+
+
+
+-- ALIASES
+
+
+type alias FilePath =
+    String
 
 
 
@@ -9,11 +16,11 @@ import Platform
 
 
 type alias Flags =
-    {}
+    { kbPath : FilePath }
 
 
 type alias Model =
-    { input : String }
+    { data : String, kbPath : FilePath }
 
 
 
@@ -21,8 +28,8 @@ type alias Model =
 
 
 init : Flags -> ( Model, Cmd Msg )
-init _ =
-    ( { input = "" }, Cmd.none )
+init { kbPath } =
+    ( { data = "", kbPath = kbPath }, Cmd.none )
 
 
 
@@ -40,7 +47,6 @@ main =
 
 
 -- PORTS
--- TODO: figure out how to make it more type safe.
 
 
 {-| Default extension output port.
@@ -59,12 +65,28 @@ port toExtension : String -> Cmd msg
 port fromExtension : (String -> msg) -> Sub msg
 
 
+
+-- {-| Default extension config port.
+--     - Extension - [Config] -> Worker
+--     -- TODO: support JSON input?
+-- -}
+-- port fromExtensionConfig : (String -> msg) -> Sub msg
+
+
 {-| Extension Expand command requiest.
 
     - Extension - [String] -> Worker
 
 -}
 port fromExtensionExpand : (String -> msg) -> Sub msg
+
+
+{-| Extension Replace command requiest.
+
+    - Extension - [FilePath] -> Worker
+
+-}
+port fromExtensionReplace : (FilePath -> msg) -> Sub msg
 
 
 {-| Default ShortHandr CLI trigger port.
@@ -92,23 +114,25 @@ port fromShortHndrError : (String -> msg) -> Sub msg
 
 
 
--- PROTOCOLS
--- TODO: idea for the future - make it automated?
+-- REQUESTS
 
 
-type ShortHandrProtocol i
-    = Expand i
-    | Replace i
-    | Help i
+{-| Supported ShortHandr request requests.
+TODO: generate this automatically?
+-}
+type ShortHandrRequest
+    = Expand { abbreviation : String, kbPath : FilePath }
+    | Replace { input : FilePath, kbPath : FilePath, inplace : Bool }
+    | Help { command : String }
 
 
 {-| Format the command input according to procol
 -}
-format : ShortHandrProtocol String -> String
+format : ShortHandrRequest -> String
 format p =
     case p of
-        Expand input ->
-            "expand --abbreviation=\"" ++ input ++ "\""
+        Expand { abbreviation, kbPath } ->
+            "expand --abbreviation=\"" ++ abbreviation ++ "\" -k=\"" ++ kbPath ++ "\""
 
         Replace _ ->
             "replace --help"
@@ -132,14 +156,16 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ExtDataInput input ->
-            ( { model | input = input }, toExtension "Pong!" )
+        ExtDataInput data ->
+            ( { model | data = data }, toExtension "Pong!" )
 
+        -- Extension request to replace content.
         ExtReplaceInput _ ->
-            ( model, toShortHndr <| format (Replace "") )
+            ( model, toShortHndr <| format (Replace { input = "", kbPath = "", inplace = True }) )
 
-        ExtExpandInput input ->
-            ( model, toShortHndr <| format (Expand input) )
+        -- Extension request to expand content.
+        ExtExpandInput request ->
+            ( model, toShortHndr <| format (Expand { abbreviation = request, kbPath = model.kbPath }) )
 
         ShOkResult output ->
             ( model, toExtension output )
@@ -155,8 +181,9 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Sub.batch
-        [ fromExtension ExtDataInput
-        , fromExtensionExpand ExtExpandInput -- TODO: add more type safety
-        , fromShortHndrSuccess ShOkResult -- TODO: add more type safety
-        , fromShortHndrError ShErrorResult -- TODO: add more type safety
+        -- TODO: add more type safety
+        [ fromExtension ExtDataInput -- ^ Receive an info request from extension.
+        , fromExtensionExpand ExtExpandInput -- ^ Receive an expand request from extension.
+        , fromShortHndrSuccess ShOkResult -- ^ Receive an OK result from shorthndr.
+        , fromShortHndrError ShErrorResult -- ^ Receive an Error result from shorthndr.
         ]

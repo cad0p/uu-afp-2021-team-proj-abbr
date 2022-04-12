@@ -1,17 +1,19 @@
-const worker = require("./dist/VsCodeWorker.js");
-const { ShortHndr } = require("./wiring/ShortHndr");
+const worker = require("./dist/ExpandWorker.js");
+const { ShortHndrCli } = require("./wiring/ShortHndrCli");
 
 console.log(worker);
-console.log(ShortHndr);
+console.log(ShortHndrCli);
 
-const app = worker.Elm.VsCodeWorker.init({});
+const app = worker.Elm.ExpandWorker.init({
+  flags: { kbPath: "data/lb_example.csv" },
+});
 console.log(app);
 
 app.ports.toExtension.subscribe(function (msg) {
   console.log("got from port", msg);
 });
 app.ports.toShortHndr.subscribe(function (msg) {
-  ShortHndr.call(
+  ShortHndrCli.call(
     msg,
     [],
     (error) => console.error(`Error: ${error}`),

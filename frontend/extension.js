@@ -1,25 +1,27 @@
 const vscode = require("vscode");
-// The `app` instantiated with the Elm brain.
-const { app } = require("./wiring/App");
+
+// The `app` wired up with the Elm brain.
+const { setupApp } = require("./wiring/ExpandApp");
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-  console.log(
-    'Congratulations, your extension "helloworld-minimal-sample" is now active!'
-  );
-  console.debug(app);
+  // TODO: instantiate with the correct KB path from settings.
+  const expandApp = setupApp({ kbPath: "data/lb_example.csv" });
+  console.debug(expandApp);
+  console.log('Congratulations, your extension "ShortHndr" is now active!');
 
-  let disposable = vscode.commands.registerCommand(
-    "extension.helloWorld",
-    () => {
-      // The code you place here will be executed every time your command is executed
+  // expandApp subscriptions
+  expandApp.ports.toExtension.subscribe(function (msg) {
+    console.debug("got from port", msg);
+    vscode.window.showInformationMessage(msg);
+  });
 
-      // Display a message box to the user
-      vscode.window.showInformationMessage("Hello world!");
-    }
-  );
+  // Extension command subscriptions
+  let disposable = vscode.commands.registerCommand("extension.ping", () => {
+    app.ports.fromExtension.send("Ping!");
+  });
 
   context.subscriptions.push(disposable);
 }
