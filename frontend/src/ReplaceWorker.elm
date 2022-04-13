@@ -1,4 +1,4 @@
-port module ExpandWorker exposing (..)
+port module ReplaceWorker exposing (..)
 
 import Platform
 import Shared exposing (FilePath, ShortHandrRequest(..), format)
@@ -68,28 +68,12 @@ port toExtensionInfo : String -> Cmd msg
 port toExtensionError : String -> Cmd msg
 
 
-{-| Error extension expand result port.
-
-    - Worker - [String] -> Extension
-
--}
-port toExtensionContent : String -> Cmd msg
-
-
 {-| Default extension input port.
 
     - Extension - [String] -> Worker
 
 -}
 port fromExtension : (String -> msg) -> Sub msg
-
-
-{-| Extension Expand command requiest.
-
-    - Extension - [String] -> Worker
-
--}
-port fromExtensionExpand : (String -> msg) -> Sub msg
 
 
 {-| Extension Replace command requiest.
@@ -139,14 +123,14 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ExtDataInput data ->
-            ( { model | data = data }, toExtensionInfo "Pong!" )
+            ( { model | data = data }, toExtensionInfo "Expand: Pong!" )
 
-        -- Extension request to expand content.
-        ExtRequestInput request ->
-            ( model, toShortHndr <| format (Expand { abbreviation = request, kbPath = model.kbPath }) )
+        -- Extension request to replace content.
+        ExtRequestInput file ->
+            ( model, toShortHndr <| format (Replace { input = file, kbPath = model.kbPath, inplace = True }) )
 
         ShOkResult output ->
-            ( model, toExtensionContent output )
+            ( model, toExtensionInfo output )
 
         ShErrorResult output ->
             ( model, toExtensionError output )
@@ -161,7 +145,7 @@ subscriptions _ =
     Sub.batch
         -- TODO: add more type safety
         [ fromExtension ExtDataInput -- ^ Receive an info request from extension.
-        , fromExtensionExpand ExtRequestInput -- ^ Receive an expand request from extension.
+        , fromExtensionReplace ExtRequestInput -- ^ Receive an expand request from extension.
         , fromShortHndrSuccess ShOkResult -- ^ Receive an OK result from shorthndr.
         , fromShortHndrError ShErrorResult -- ^ Receive an Error result from shorthndr.
         ]

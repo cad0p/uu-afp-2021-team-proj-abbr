@@ -1,6 +1,9 @@
-const { setupApp } = require("./wiring/ExpandApp");
+const { setupApps } = require("./wiring/Apps");
 
-const app = setupApp({ kbPath: "./demo/data/example_kb.csv" });
+const { expandApp } = setupApps({ kbPath: ".demo/data/example_kb.csv" });
+
+// Debug on expand App
+const app = expandApp;
 
 // Setup subscriptions.
 app.ports.toExtensionInfo.subscribe(function (msg) {
@@ -9,10 +12,11 @@ app.ports.toExtensionInfo.subscribe(function (msg) {
 app.ports.toExtensionError.subscribe(function (msg) {
   console.error("ERR: got from port", msg);
 });
-app.ports.toExtensionExpand.subscribe(function (msg) {
-  console.info("OK: got from port", msg);
+app.ports.toExtensionContent.subscribe(function (msg) {
+  console.info("CONTENT: got from port ->", msg);
 });
 
 // Send message.
 console.log("Sending to Elm...");
+app.ports.fromExtension.send("Ping!");
 app.ports.fromExtensionExpand.send("@@hl");

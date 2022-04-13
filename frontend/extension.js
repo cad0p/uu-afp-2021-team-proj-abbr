@@ -1,7 +1,7 @@
 const vscode = require("vscode");
 
 // The `app` wired up with the Elm brain.
-const { setupApp } = require("./wiring/ExpandApp");
+const { setupApps } = require("./wiring/Apps");
 
 /**
  * Editor interface.
@@ -14,18 +14,18 @@ const editor = vscode.window.activeTextEditor;
 function activate(context) {
   // TODO: instantiate with the correct KB path from settings.
   const kbPath = context.asAbsolutePath(".demo/data/example_kb.csv");
-  const expandApp = setupApp({ kbPath });
+  const { expandApp, replaceApp } = setupApps({ kbPath });
   console.debug('Congratulations, your extension "ShortHndr" is now active!');
 
   // expandApp subscriptions
   console.debug(expandApp.ports);
   expandApp.ports.toExtensionInfo.subscribe(function (msg) {
-    vscode.window.showWarningMessage(msg);
+    vscode.window.showWarningMessage(`ExpandApp: ${msg}`);
   });
   expandApp.ports.toExtensionError.subscribe(function (msg) {
-    vscode.window.showErrorMessage(msg);
+    vscode.window.showErrorMessage(`ExpandApp: ${msg}`);
   });
-  expandApp.ports.toExtensionExpand.subscribe(function (msg) {
+  expandApp.ports.toExtensionContent.subscribe(function (msg) {
     if (!!editor) {
       editor.edit((editBuilder) => {
         editBuilder.replace(editor.selection, msg);
@@ -34,10 +34,17 @@ function activate(context) {
       throw new Error("no editor");
     }
   });
+  replaceApp.ports.toExtensionInfo.subscribe(function (msg) {
+    vscode.window.showWarningMessage(`Replace: ${msg}`);
+  });
+  replaceApp.ports.toExtensionError.subscribe(function (msg) {
+    vscode.window.showErrorMessage(`ReplaceApp: ${msg}`);
+  });
 
   // Extension command subscriptions
   const ping = vscode.commands.registerCommand("shorthndr.ping", () => {
     expandApp.ports.fromExtension.send("Ping!");
+    replaceApp.ports.fromExtension.send("Ping!");
   });
   const expand = vscode.commands.registerCommand("shorthndr.expand", () => {
     if (!!editor) {
@@ -47,8 +54,16 @@ function activate(context) {
       throw new Error("no editor");
     }
   });
+  const replace = vscode.commands.registerCommand("shorthndr.replace", () => {
+    if (!!editor) {
+      const openedFile = vscode.window.activeTextEditor.document.uri.fsPath;
+      replaceApp.ports.fromExtensionReplace.send(openedFile);
+    } else {
+      throw new Error("no editor");
+    }
+  });
 
-  context.subscriptions.push(ping, expand);
+  context.subscriptions.push(ping, expand, replace);
 }
 
 function deactivate() {}
