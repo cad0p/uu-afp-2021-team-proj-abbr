@@ -18,14 +18,21 @@ function activate(context) {
   console.debug('Congratulations, your extension "ShortHndr" is now active!');
 
   // expandApp subscriptions
+  console.debug(expandApp.ports);
   expandApp.ports.toExtensionInfo.subscribe(function (msg) {
     vscode.window.showWarningMessage(msg);
   });
   expandApp.ports.toExtensionError.subscribe(function (msg) {
     vscode.window.showErrorMessage(msg);
   });
-  expandApp.ports.toExtensionSuccess.subscribe(function (msg) {
-    vscode.window.showInformationMessage(msg);
+  expandApp.ports.toExtensionExpand.subscribe(function (msg) {
+    if (!!editor) {
+      editor.edit((editBuilder) => {
+        editBuilder.replace(editor.selection, msg);
+      });
+    } else {
+      throw new Error("no editor");
+    }
   });
 
   // Extension command subscriptions

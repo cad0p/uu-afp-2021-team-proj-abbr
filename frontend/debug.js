@@ -9,7 +9,7 @@ app.ports.toExtensionInfo.subscribe(function (msg) {
 app.ports.toExtensionError.subscribe(function (msg) {
   console.error("ERR: got from port", msg);
 });
-app.ports.toExtensionSuccess.subscribe(function (msg) {
+app.ports.toExtensionExpand.subscribe(function (msg) {
   console.info("OK: got from port", msg);
 });
 

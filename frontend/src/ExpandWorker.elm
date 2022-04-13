@@ -47,6 +47,9 @@ main =
 
 
 -- PORTS: communication to external services.
+-- TODO:
+--   [ ] Introduce a type-based message protocol instead of many parts
+--   [ ] Get/send something fancier (like JSON) instead of Strings in the ports
 
 
 {-| Default extension output port.
@@ -57,12 +60,11 @@ main =
 port toExtensionInfo : String -> Cmd msg
 
 
-{-| Success extension output port.
 
-    - Worker - [String] -> Extension
-
--}
-port toExtensionSuccess : String -> Cmd msg
+-- {-| Success extension output port.
+--     - Worker - [String] -> Extension
+-- -}
+-- port toExtensionSuccess : String -> Cmd msg
 
 
 {-| Error extension output port.
@@ -71,6 +73,14 @@ port toExtensionSuccess : String -> Cmd msg
 
 -}
 port toExtensionError : String -> Cmd msg
+
+
+{-| Error extension expand result port.
+
+    - Worker - [String] -> Extension
+
+-}
+port toExtensionExpand : String -> Cmd msg
 
 
 {-| Default extension input port.
@@ -176,7 +186,7 @@ update msg model =
             ( model, toShortHndr <| format (Expand { abbreviation = request, kbPath = model.kbPath }) )
 
         ShOkResult output ->
-            ( model, toExtensionSuccess output )
+            ( model, toExtensionExpand output )
 
         ShErrorResult output ->
             ( model, toExtensionError output )
