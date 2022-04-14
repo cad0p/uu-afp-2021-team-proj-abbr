@@ -5,7 +5,7 @@ const { ShortHndrCli } = require("./ShortHndrCli");
 console.debug(expandWorker);
 console.debug(replaceWorker);
 
-// TODO: add argument types and generics...
+// TODO(tech debt): add argument types and generics...
 const configureApp = function (app) {
   // Make wiring to ShortHndr side-car service.
   app.ports.toShortHndr.subscribe(function (msg) {
