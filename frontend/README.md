@@ -65,9 +65,10 @@ This is an approximate illustration of the setup of the extension.
 
 ### Configure project
 
-- Run `npm install` to install all required dependencies
-- Run `npm run make:elm` to compile the Elm components into JS
-- If developing with VS Code, start a debugging session
+2. Run `npm install` to install all required dependencies
+  (step 1 is also run automatically with this command)
+3. Run `npm run make:elm` to compile the Elm components into JS
+4. If developing with VS Code, start a debugging session
   with `F5` (or via "Run and Debug" panel -> "Run Extension")
 
 ### Building Elm stuff
