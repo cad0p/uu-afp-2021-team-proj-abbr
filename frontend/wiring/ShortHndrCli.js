@@ -1,6 +1,8 @@
 const { exec } = require("child_process");
 
-// FIXME: replace with installation path.
+// TODO(tech debt): add support for installation paths on other systems
+// https://docs.haskellstack.org/en/stable/install_and_upgrade/#path
+// TODO(future feature): make executable path a part of the Extension Config.
 const executable = "~/.local/bin/shorthndr";
 
 /**
