@@ -62,11 +62,12 @@ This is an approximate illustration of the setup of the extension.
 1. Run `stack install` in the `/backend/team-proj-abbr` directory
    to make sure `shorthndr` development is available.
    (Or, experimentally, run `npm run setup:shorthndr`)
+   (Or skip to step 2 which does it all automatically)
 
 ### Configure project
 
 2. Run `npm install` to install all required dependencies
-  (step 1 is also run automatically with this command)
+  (step 1 and 3 are also run automatically with this command)
 3. Run `npm run make:elm` to compile the Elm components into JS
 4. If developing with VS Code, start a debugging session
   with `F5` (or via "Run and Debug" panel -> "Run Extension")
