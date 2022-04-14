@@ -1,3 +1,7 @@
+/**
+ * This module configures a side-car wrapper for the ShortHndr CLI app.
+ */
+
 const { exec } = require("child_process");
 
 // TODO(tech debt): add support for installation paths on other systems

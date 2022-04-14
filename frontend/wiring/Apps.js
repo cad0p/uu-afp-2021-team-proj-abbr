@@ -6,6 +6,13 @@ console.debug(expandWorker);
 console.debug(replaceWorker);
 
 // TODO(tech debt): add argument types and generics...
+/**
+ * Sets up the required dependencies and internal configurations
+ * of the worker apps.
+ *
+ * @param {*} app - An Elm Worker application to configure.
+ * @returns
+ */
 const configureApp = function (app) {
   // Make wiring to ShortHndr side-car service.
   app.ports.toShortHndr.subscribe(function (msg) {
@@ -14,7 +21,7 @@ const configureApp = function (app) {
       [],
       // error handler
       ({ error, stderr }) => app.ports.fromShortHndrError.send(stderr),
-      // stdout flow
+      // stdout flow, treat as Error if stderr is not empty, otherwise Success
       ({ stdout, stderr }) =>
         !!stderr
           ? app.ports.fromShortHndrError.send(stderr)
