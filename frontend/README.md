@@ -57,6 +57,8 @@ This is an approximate illustration of the setup of the extension.
 
 ## Development steps
 
+> NB: currently we only support the extension with `shorthndr` running on Unix systems.
+
 1. Run `stack install` in the `./backend/team-proj-abbr` directory
    to make sure `shorthndr` development is available.
    (Or, experimentally, run `npm run setup:shorthndr`)
