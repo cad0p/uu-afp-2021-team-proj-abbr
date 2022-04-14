@@ -33,6 +33,8 @@
     "vscode": "^1.32.0"
   },
   "scripts": {
+    "preinstall": "npm run setup:shorthndr",
+    "setup:shorthndr": "cd ../backend/team-proj-abbr && stack install && cd -",
     "postinstall": "npm run make:elm",
     "make:elm": "npm-run-all make:elm:ExpandWorker make:elm:ReplaceWorker",
     "make:elm:ExpandWorker": "elm make ./src/ExpandWorker.elm --output ./dist/ExpandWorker.js --debug",
