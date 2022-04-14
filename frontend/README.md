@@ -48,8 +48,12 @@ This is an approximate illustration of the setup of the extension.
 ## Usage demo
 
 1. Running the expand command
-   
+
+    ![ShortHndr: Expand](./md_resources/expand.gif)
+
 2. Running the replace command
+
+    ![ShortHndr: Replace](./md_resources/replace.gif)
 
 ## Development steps
 
