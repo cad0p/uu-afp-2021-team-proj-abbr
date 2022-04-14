@@ -1,0 +1,54 @@
+{
+  "name": "shorthndr",
+  "displayName": "ShortHndr",
+  "repository": "https://github.com/cad0p/uu-afp-2021-team-proj-abbr",
+  "version": "1.0.0",
+  "description": "This is the integration of the ShortHndr with VS Code. Implemented in [`Elm`](https://elm-lang.org/).",
+  "categories": [
+    "Formatters",
+    "Other",
+    "Education"
+  ],
+  "main": "extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "shorthndr.ping",
+        "title": "ShortHndr: Ping"
+      },
+      {
+        "command": "shorthndr.expand",
+        "title": "ShortHndr: Expand"
+      },
+      {
+        "command": "shorthndr.replace",
+        "title": "ShortHndr: Replace"
+      }
+    ]
+  },
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "scripts": {
+    "preinstall": "npm run setup:shorthndr",
+    "setup:shorthndr": "cd ../backend/team-proj-abbr && stack install && cd -",
+    "postinstall": "npm run make:elm",
+    "make:elm": "npm-run-all make:elm:ExpandWorker make:elm:ReplaceWorker",
+    "make:elm:ExpandWorker": "elm make ./src/ExpandWorker.elm --output ./dist/ExpandWorker.js --debug",
+    "make:elm:ReplaceWorker": "elm make ./src/ReplaceWorker.elm --output ./dist/ReplaceWorker.js --debug",
+    "format:elm": "elm-format --yes ./src/*.elm "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/vscode": "^1.32.0",
+    "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
+    "npm-run-all": "^4.1.5",
+    "vsce": "^2.7.0"
+  }
+}
