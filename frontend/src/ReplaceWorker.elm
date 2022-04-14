@@ -123,7 +123,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ExtDataInput data ->
-            ( { model | data = data }, toExtensionInfo "Expand: Pong!" )
+            ( { model | data = data }, toExtensionInfo "Pong!" )
 
         -- Extension request to replace content.
         ExtRequestInput file ->

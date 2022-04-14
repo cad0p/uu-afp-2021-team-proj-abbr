@@ -92,14 +92,6 @@ port fromExtension : (String -> msg) -> Sub msg
 port fromExtensionExpand : (String -> msg) -> Sub msg
 
 
-{-| Extension Replace command requiest.
-
-    - Extension - [FilePath] -> Worker
-
--}
-port fromExtensionReplace : (FilePath -> msg) -> Sub msg
-
-
 {-| Default ShortHandr CLI trigger port.
 
     - Worker - [String] -> CLI

@@ -15,7 +15,6 @@ function activate(context) {
   // TODO: instantiate with the correct KB path from settings.
   const kbPath = context.asAbsolutePath(".demo/data/example_kb.csv");
   const { expandApp, replaceApp } = setupApps({ kbPath });
-  console.debug('Congratulations, your extension "ShortHndr" is now active!');
 
   // expandApp subscriptions
   console.debug(expandApp.ports);
@@ -34,8 +33,9 @@ function activate(context) {
       throw new Error("no editor");
     }
   });
+  // replaceApp subscriptions
   replaceApp.ports.toExtensionInfo.subscribe(function (msg) {
-    vscode.window.showWarningMessage(`Replace: ${msg}`);
+    vscode.window.showWarningMessage(`ReplaceApp: ${msg}`);
   });
   replaceApp.ports.toExtensionError.subscribe(function (msg) {
     vscode.window.showErrorMessage(`ReplaceApp: ${msg}`);
@@ -64,6 +64,7 @@ function activate(context) {
   });
 
   context.subscriptions.push(ping, expand, replace);
+  console.debug('Congratulations, your extension "ShortHndr" is now ready!');
 }
 
 function deactivate() {}
