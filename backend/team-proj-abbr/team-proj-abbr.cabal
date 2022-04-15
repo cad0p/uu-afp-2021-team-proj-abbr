@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           team-proj-abbr
-version:        0.1.0.0
+version:        0.1.0
 synopsis:       ShortHndr
 description:    Please see the README on GitHub at <https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme>
 homepage:       https://cad0p.github.io/uu-afp-2021-team-proj-abbr/backend/team-proj-abbr
