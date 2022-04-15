@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2022-04-15
+
+### Added
+
+- Elm Frontend
+
+### Changed
+
+- Stuff
+
+### Removed
+
+- Probably Something
+
+### Fixed
+
+- For sure a lot of Stuff
+
+## [0.0.1] - 2022-04-11
+
+### Added
+
+- First release
+- Abbreviation syntax: support for basic abbreviation syntax.
+- Abbreviation syntax: support for abbreviation syntax supporting plural expansion.
+- Knowledge base: file format definition for specifying basic abbreviation records.
+- Knowledge base: file format definition for with plural expansion support.
+- CLI tool: load abbreviation dictionary from a locally stored file.
+- CLI tool: expand in bulk mode with input as input stream.
+- CLI tool: expand in bulk mode with input as a local file.
+- CLI tool: expand in bulk mode with output to standard output stream.
+- CLI tool: expand in bulk mode with output to a specified file.
+- CLI tool: expand in bulk mode with output to the input file.
+- Extension: expand abbreviations in bulk mode on file save.
+
+<!-- TODO: change this to add v0.1.0 (it would break the links right now because no such tag exists yet) -->
+[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
+
+<!-- # Template below
+
+## [Unreleased]
+
 ## [1.0.0] - 2017-06-20
 
 ### Added
@@ -181,4 +224,4 @@ notable changes.
 [0.0.4]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.0.2
-[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
+[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1 -->
