@@ -8,6 +8,10 @@ https://cad0p.github.io/uu-afp-2021-team-proj-abbr/
 
 It gets automatically updated with each new stable version, thanks to GitHub Actions. We also have a dev version to rapidly see the changes without affecting the stable documentation.
 
+## To install
+
+`stack install` will install the `shorthndr` CLI, which you can easily call from anywhere in your terminal of choice.
+
 ## To setup
 
 ```sh
