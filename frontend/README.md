@@ -70,7 +70,7 @@ Run `npm install`. This will automatically:
 
 ### How to use the extension on VS Code
 
-If developing with VS Code, start a debugging session 
+If developing with VS Code, start a debugging session
 with `F5`, located also in the "Run" menu -> "Start Debugging"
 (or for the successive runs, also via "Run and Debug" panel -> "Run Extension").
 

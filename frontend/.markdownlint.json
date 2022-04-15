@@ -1,5 +1,0 @@
-{
-    "extends": "../.markdownlint.json",
-    "ol-prefix": false,
-    "line-length": false
-}

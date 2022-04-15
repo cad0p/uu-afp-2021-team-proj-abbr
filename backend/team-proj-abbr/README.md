@@ -67,7 +67,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
 
 2. `Replace`: - expansion of the full file content
 
-    - _Basic_ approach, with `--input` and `--output`: 
+    - _Basic_ approach, with `--input` and `--output`:
 
       ```bash
       # create demo file:
@@ -84,7 +84,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
       $ rm data/demo_file.txt ./demo_file_o.txt
       ```
 
-    - _Inplace_ approach, with `--input` and `--inplace`: 
+    - _Inplace_ approach, with `--input` and `--inplace`:
 
       ```bash
       # create demo file:
