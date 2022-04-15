@@ -9,12 +9,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      tag: 'v0.1.0'
+      RELEASE_NAME: 'v0.1.0'
     steps:
     - name: 📥 Checkout repository
       uses: actions/checkout@v3
       with:
-        ref: ${{ env.tag }}
+        ref: ${{ env.RELEASE_NAME }}
 
     # - name: 🖨 Print Context
     #   run: |
