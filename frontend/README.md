@@ -59,18 +59,25 @@ This is an approximate illustration of the setup of the extension.
 
 > NB: currently we only support the extension with `shorthndr` running on Unix systems.
 
-1. Run `stack install` in the `/backend/team-proj-abbr` directory
-   to make sure `shorthndr` development is available.
-   (Or, experimentally, run `npm run setup:shorthndr`)
-   (Or skip to step 2 which does it all automatically)
-
 ### Configure project
 
-2. Run `npm install` to install all required dependencies
-  (step 1 and 3 are also run automatically with this command)
+Run `npm install`. This will automatically:
+
+1. Run `npm run setup:shorthndr` to install all required dependencies
+2. Run `stack install` in the [`../backend/team-proj-abbr`](../backend/team-proj-abbr) directory
+   to make sure that the `shorthndr` CLI is available to use.
 3. Run `npm run make:elm` to compile the Elm components into JS
-4. If developing with VS Code, start a debugging session
-  with `F5` (or via "Run and Debug" panel -> "Run Extension")
+
+### How to use the extension on VS Code
+
+If developing with VS Code, start a debugging session 
+with `F5`, located also in the "Run" menu -> "Start Debugging"
+(or for the successive runs, also via "Run and Debug" panel -> "Run Extension").
+
+The command will open a new VS Code debug window, with the extension enabled.
+
+Then, you can use the command palette `Cmd/Ctrl + P`, write `>ShortHndr` in the text field,
+and you will see all our `Replace` and `Expand` commands!
 
 ### Building Elm stuff
 
