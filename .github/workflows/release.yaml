@@ -7,12 +7,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      TAG: 'v0.1.0'
+      tag: 'v0.1.0'
     steps:
     - name: 📥 Checkout repository
       uses: actions/checkout@v3
       with:
-        ref: $TAG
+        ref: env.tag
 
     - name: 🖨 Print Context
       run: |
