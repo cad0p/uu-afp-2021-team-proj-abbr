@@ -5,7 +5,7 @@
     "type": "git",
     "url":  "https://github.com/cad0p/uu-afp-2021-team-proj-abbr"
   },
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "This is the integration of the ShortHndr with VS Code. Implemented in [`Elm`](https://elm-lang.org/).",
   "categories": [
     "Formatters",
