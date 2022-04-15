@@ -1,12 +1,14 @@
 name: Release
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       tag:
         description: 'The tag you want to release'
         required: true
         type: string
+        default: 'v0.1.0'
 
 jobs:
   release:
