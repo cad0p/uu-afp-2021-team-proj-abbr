@@ -61,12 +61,19 @@ This is an approximate illustration of the setup of the extension.
 
 ### Configure project
 
-Run `npm install`. This will automatically:
+Run `npm install` to set up all the project dependencies (internal and external).  
+This will automatically (using [the `preinstall` and `postinstall` scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts#pre--post-scripts)):
 
-1. Run `npm run setup:shorthndr` to install all required dependencies
-2. Run `stack install` in the [`../backend/team-proj-abbr`](../backend/team-proj-abbr) directory
+1. Run `npm run setup:shorthndr` to install the `shorthndr` CLI from the 
+   [`../backend/team-proj-abbr`](../backend/team-proj-abbr) directory
    to make sure that the `shorthndr` CLI is available to use.
-3. Run `npm run make:elm` to compile the Elm components into JS
+   It uses the `stack install` under the hood and installs the project to
+   [`$HOME/.local/bin` directory](https://docs.haskellstack.org/en/stable/install_and_upgrade/#path).
+2. Run `npm install` resolving all the NPM (JavaScript/Node.js) dependencies
+   for the project
+3. Run `npm run make:elm` to compile the Elm components into JavaScript
+   using `elm make` under the hood. The compilation results are placed
+   in the `./dist` directory.
 
 ### How to use the extension on VS Code
 
