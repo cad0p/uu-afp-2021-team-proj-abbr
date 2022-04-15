@@ -2,19 +2,19 @@ name: Release
 
 on:
   # Activate this by uncommenting push and pushing
-  # Make sure that the env.tag is set correctly!!!
+  # Make sure that the env.GITHUB_REF is set correctly!!!
   push:
 
 jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      RELEASE_NAME: 'v0.1.0'
+      GITHUB_REF: 'refs/tags/v0.1.0'
     steps:
     - name: 📥 Checkout repository
       uses: actions/checkout@v3
       with:
-        ref: ${{ env.RELEASE_NAME }}
+        ref: ${{ env.GITHUB_REF }}
 
     # - name: 🖨 Print Context
     #   run: |
