@@ -44,7 +44,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- TODO: change this to add v0.1.0 (it would break the links right now because no such tag exists yet) -->
 [Unreleased]: https://github.com/cad0p/uu-afp-2021-team-proj-abbr/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/cad0p/uu-afp-2021-team-proj-abbr/releases/tag/v0.0.1
+[0.0.1]: https://github.com/cad0p/uu-afp-2021-team-proj-abbr/compare/6098930...v0.0.1
+<!-- How to find the initial commit: `git log --oneline --reverse | head -n 1`
+source: https://stackoverflow.com/questions/44854556/how-can-i-compare-changes-against-a-github-projects-first-commit -->
+
+<!-- -------------------------------------------------------------------------------------------- -->
 
 <!-- # Template below
 
