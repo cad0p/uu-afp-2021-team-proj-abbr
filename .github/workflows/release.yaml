@@ -1,27 +1,24 @@
 name: Release
 
 on:
-  # Activate this by uncommenting push and pushing
-  # Make sure that the env.GITHUB_REF is set correctly!!!
   push:
+    tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"
+
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_REF: 'refs/tags/v0.1.0'
     steps:
     - name: 📥 Checkout repository
       uses: actions/checkout@v3
-      with:
-        ref: ${{ env.GITHUB_REF }}
 
-    # - name: 🖨 Print Context
-    #   run: |
-    #     cat README.md
+    - name: 🖨 Print Context
+      run: |
+        run: echo ${GITHUB_REF}
 
     - name: 🚀 Release
-      uses: docker://antonyurchenko/git-release:latest
+      uses: docker://antonyurchenko/git-release:v4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DRAFT_RELEASE: "false"
