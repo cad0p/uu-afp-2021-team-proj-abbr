@@ -59,16 +59,32 @@ This is an approximate illustration of the setup of the extension.
 
 > NB: currently we only support the extension with `shorthndr` running on Unix systems.
 
-1. Run `stack install` in the `./backend/team-proj-abbr` directory
-   to make sure `shorthndr` development is available.
-   (Or, experimentally, run `npm run setup:shorthndr`)
-
 ### Configure project
 
-- Run `npm install` to install all required dependencies
-- Run `npm run make:elm` to compile the Elm components into JS
-- If developing with VS Code, start a debugging session
-  with `F5` (or via "Run and Debug" panel -> "Run Extension")
+Run `npm install` to set up all the project dependencies (internal and external).  
+This will automatically (using [the `preinstall` and `postinstall` scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts#pre--post-scripts)):
+
+1. Run `npm run setup:shorthndr` to install the `shorthndr` CLI from the 
+   [`../backend/team-proj-abbr`](../backend/team-proj-abbr) directory
+   to make sure that the `shorthndr` CLI is available to use.
+   It uses the `stack install` under the hood and installs the project to
+   [`$HOME/.local/bin` directory](https://docs.haskellstack.org/en/stable/install_and_upgrade/#path).
+2. Run `npm install` resolving all the NPM (JavaScript/Node.js) dependencies
+   for the project
+3. Run `npm run make:elm` to compile the Elm components into JavaScript
+   using `elm make` under the hood. The compilation results are placed
+   in the `./dist` directory.
+
+### How to use the extension on VS Code
+
+If developing with VS Code, start a debugging session
+with `F5`, located also in the "Run" menu -> "Start Debugging"
+(or for the successive runs, also via "Run and Debug" panel -> "Run Extension").
+
+The command will open a new VS Code debug window, with the extension enabled.
+
+Then, you can use the command palette `Cmd/Ctrl + P`, write `>ShortHndr` in the text field,
+and you will see all our `Replace` and `Expand` commands!
 
 ### Building Elm stuff
 

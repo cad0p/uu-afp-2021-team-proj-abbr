@@ -1,5 +1,17 @@
 # team-proj-abbr
 
+## Documentation and Test Coverage
+
+The Haddock documentation and the test coverage for this backend can be found here:
+
+https://cad0p.github.io/uu-afp-2021-team-proj-abbr/
+
+It gets automatically updated with each new stable version, thanks to GitHub Actions. We also have a dev version to rapidly see the changes without affecting the stable documentation.
+
+## To install
+
+`stack install` will install the `shorthndr` CLI, which you can easily call from anywhere in your terminal of choice.
+
 ## To setup
 
 ```sh
@@ -55,7 +67,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
 
 2. `Replace`: - expansion of the full file content
 
-    - _Basic_ approach, with `--input` and `--output`: 
+    - _Basic_ approach, with `--input` and `--output`:
 
       ```bash
       # create demo file:
@@ -72,7 +84,7 @@ stack ghci --ghci-options -isrc --ghci-options -itest team-proj-abbr:team-proj-a
       $ rm data/demo_file.txt ./demo_file_o.txt
       ```
 
-    - _Inplace_ approach, with `--input` and `--inplace`: 
+    - _Inplace_ approach, with `--input` and `--inplace`:
 
       ```bash
       # create demo file:
