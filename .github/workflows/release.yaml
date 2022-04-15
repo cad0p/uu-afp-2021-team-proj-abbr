@@ -1,6 +1,8 @@
 name: Release
 
 on:
+  # Activate this by uncommenting push and pushing
+  # Make sure that the env.tag is set correctly!!!
   push:
 
 jobs:
@@ -14,16 +16,16 @@ jobs:
       with:
         ref: ${{ env.tag }}
 
-    - name: 🖨 Print Context
-      run: |
-        cat README.md
+    # - name: 🖨 Print Context
+    #   run: |
+    #     cat README.md
 
-    # - name: 🚀 Release
-    #   uses: docker://antonyurchenko/git-release:latest
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     DRAFT_RELEASE: "false"
-    #     PRE_RELEASE: "true"
-    #     CHANGELOG_FILE: "CHANGELOG.md"
-    #     ALLOW_EMPTY_CHANGELOG: "false"
-    #     ALLOW_TAG_PREFIX: "true"
+    - name: 🚀 Release
+      uses: docker://antonyurchenko/git-release:latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DRAFT_RELEASE: "false"
+        PRE_RELEASE: "true"
+        CHANGELOG_FILE: "CHANGELOG.md"
+        ALLOW_EMPTY_CHANGELOG: "false"
+        ALLOW_TAG_PREFIX: "true"
