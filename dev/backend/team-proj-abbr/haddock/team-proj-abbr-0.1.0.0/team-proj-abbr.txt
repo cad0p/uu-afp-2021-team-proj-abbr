@@ -7,7 +7,7 @@
 --   Please see the README on GitHub at
 --   <a>https://github.com/cad0p/uu-afp-2021-team-proj-abbr#readme</a>
 @package team-proj-abbr
-@version 0.1.0
+@version 0.1.0.0
 
 
 module LibCli.Spec
