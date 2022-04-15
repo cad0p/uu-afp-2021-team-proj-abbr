@@ -4,7 +4,7 @@
 
 The Haddock documentation and the test coverage for this backend can be found here:
 
-https://cad0p.github.io/uu-afp-2021-team-proj-abbr/backend/team-proj-abbr/haddock/team-proj-abbr-0.1.0.0/index.html
+https://cad0p.github.io/uu-afp-2021-team-proj-abbr/
 
 It gets automatically updated with each new stable version, thanks to GitHub Actions. We also have a dev version to rapidly see the changes without affecting the stable documentation.
 
