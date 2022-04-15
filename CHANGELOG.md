@@ -43,8 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extension: expand abbreviations in bulk mode on file save.
 
 <!-- TODO: change this to add v0.1.0 (it would break the links right now because no such tag exists yet) -->
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
+[Unreleased]: https://github.com/cad0p/uu-afp-2021-team-proj-abbr/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/cad0p/uu-afp-2021-team-proj-abbr/releases/tag/v0.0.1
 
 <!-- # Template below
 
