@@ -11,7 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Elm Frontend
+- Elm frontend.
+- Knowledge base: CRUD support for management of abbreviations in the dictionary file.
+- Knowledge base: automatic abbreviation conflict detection and resolution.
+- CLI Tool: provide CRUD interface for dictionary management.
+- CLI tool: expand in single mode with all input/output combinations.
+- Extension: provide functionality for single abbreviation expansion.
 
 ### Changed
 
@@ -29,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- First release
+- First release.
 - Abbreviation syntax: support for basic abbreviation syntax.
 - Abbreviation syntax: support for abbreviation syntax supporting plural expansion.
 - Knowledge base: file format definition for specifying basic abbreviation records.
