@@ -29,10 +29,14 @@ jobs:
         apt-get: libgmp-dev 
 
     - name: 📥 Checkout repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2.3.3
 
     - name: 🧰 Setup Stack
-      uses: mstksg/setup-stack@v1
+      uses: haskell/actions/setup@v2
+      with:
+        ghc-version: '8.10.7'
+        enable-stack: true
+        stack-version: 'latest'
 
     - name: 🔑 Cache Key
       id: cache_key
